@@ -63,7 +63,7 @@ public class DBHandler extends SQLiteOpenHelper {
         db.insert(TABLE_USER,null,values);
         db.close();
     }
-/*
+
     public User getUser(int id){
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -76,5 +76,5 @@ public class DBHandler extends SQLiteOpenHelper {
         User user=new User();
         return user;
     }
-    */
+
 }
