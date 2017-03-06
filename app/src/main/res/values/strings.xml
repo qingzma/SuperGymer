@@ -3,5 +3,6 @@
     <string name="menu_plan">Plan</string>
     <string name="menu_user">Me</string>
     <string name="menu_scan">Scanner</string>
+    <string name="title_activity_android_sqlite_tutorial">AndroidSQLiteTutorialActivity</string>
 
 </resources>

@@ -9,6 +9,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".UserRegister">
+
+        </activity>
+        <activity
+            android:name=".AndroidSQLiteTutorialActivity"
+            android:label="@string/title_activity_android_sqlite_tutorial"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
