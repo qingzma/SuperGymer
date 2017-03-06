@@ -1,5 +1,7 @@
 package com.learn.qingzhi.supergymer;
 
+import android.provider.BaseColumns;
+
 /**
  * Created by qingzhi on 06/03/2017.
  */
