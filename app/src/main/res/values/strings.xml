@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">SuperGymer</string>
+    <string name="menu_plan">Plan</string>
+    <string name="menu_user">Me</string>
+    <string name="menu_scan">Scanner</string>
+
 </resources>
