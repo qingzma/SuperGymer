@@ -64,14 +64,14 @@ public class AndroidSQLiteTutorialActivity extends AppCompatActivity {
         /**
          * CRUD Operations
          * */
-        // Inserting Contacts
-        /*
+         //Inserting Contacts
+
         Log.d("Insert: ", "Inserting ..");
         db.addUser(new User("Tom1", 70, 180, 1,"skjfkdsf"));
         db.addUser(new User("John1", 60,190,1,"a34sdfsd"));
         db.addUser(new User("Lily0", 50,165,0,"sdfas234fdgas"));
         db.addUser(new User("Sue0", 65,170,0,"ahfi893r"));
-        */
+
 
         // Reading all contacts
         Log.d("Reading: ", "Reading all contacts..");
