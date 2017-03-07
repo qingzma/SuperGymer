@@ -16,7 +16,7 @@ import db.DBHandler;
  */
 
 public class WelcomePageActivity extends AppCompatActivity {
-    private static int SPLASH_TIME_OUT = 2000;
+    private static int SPLASH_TIME_OUT = 4000;
 
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -29,6 +29,7 @@ public class WelcomePageActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+
                 Intent homeIntent = new Intent(WelcomePageActivity.this,UserSignUp.class);
                 startActivity(homeIntent);
                 finish();
