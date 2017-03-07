@@ -42,7 +42,13 @@
         <activity android:name=".dumbbell.Arm_yalingActivity" />
         <activity android:name=".dumbbell.Part_YalingActivity" />
 
-        <activity android:name=".EquiementActivity"></activity>
+        <activity android:name=".EquiementActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
