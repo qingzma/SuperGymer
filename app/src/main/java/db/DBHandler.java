@@ -285,7 +285,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
 
     //get equipments count
-    public int getEquipmentsCount(){
+    public int getAllEquipmentsCount(){
         String countQuery = "SELECT  * FROM " + TABLE_EQUIPMENT;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
@@ -295,6 +295,29 @@ public class DBHandler extends SQLiteOpenHelper {
         return cursor.getCount();
     }
 
+    //get equipments types and names
+    public List<String> getEquipmentNames(){
+        List<String> names=new ArrayList<>();
+        List<Equipment> equipments=getAllEquipment();
+        for( Equipment equipment: equipments){
+            if(!names.contains(equipment.get_equipment_name())){
+                names.add(equipment.get_equipment_name());
+            }
+        }
+        return names;
+    }
+
+
+    //get equipments count
+    public int getEquipmentsCount(){
+        String countQuery = "SELECT  * FROM " + TABLE_EQUIPMENT;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery, null);
+        cursor.close();
+
+        // return count
+        return cursor.getCount();
+    }
 
 
     // Updating single user
