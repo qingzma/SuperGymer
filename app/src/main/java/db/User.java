@@ -10,13 +10,29 @@ public class User {
     private float _weight;
     private float _height;
     private int _gender;            //1 for male, and 0 for female
+    private String _password;
 
-    public User(int _userId, String _name, float _weight, float _height, int _gender) {
+
+    public User(int _userId, String _name, float _weight, float _height, int _gender, String _password) {
         this._userId = _userId;
         this._name = _name;
         this._weight = _weight;
         this._height = _height;
         this._gender = _gender;
+        this._password = _password;
+    }
+
+    public User(String _name, float _weight, float _height, int _gender, String _password) {
+        this._name = _name;
+        this._weight = _weight;
+        this._height = _height;
+        this._gender = _gender;
+        this._password = _password;
+    }
+
+
+    public User(){
+
     }
 
     public int get_userId() {
@@ -57,5 +73,18 @@ public class User {
 
     public void set_gender(int _gender) {
         this._gender = _gender;
+    }
+
+    public String get_password() {
+        return _password;
+    }
+
+    public void set_password(String _password) {
+        this._password = _password;
+    }
+
+    public String toString(){
+        return "user id: "+_userId+", name: "+_name+", weight: "+_weight+", height: "+_height
+                +", gender: "+_gender+", password: "+_password;
     }
 }

@@ -11,7 +11,9 @@ import android.view.View;
 import java.util.List;
 
 import db.Contact;
+import db.DBHandler;
 import db.DatabaseHandler;
+import db.User;
 
 public class AndroidSQLiteTutorialActivity extends AppCompatActivity {
 
@@ -31,14 +33,14 @@ public class AndroidSQLiteTutorialActivity extends AppCompatActivity {
             }
         });
 
-
+        /*
         DatabaseHandler db = new DatabaseHandler(this);
 
         /**
          * CRUD Operations
          * */
         // Inserting Contacts
-        Log.d("Insert: ", "Inserting ..");
+/*        Log.d("Insert: ", "Inserting ..");
         db.addContact(new Contact("Ravi", "9100000000"));
         db.addContact(new Contact("Srinivas", "9199999999"));
         db.addContact(new Contact("Tommy", "9522222222"));
@@ -53,6 +55,59 @@ public class AndroidSQLiteTutorialActivity extends AppCompatActivity {
             // Writing Contacts to log
             Log.d("Name: ", log);
         }
+        */
+
+        DBHandler db = new DBHandler(this);
+
+        /**
+         * CRUD Operations
+         * */
+        // Inserting Contacts
+        Log.d("Insert: ", "Inserting ..");
+        db.addUser(new User("Tom1", 70, 180, 1,"skjfkdsf"));
+        db.addUser(new User("John1", 60,190,1,"a34sdfsd"));
+        db.addUser(new User("Lily0", 50,165,0,"sdfas234fdgas"));
+        db.addUser(new User("Sue0", 65,170,0,"ahfi893r"));
+
+        // Reading all contacts
+        Log.d("Reading: ", "Reading all contacts..");
+        List<User> contacts = db.getAllUsers();
+
+        for (User cn : contacts) {
+            String log = cn.toString();
+            // Writing Contacts to log
+            Log.d("Name: ", log);
+        }
+
+
+        //insert one user
+        Log.d("User","insert new user:");
+        db.addUser(new User("Lee1", 90,190,1,"a2738432jsdflkjsf"));
+        Log.d("Reading: ", "Reading all contacts..");
+        contacts = db.getAllUsers();
+
+        for (User cn : contacts) {
+            String log = cn.toString();
+            // Writing Contacts to log
+            Log.d("Name: ", log);
+        }
+/*
+        //delete one user
+        Log.d("User","delete one user:");
+        User user=db.getUser(1);
+        db.deleteUser(user);
+        Log.d("Reading: ", "Reading all contacts..");
+        contacts = db.getAllUsers();
+
+        for (User cn : contacts) {
+            String log = "Id: " + cn.get_userId() + ", Name: " + cn.get_name() +
+                    " ,weight: " + cn.get_weight()+", Height: "+cn.get_weight()+
+                    ", gender: "+cn.get_gender();
+            // Writing Contacts to log
+            Log.d("Name: ", log);
+        }
+*/
+
     }
 
 }
