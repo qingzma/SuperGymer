@@ -21,7 +21,7 @@ public class EquiementActivity extends AppCompatActivity {
         setContentView(R.layout.activity_equiement);
         LinearLayout layout = (LinearLayout) findViewById(R.id.layout2);
         layout.setOrientation(LinearLayout.VERTICAL);  //Can also be done in xml by android:orientation="vertical"
-        //Button[] btnCategory = new Button[5];
+
         for (int i = 0; i < 5; i++) {
             LinearLayout row = new LinearLayout(this);
             row.setLayoutParams(new AppBarLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));

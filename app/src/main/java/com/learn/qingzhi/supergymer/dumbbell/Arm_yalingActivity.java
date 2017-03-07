@@ -18,7 +18,7 @@ public class Arm_yalingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.arm_yaling);
         Intent intent=getIntent();
-        Button1=(Button)findViewById(R.id.button1);
+        Button1=(Button)findViewById(R.id.button);
         Text1=(TextView)findViewById(R.id.textView);
         video1=(VideoView)findViewById(R.id.videoView);
     }
