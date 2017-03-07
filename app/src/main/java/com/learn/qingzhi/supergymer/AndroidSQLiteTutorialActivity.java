@@ -124,15 +124,39 @@ public class AndroidSQLiteTutorialActivity extends AppCompatActivity {
 */
 
         Log.d("Inserting: ", "inserting equipments");
-        db.addEquipment(new Equipment("Dumbbell","arm","www.baidu.com",getResources().getString(R.string.introduction_da)));
-        db.addEquipment(new Equipment("Dumbbell","chest","www.baidu.com","introduction"));
-        db.addEquipment(new Equipment("Dumbbell","abdomen","www.baidu.com","introduction"));
-        db.addEquipment(new Equipment("Yoga mat","abdomen","www.baidu.com","introduction"));
-        db.addEquipment(new Equipment("Yoga mat","leg","www.baidu.com","introduction"));
-        db.addEquipment(new Equipment("Treadmill","running exercise","www.baidu.com","introduction"));
+        db.addEquipment(new Equipment(getResources().getString(R.string.dumbbell_name),
+                getResources().getString(R.string.part_arm),
+                "www.baidu.com",
+                getResources().getString(R.string.dumbbell_arm_introduction)));
+        db.addEquipment(new Equipment(getResources().getString(R.string.dumbbell_name)
+                ,getResources().getString(R.string.part_chest),
+                "www.baidu.com",
+                getResources().getString(R.string.dumbbell_chest_introduction)));
+        db.addEquipment(new Equipment(getResources().getString(R.string.dumbbell_name),
+                getResources().getString(R.string.part_abdomen),
+                "www.baidu.com",
+                getResources().getString(R.string.dumbbell_abdomen_introduction)));
+        db.addEquipment(new Equipment(getResources().getString(R.string.yoga_name)
+                ,getResources().getString(R.string.part_abdomen),
+                "www.baidu.com",
+                getResources().getString(R.string.yoga_abdomen_introduction)));
+        db.addEquipment(new Equipment(getResources().getString(R.string.yoga_name)
+                ,getResources().getString(R.string.part_leg),
+                "www.baidu.com",
+                getResources().getString(R.string.yoga_leg_introduction)));
+        db.addEquipment(new Equipment(getResources().getString(R.string.treadmill_name)
+                ,getResources().getString(R.string.part_reduce_fate),
+                "www.baidu.com",
+                getResources().getString(R.string.treadmill_reduce_fat_introduction)));
 
         List<Equipment> equipmentList=new ArrayList<>();
         equipmentList=db.getAllEquipment();
+        for (Equipment item:equipmentList){
+            Log.d("Equipment: ",item.toString());
+        }
+
+
+        equipmentList=db.getEquipmentByName("Dumbbell");
         for (Equipment item:equipmentList){
             Log.d("Equipment: ",item.toString());
         }

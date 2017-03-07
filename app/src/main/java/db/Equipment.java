@@ -69,7 +69,7 @@ public class Equipment {
     }
 
     public String toString(){
-        return "euipment id: "+_equipment_id+", _part: "+_part+", name: "+_equipment_name+
+        return "euipment id: "+_equipment_id+", name: "+_equipment_name+", _part: "+_part+
                 ", URL: "+_video_url+", introduction: "+_introduction;
     }
 }
