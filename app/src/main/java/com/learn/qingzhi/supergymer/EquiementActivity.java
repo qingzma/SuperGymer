@@ -11,18 +11,28 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import com.learn.qingzhi.supergymer.dumbbell.Part_YalingActivity;
 
+import java.util.List;
+
+import db.DBHandler;
 
 
 public class EquiementActivity extends AppCompatActivity {
-    Button[] btnCategory = new Button[5];
+    //DBHandler mDBHandler=new DBHandler(this);
+    Button[] btnCategory;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        DBHandler dbHandler=new DBHandler(this);
+        dbHandler.initDb(this);
+
+        List<String> btnNames=dbHandler.getEquipmentNames();
+
+        btnCategory = new Button[btnNames.size()];
         setContentView(R.layout.activity_equiement);
         LinearLayout layout = (LinearLayout) findViewById(R.id.layout2);
         layout.setOrientation(LinearLayout.VERTICAL);  //Can also be done in xml by android:orientation="vertical"
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < btnNames.size(); i++) {
             LinearLayout row = new LinearLayout(this);
             row.setLayoutParams(new AppBarLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 
