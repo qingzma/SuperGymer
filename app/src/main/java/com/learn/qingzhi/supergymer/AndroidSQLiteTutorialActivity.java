@@ -14,6 +14,7 @@ import java.util.List;
 import db.Contact;
 import db.DBHandler;
 import db.DatabaseHandler;
+import db.DbSetup;
 import db.Equipment;
 import db.User;
 
@@ -35,8 +36,21 @@ public class AndroidSQLiteTutorialActivity extends AppCompatActivity {
             }
         });
 
+
+        DBHandler db = new DBHandler(this);
+        db.initDb(this);
+        List<User> contacts = db.getAllUsers();
+
+        for (User cn : contacts) {
+            String log = cn.toString();
+            // Writing Contacts to log
+            Log.d("Name: ", log);
+        }
+
         /*
-        DatabaseHandler db = new DatabaseHandler(this);
+
+         */
+
 
         /**
          * CRUD Operations
@@ -59,7 +73,7 @@ public class AndroidSQLiteTutorialActivity extends AppCompatActivity {
         }
         */
 
-        DBHandler db = new DBHandler(this);
+ //       DBHandler db = new DBHandler(this);
 
         /**
          * CRUD Operations
@@ -74,7 +88,7 @@ public class AndroidSQLiteTutorialActivity extends AppCompatActivity {
 
 
         // Reading all contacts
-        Log.d("Reading: ", "Reading all contacts..");
+ /*       Log.d("Reading: ", "Reading all contacts..");
         List<User> contacts = db.getAllUsers();
 
         for (User cn : contacts) {
@@ -91,7 +105,7 @@ public class AndroidSQLiteTutorialActivity extends AppCompatActivity {
             // Writing Contacts to log
             Log.d("Name: ", log);
         }
-
+*/
  /*
         //insert one user
         Log.d("User","insert new user:");
@@ -122,30 +136,30 @@ public class AndroidSQLiteTutorialActivity extends AppCompatActivity {
             Log.d("Name: ", log);
         }
 */
-
+/*
         Log.d("Inserting: ", "inserting equipments");
         db.addEquipment(new Equipment(getResources().getString(R.string.dumbbell_name),
                 getResources().getString(R.string.part_arm),
                 "www.baidu.com",
                 getResources().getString(R.string.dumbbell_arm_introduction)));
-        db.addEquipment(new Equipment(getResources().getString(R.string.dumbbell_name)
-                ,getResources().getString(R.string.part_chest),
+        db.addEquipment(new Equipment(getResources().getString(R.string.dumbbell_name),
+                getResources().getString(R.string.part_chest),
                 "www.baidu.com",
                 getResources().getString(R.string.dumbbell_chest_introduction)));
         db.addEquipment(new Equipment(getResources().getString(R.string.dumbbell_name),
                 getResources().getString(R.string.part_abdomen),
                 "www.baidu.com",
                 getResources().getString(R.string.dumbbell_abdomen_introduction)));
-        db.addEquipment(new Equipment(getResources().getString(R.string.yoga_name)
-                ,getResources().getString(R.string.part_abdomen),
+        db.addEquipment(new Equipment(getResources().getString(R.string.yoga_name),
+                getResources().getString(R.string.part_abdomen),
                 "www.baidu.com",
                 getResources().getString(R.string.yoga_abdomen_introduction)));
-        db.addEquipment(new Equipment(getResources().getString(R.string.yoga_name)
-                ,getResources().getString(R.string.part_leg),
+        db.addEquipment(new Equipment(getResources().getString(R.string.yoga_name),
+                getResources().getString(R.string.part_leg),
                 "www.baidu.com",
                 getResources().getString(R.string.yoga_leg_introduction)));
-        db.addEquipment(new Equipment(getResources().getString(R.string.treadmill_name)
-                ,getResources().getString(R.string.part_reduce_fate),
+        db.addEquipment(new Equipment(getResources().getString(R.string.treadmill_name),
+                getResources().getString(R.string.part_reduce_fate),
                 "www.baidu.com",
                 getResources().getString(R.string.treadmill_reduce_fat_introduction)));
 
@@ -160,7 +174,7 @@ public class AndroidSQLiteTutorialActivity extends AppCompatActivity {
         for (Equipment item:equipmentList){
             Log.d("Equipment: ",item.toString());
         }
-
+*/
     }
 
 }
