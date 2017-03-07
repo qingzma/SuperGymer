@@ -50,6 +50,6 @@ public class UserInfoSetup extends AppCompatActivity {
         Intent intent = getIntent();
         String name = intent.getStringExtra("name");
         String password = intent.getStringExtra("password");
-        
+
     }
 }

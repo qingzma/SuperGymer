@@ -8,7 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
 import android.view.WindowManager;
 
-import db.DbSetup;
+import db.DBHandler;
+
 
 /**
  * Created by wangxi on 06/03/2017.
@@ -20,8 +21,11 @@ public class WelcomePageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.welcome_page);
-        DbSetup dbSetup = new DbSetup();
-        dbSetup.setupDB(this);
+
+        //Initialize the database
+        DBHandler dbHandler = new DBHandler(this);
+        dbHandler.initDb(this);
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
