@@ -169,6 +169,8 @@ public class DBHandler extends SQLiteOpenHelper {
                 userList.add(user);
             }while(cursor.moveToNext());
         }
+        else
+            return null;
 
         return userList;
 
