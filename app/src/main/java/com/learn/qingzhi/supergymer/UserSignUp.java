@@ -78,7 +78,7 @@ public class UserSignUp extends AppCompatActivity{
         */
         String name = _input_name.getText().toString();
         String password = _input_password.getText().toString();
-        System.out.println("name: " + name);
+        //System.out.println("name: " + name);
         if(validate()){
             nextSuccess(name,password);
         }else{
@@ -107,7 +107,7 @@ public class UserSignUp extends AppCompatActivity{
     }
 
     public void nextFailed() {
-        Toast.makeText(getBaseContext(), "Sign Up failed", Toast.LENGTH_LONG).show();
+        //Toast.makeText(getBaseContext(), " failed", Toast.LENGTH_LONG).show();
     }
     public boolean validate() {
         boolean valid = true;

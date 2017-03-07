@@ -7,16 +7,9 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen">
-        <activity
-            android:name=".WelcomePageActivity"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+        android:theme="@style/AppTheme">
+        <activity android:name=".UserRegister">
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
         <activity
             android:name=".UserSignUp"
@@ -29,13 +22,27 @@
         <activity
             android:name=".AndroidSQLiteTutorialActivity"
             android:label="@string/title_activity_android_sqlite_tutorial"
-            android:theme="@style/Theme.AppCompat.Light">
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity
+            android:name=".WelcomePageActivity"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".dumbbell.Arm_yalingActivity" />
+        <activity android:name=".dumbbell.Part_YalingActivity" />
+
+        <activity android:name=".EquiementActivity"></activity>
     </application>
 
 </manifest>

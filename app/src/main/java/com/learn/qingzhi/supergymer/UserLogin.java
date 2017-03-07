@@ -122,7 +122,7 @@ public class UserLogin extends AppCompatActivity {
         String password = _passwordText.getText().toString();
 
         if (name.isEmpty()) {
-            _nameText.setError("enter a valid email address");
+            _nameText.setError("enter a valid name");
             valid = false;
         } else {
             _nameText.setError(null);
