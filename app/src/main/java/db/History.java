@@ -1,6 +1,6 @@
 package db;
 
-import java.util.Date;
+import java.sql.Date;
 
 /**
  * Created by qingzhi on 07/03/2017.

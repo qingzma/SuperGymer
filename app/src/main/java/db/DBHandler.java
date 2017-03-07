@@ -10,6 +10,9 @@ import android.util.Log;
 import com.learn.qingzhi.supergymer.R;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,6 +51,7 @@ public class DBHandler extends SQLiteOpenHelper {
     private static final String KEY_EQUIPMENT_NAME="equipmentName";
     private static final String KEY_HYPERLINK="hyperlink";
     private static final String KEY_INTRO="introduction";
+
 
 
 
@@ -133,6 +137,7 @@ public class DBHandler extends SQLiteOpenHelper {
         values.put(KEY_ID,history.get_userId());
         values.put(KEY_DATE,history.get_date().toString());
         values.put(KEY_CALORY,history.get_calories());
+        values.put(KEY_DURATION,history.get_duration());
 
         //insert row
         db.insert(TABLE_HISTORY,null,values);
@@ -218,6 +223,23 @@ public class DBHandler extends SQLiteOpenHelper {
         return equipmentList;
 
     }
+
+    //get one day's calory history
+    public float getHistoryCaloryOfDay(int uid ,Date date){
+        //Date dt= Calendar.getInstance().getTime();
+        //Log.d("hah",MyDateFormat.Date2String.format(dt));
+        SQLiteDatabase db = this.getReadableDatabase();
+        String querySelect="SELECT  *  FROM  " +TABLE_HISTORY+
+                "    WHERE "+KEY_ID +" = " +uid +
+                " AND "+KEY_DATE+" = "+"\""+MyDateFormat.Date2String.format(date)+"\"";
+        Cursor cursor=db.rawQuery(querySelect,null);
+        if(cursor.moveToFirst()){
+            return cursor.getFloat(3);
+        }
+        return -1;
+    }
+    //get one day's duration history
+
 
 
     //get all users.
@@ -434,6 +456,15 @@ public class DBHandler extends SQLiteOpenHelper {
             for (Equipment item:equipmentList){
                 Log.d("Equipment: ",item.toString());
             }
+
+
+
+
+            Date dt1=Calendar.getInstance().getTime();
+           // Date dt2=
+
+
+            //db.addHistory(new History(1,));
         }
 
 
