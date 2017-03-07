@@ -4,5 +4,9 @@
     <string name="menu_user">Me</string>
     <string name="menu_scan">Scanner</string>
     <string name="title_activity_android_sqlite_tutorial">AndroidSQLiteTutorialActivity</string>
+    <string name="title_activity_pat">patActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
 
 </resources>
