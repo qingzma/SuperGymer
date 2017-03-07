@@ -8,11 +8,13 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import db.Contact;
 import db.DBHandler;
 import db.DatabaseHandler;
+import db.Equipment;
 import db.User;
 
 public class AndroidSQLiteTutorialActivity extends AppCompatActivity {
@@ -21,8 +23,8 @@ public class AndroidSQLiteTutorialActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_android_sqlite_tutorial);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -120,6 +122,20 @@ public class AndroidSQLiteTutorialActivity extends AppCompatActivity {
             Log.d("Name: ", log);
         }
 */
+
+        Log.d("Inserting: ", "inserting equipments");
+        db.addEquipment(new Equipment("Dumbbell","arm","www.baidu.com",getResources().getString(R.string.introduction_da)));
+        db.addEquipment(new Equipment("Dumbbell","chest","www.baidu.com","introduction"));
+        db.addEquipment(new Equipment("Dumbbell","abdomen","www.baidu.com","introduction"));
+        db.addEquipment(new Equipment("Yoga mat","abdomen","www.baidu.com","introduction"));
+        db.addEquipment(new Equipment("Yoga mat","leg","www.baidu.com","introduction"));
+        db.addEquipment(new Equipment("Treadmill","running exercise","www.baidu.com","introduction"));
+
+        List<Equipment> equipmentList=new ArrayList<>();
+        equipmentList=db.getAllEquipment();
+        for (Equipment item:equipmentList){
+            Log.d("Equipment: ",item.toString());
+        }
 
     }
 

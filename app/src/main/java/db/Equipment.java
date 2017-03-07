@@ -13,10 +13,17 @@ public class Equipment {
     private String _video_url;
     private String _introduction;
 
-    public Equipment(int _equipment_id, String _part, String _equipment_name, String _video_url, String _introduction) {
+    public Equipment(int _equipment_id, String _equipment_name, String _part, String _video_url, String _introduction) {
         this._equipment_id = _equipment_id;
-        this._part = _part;
         this._equipment_name = _equipment_name;
+        this._part = _part;
+        this._video_url = _video_url;
+        this._introduction = _introduction;
+    }
+
+    public Equipment(String _equipment_name, String _part, String _video_url, String _introduction) {
+        this._equipment_name = _equipment_name;
+        this._part = _part;
         this._video_url = _video_url;
         this._introduction = _introduction;
     }
