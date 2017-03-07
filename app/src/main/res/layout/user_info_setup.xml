@@ -24,12 +24,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp">
+            android:layout_marginBottom="8dp"
+            android:orientation="horizontal">
             <EditText android:id="@+id/input_weight"
                       android:layout_width="match_parent"
                       android:layout_height="wrap_content"
                       android:inputType="text|number"
                       android:hint="Weight"/>
+            <TextView
+                android:layout_width="25dip"
+                android:layout_height="25dip"
+                android:layout_centerInParent="true"
+                android:layout_alignParentRight="true"
+                android:text="kg"/>
         </android.support.design.widget.TextInputLayout>
 
         <!-- height Label -->
@@ -37,12 +44,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp">
+            android:layout_marginBottom="8dp"
+            android:orientation="horizontal">
             <EditText android:id="@+id/input_height"
                       android:layout_width="match_parent"
                       android:layout_height="wrap_content"
                       android:inputType="text|number"
                       android:hint="Height"/>
+            <TextView
+                android:layout_width="25dip"
+                android:layout_height="25dip"
+                android:layout_centerInParent="true"
+                android:layout_alignParentRight="true"
+                android:text="cm"/>
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -51,7 +65,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp">
             <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
-                android:id="@+id/android_material_design_spinner"
+                android:id="@+id/input_gender"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Gender"/>
@@ -65,7 +79,7 @@
         </android.support.design.widget.TextInputLayout>
 
         <android.support.v7.widget.AppCompatButton
-            android:id="@+id/btn_login"
+            android:id="@+id/btn_sign_up"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"

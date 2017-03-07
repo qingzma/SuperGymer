@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import butterknife.BindView;
@@ -22,10 +23,12 @@ import db.DBHandler;
 
 public class UserSignUp extends AppCompatActivity{
     private static final String TAG = "UserSignUpActivity";
+    private static final int REQUEST_LOGIN = 0;
 
     @BindView(R.id.input_name) EditText _input_name;
     @BindView(R.id.input_password) EditText _input_password;
     @BindView(R.id.btn_next) Button _nextButton;
+    @BindView(R.id.link_login) TextView _loginLink;
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_sign_up);
@@ -35,6 +38,16 @@ public class UserSignUp extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 next();
+            }
+        });
+
+        _loginLink.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // Start the Signup activity
+                Intent intent = new Intent(getApplicationContext(), UserLogin.class);
+                startActivityForResult(intent, REQUEST_LOGIN);
             }
         });
 

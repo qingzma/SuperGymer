@@ -2,6 +2,7 @@ package com.learn.qingzhi.supergymer;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -14,15 +15,20 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.List;
+
 import butterknife.ButterKnife;
 import butterknife.BindView;
+import db.DBHandler;
+import db.User;
+
 /**
  * Created by wangxi on 07/03/2017.
  */
 
 public class UserLogin extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
-    private static final int REQUEST_SIGNUP = 0;
+    private static final int REQUEST_SIGNUP = 1;
 
     @BindView(R.id.input_name) EditText _nameText;
     @BindView(R.id.input_password) EditText _passwordText;
@@ -83,11 +89,9 @@ public class UserLogin extends AppCompatActivity {
         progressDialog.setMessage("Authenticating...");
         progressDialog.show();
 
-        String name = _nameText.getText().toString();
-        String password = _passwordText.getText().toString();
+
 
         //implement the authentication here !!!
-
 
         new android.os.Handler().postDelayed(
                 new Runnable() {
@@ -97,7 +101,25 @@ public class UserLogin extends AppCompatActivity {
                         // onLoginFailed();
                         progressDialog.dismiss();
                     }
-                }, 3000);
+                }, 2000);
+
+        /*if(authenticating()){
+            String name = _nameText.getText().toString();
+            DBHandler dbHandler = new DBHandler(this);
+            List<User> users = dbHandler.getUser(name);
+            User user = users.get(0);
+            //put user Info into sharedPreferences
+            SharedPreferences sharedPreferences = getSharedPreferences("UserInfo", MODE_PRIVATE);
+
+            //Get SharedPreferences.Editor object，save object to sharedPreferences
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("UserId",Integer.toString(user.get_userId()));
+            //put key value pair
+            editor.commit();
+            Intent intent = new Intent(UserLogin.this,UserSignUp.class);
+        }else{
+            Toast.makeText(getBaseContext(), "username not exists or Wrong Password", Toast.LENGTH_LONG).show();
+        }*/
     }
 
     @Override
@@ -113,6 +135,25 @@ public class UserLogin extends AppCompatActivity {
     public void onLoginFailed() {
         Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
         _loginButton.setEnabled(true);
+    }
+
+    public boolean authenticating(){
+        boolean authenticate = true;
+        String name = _nameText.getText().toString();
+        String password = _passwordText.getText().toString();
+
+        //get user account information
+        DBHandler dbHandler = new DBHandler(this);
+        List<User> users = dbHandler.getUser(name);
+        if(users.isEmpty()){
+            return false;
+        }
+        User user = users.get(0);
+        if(user.get_password().equals(password)){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     public boolean validate() {
