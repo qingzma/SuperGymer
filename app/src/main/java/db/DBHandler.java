@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,6 +72,19 @@ public class DBHandler extends SQLiteOpenHelper {
                 +KEY_PART+ " TEXT,"+KEY_HYPERLINK +" TEXT,"
                 +KEY_INTRO+" TEXT"+")";
         db.execSQL(CREATE_EQUIPMENT_TABLE);
+
+
+        /**
+         * CRUD Operations
+         * */
+        // Inserting Contacts
+        Log.d("Insert: ", "Inserting ..");
+        addUser(new User("Tom1", 70, 180, 1,"skjfkdsf"));
+        addUser(new User("John1", 60,190,1,"a34sdfsd"));
+        addUser(new User("Lily0", 50,165,0,"sdfas234fdgas"));
+        addUser(new User("Sue0", 65,170,0,"ahfi893r"));
+
+
 
 
 

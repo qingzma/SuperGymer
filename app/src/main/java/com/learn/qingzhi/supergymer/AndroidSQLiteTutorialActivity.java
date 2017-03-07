@@ -59,15 +59,7 @@ public class AndroidSQLiteTutorialActivity extends AppCompatActivity {
 
         DBHandler db = new DBHandler(this);
 
-        /**
-         * CRUD Operations
-         * */
-        // Inserting Contacts
-        Log.d("Insert: ", "Inserting ..");
-        db.addUser(new User("Tom1", 70, 180, 1,"skjfkdsf"));
-        db.addUser(new User("John1", 60,190,1,"a34sdfsd"));
-        db.addUser(new User("Lily0", 50,165,0,"sdfas234fdgas"));
-        db.addUser(new User("Sue0", 65,170,0,"ahfi893r"));
+
 
         // Reading all contacts
         Log.d("Reading: ", "Reading all contacts..");
@@ -78,8 +70,6 @@ public class AndroidSQLiteTutorialActivity extends AppCompatActivity {
             // Writing Contacts to log
             Log.d("Name: ", log);
         }
-
-
         //insert one user
         Log.d("User","insert new user:");
         db.addUser(new User("Lee1", 90,190,1,"a2738432jsdflkjsf"));
