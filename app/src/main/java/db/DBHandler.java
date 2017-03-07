@@ -41,6 +41,7 @@ public class DBHandler extends SQLiteOpenHelper {
     private static final String KEY_HISTORY_ID="historyID";
     private static final String KEY_DATE="date";
     private static final String KEY_CALORY="calory";
+    private static final String KEY_DURATION="duration";
     // equipments Table column names
     private static final String KEY_EQUIPMENT_ID="equipmentID";
     private static final String KEY_PART="part";
@@ -67,7 +68,8 @@ public class DBHandler extends SQLiteOpenHelper {
         String CREATE_HISTORY_TABLE="CREATE TABLE " + TABLE_HISTORY  + "("
                 +KEY_HISTORY_ID+ " INTEGER PRIMARY KEY, "
                 +KEY_ID + " INTEGER,"+ KEY_DATE + " TEXT,"
-                +KEY_CALORY+ " REAL"+")";
+                +KEY_CALORY+ " REAL, "
+                +KEY_DURATION+" REAL "+")";
         db.execSQL(CREATE_HISTORY_TABLE);
 
         String CREATE_EQUIPMENT_TABLE="CREATE TABLE " + TABLE_EQUIPMENT  + "("

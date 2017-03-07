@@ -11,35 +11,21 @@ public class History {
     private int _userId;
     private Date _date;
     private float _calories;
+    private float _duration;
 
-    public History(int _userId, Date _date, float _calories) {
+    public History(int _history_id, int _userId, Date _date, float _calories, float _duration) {
+        this._history_id = _history_id;
         this._userId = _userId;
         this._date = _date;
         this._calories = _calories;
+        this._duration = _duration;
     }
 
-    public void set_userId(int _userId) {
+    public History(int _userId, Date _date, float _calories, float _duration) {
         this._userId = _userId;
-    }
-
-    public void set_date(Date _date) {
         this._date = _date;
-    }
-
-    public void set_calories(float _calories) {
         this._calories = _calories;
-    }
-
-    public int get_userId() {
-        return _userId;
-    }
-
-    public Date get_date() {
-        return _date;
-    }
-
-    public float get_calories() {
-        return _calories;
+        this._duration = _duration;
     }
 
     public int get_history_id() {
@@ -50,7 +36,40 @@ public class History {
         this._history_id = _history_id;
     }
 
+    public int get_userId() {
+        return _userId;
+    }
+
+    public void set_userId(int _userId) {
+        this._userId = _userId;
+    }
+
+    public Date get_date() {
+        return _date;
+    }
+
+    public void set_date(Date _date) {
+        this._date = _date;
+    }
+
+    public float get_calories() {
+        return _calories;
+    }
+
+    public void set_calories(float _calories) {
+        this._calories = _calories;
+    }
+
+    public float get_duration() {
+        return _duration;
+    }
+
+    public void set_duration(float _duration) {
+        this._duration = _duration;
+    }
+
     public String toString(){
-        return "history id: "+_history_id+ "user id: "+_userId+", date: "+_date.toString()+", calories: "+_calories;
+        return "history id: "+_history_id+ "user id: "+_userId+", date: "+_date.toString()+
+                ", calories: "+_calories+", duration: "+_duration;
     }
 }
