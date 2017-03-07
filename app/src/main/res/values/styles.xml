@@ -28,5 +28,14 @@
         <item name="colorAccent">@color/white</item>
         <item name="android:textColorPrimary">@color/iron</item>
         <item name="android:background">@color/primary</item>
+        <item name="android:textColorHint">@color/primary</item>
     </style>
+    <!--
+    <style name="TextInputLayoutHintAppearance" parent="TextAppearance.AppCompat">
+        <item name="android:textColorHint">@color/jet</item>
+        <item name="colorControlNormal">@color/jet</item>
+        <item name="colorControlActivated">@color/jet</item>
+    </style>
+    -->
+
 </resources>
