@@ -1,4 +1,5 @@
 package com.learn.qingzhi.supergymer;
+import android.content.Intent;
 import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import db.DBHandler;
 
 /**
  * Created by wangxi on 06/03/2017.
@@ -55,11 +57,18 @@ public class UserSignUp extends AppCompatActivity{
     }
 
     public void next(){
+
         Log.d(TAG,"next");
+
+        /*
+        _nextButton.setEnabled(true);
+
         if(!validate()){
             nextFailed();
         }
         _nextButton.setEnabled(false);
+        */
+
         /*
         final ProgressDialog progressDialog = new ProgressDialog(SignupActivity.this,
                 R.style.AppTheme_Dark_Dialog);
@@ -69,38 +78,50 @@ public class UserSignUp extends AppCompatActivity{
         */
         String name = _input_name.getText().toString();
         String password = _input_password.getText().toString();
+        System.out.println("name: " + name);
+        if(validate()){
+            nextSuccess(name,password);
+        }else{
+            nextFailed();
+        }
+        /*
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
                         // On complete call either onSignupSuccess or onSignupFailed
                         // depending on success
-                        nextSuccess();
+                        nextSuccess(name,password);
                         // onSignupFailed();
                         //progressDialog.dismiss();
                     }
-                }, 3000);
+                }, 3000);*/
     }
 
-    public void nextSuccess() {
+    public void nextSuccess(String name,String password) {
         _nextButton.setEnabled(true);
+        Intent intent = new Intent(UserSignUp.this,UserInfoSetup.class);
+        intent.putExtra("name",name);
+        intent.putExtra("password",password);
+        startActivity(intent);
         setResult(RESULT_OK, null);
     }
 
     public void nextFailed() {
         Toast.makeText(getBaseContext(), "Sign Up failed", Toast.LENGTH_LONG).show();
-
-        _nextButton.setEnabled(true);
     }
     public boolean validate() {
         boolean valid = true;
-
+        DBHandler dbHandler = new DBHandler(this);
         String name = _input_name.getText().toString();
         String password = _input_password.getText().toString();
 
         if (name.isEmpty() || name.length() < 3) {
             _input_name.setError("at least 3 characters");
             valid = false;
-        } else {
+        }else if(dbHandler.getUser(name) != null){
+            _input_name.setError("username exists");
+            valid = false;
+        }else {
             _input_name.setError(null);
         }
 
