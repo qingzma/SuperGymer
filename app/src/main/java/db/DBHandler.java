@@ -69,11 +69,12 @@ public class DBHandler extends SQLiteOpenHelper {
 
         Cursor cursor=db.query(TABLE_USER,new String[]{KEY_ID, KEY_NAME, KEY_WEIGHT,
                 KEY_HEIGHT, KEY_GENDER},KEY_ID+"=?",
-                new String[]{String.valueOf(id)},, null, null, null, null);
+                new String[]{String.valueOf(id)}, null, null, null, null);
         if(cursor!=null)
             cursor.moveToFirst();
 
-        User user=new User();
+        User user=new User(Integer.parseInt(cursor.getString(0)),cursor.getString(1),Float.parseFloat(cursor.getString(0)),
+                Float.parseFloat(cursor.getString(0)),Integer.parseInt(cursor.getString(0)));
         return user;
     }
 
