@@ -22,6 +22,7 @@ import db.User;
  */
 
 public class UserInfoSetup extends AppCompatActivity {
+    /*
     private static final String TAG = "UserInfoSetup";
 
     @BindView(R.id.input_weight) EditText _input_weight;
@@ -130,4 +131,5 @@ public class UserInfoSetup extends AppCompatActivity {
         }
         return valid;
     }
+*/
 }

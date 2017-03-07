@@ -7,9 +7,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import db.DBHandler;
+import db.Equipment;
 import db.User;
 
 public class AndroidSQLiteTutorialActivity extends AppCompatActivity {
@@ -40,6 +43,16 @@ public class AndroidSQLiteTutorialActivity extends AppCompatActivity {
             // Writing Contacts to log
             Log.d("Name: ", log);
         }
+
+        List<String> names=db.getEquipmentNames();
+        for (String cn : names) {
+            String log = cn.toString();
+            // Writing Contacts to log
+            Log.d("Name: ", log);
+        }
+
+        Date date= Calendar.getInstance().getTime();
+        db.getHistoryCaloryOfDay(1,date);
 
         /*
 
@@ -73,13 +86,13 @@ public class AndroidSQLiteTutorialActivity extends AppCompatActivity {
          * CRUD Operations
          * */
          //Inserting Contacts
-
+/*
         Log.d("Insert: ", "Inserting ..");
         db.addUser(new User("Tom1", 70, 180, 1,"skjfkdsf"));
         db.addUser(new User("John1", 60,190,1,"a34sdfsd"));
         db.addUser(new User("Lily0", 50,165,0,"sdfas234fdgas"));
         db.addUser(new User("Sue0", 65,170,0,"ahfi893r"));
-
+*/
 
         // Reading all contacts
  /*       Log.d("Reading: ", "Reading all contacts..");
