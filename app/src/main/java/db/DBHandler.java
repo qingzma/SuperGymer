@@ -74,15 +74,7 @@ public class DBHandler extends SQLiteOpenHelper {
         db.execSQL(CREATE_EQUIPMENT_TABLE);
 
 
-        /**
-         * CRUD Operations
-         * */
-        // Inserting Contacts
-        Log.d("Insert: ", "Inserting ..");
-        addUser(new User("Tom1", 70, 180, 1,"skjfkdsf"));
-        addUser(new User("John1", 60,190,1,"a34sdfsd"));
-        addUser(new User("Lily0", 50,165,0,"sdfas234fdgas"));
-        addUser(new User("Sue0", 65,170,0,"ahfi893r"));
+
 
 
 
@@ -136,6 +128,10 @@ public class DBHandler extends SQLiteOpenHelper {
         values.put(KEY_ID,history.get_userId());
         values.put(KEY_DATE,history.get_date().toString());
         values.put(KEY_CALORY,history.get_calories());
+
+        //insert row
+        db.insert(TABLE_HISTORY,null,values);
+        db.close();
     }
 
     //get one user
@@ -143,14 +139,57 @@ public class DBHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor=db.query(TABLE_USER,new String[]{KEY_ID, KEY_NAME, KEY_WEIGHT,
-                KEY_HEIGHT, KEY_GENDER},KEY_ID+"=?",
+                KEY_HEIGHT, KEY_GENDER,KEY_PASSWORD},KEY_ID+"=?",
+                new String[]{String.valueOf(id)}, null, null, null, null);
+        if(cursor!=null) {
+            cursor.moveToFirst();
+
+        }
+        User user=new User(Integer.parseInt(cursor.getString(0)),cursor.getString(1),Float.parseFloat(cursor.getString(2)),
+                Float.parseFloat(cursor.getString(3)),Integer.parseInt(cursor.getString(4)),cursor.getString(5));
+
+        return user;
+    }
+
+    //get user(s) by name
+    public List<User> getUser(String name){
+        List<User> userList=new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String querySelect="SELECT  *  FROM  " +TABLE_USER+
+                "    WHERE "+KEY_NAME +" = "+ "\""+name+"\"";
+        //Cursor cursor=db.query(TABLE_USER,new String[]{KEY_ID, KEY_NAME, KEY_WEIGHT,
+        //                KEY_HEIGHT, KEY_GENDER,KEY_PASSWORD},KEY_NAME+"=?",
+        //        new String[]{name}, null, null, null, null);
+        Cursor cursor=db.rawQuery(querySelect,null);
+        if(cursor!=null) {
+            cursor.moveToFirst();
+            do{
+                User user=new User(Integer.parseInt(cursor.getString(0)),cursor.getString(1),Float.parseFloat(cursor.getString(2)),
+                        Float.parseFloat(cursor.getString(3)),Integer.parseInt(cursor.getString(4)),cursor.getString(5));
+                userList.add(user);
+            }while(cursor.moveToNext());
+        }
+
+        return userList;
+
+    }
+
+
+
+
+    //get one equipment
+    public Equipment getEquipment(int id){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor=db.query(TABLE_EQUIPMENT,new String[]{KEY_EQUIPMENT_ID,KEY_EQUIPMENT_NAME,KEY_PART,
+                        KEY_HYPERLINK,KEY_INTRO},KEY_EQUIPMENT_ID+"=?",
                 new String[]{String.valueOf(id)}, null, null, null, null);
         if(cursor!=null)
             cursor.moveToFirst();
 
-        User user=new User(Integer.parseInt(cursor.getString(0)),cursor.getString(1),Float.parseFloat(cursor.getString(2)),
-                Float.parseFloat(cursor.getString(3)),Integer.parseInt(cursor.getString(4)),cursor.getString(5));
-        return user;
+        Equipment equipment=new Equipment(Integer.parseInt(cursor.getString(0)),cursor.getString(1),cursor.getString(2),
+                cursor.getString(3),cursor.getString(4));
+        return equipment;
     }
 
 
@@ -178,8 +217,12 @@ public class DBHandler extends SQLiteOpenHelper {
                 userList.add(user);
             } while(cursor.moveToNext());
         }
+        //cursor.close();
+
         return userList;
     }
+
+
 
 
     //get users count
