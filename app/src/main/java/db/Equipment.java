@@ -9,14 +9,21 @@ import java.util.Date;
 public class Equipment {
     private int _equipment_id;
     private String _equipment_name;
-    private int _part;
+    private String _part;
     private String _video_url;
     private String _introduction;
 
-    public Equipment(int _equipment_id, int _part, String _equipment_name, String _video_url, String _introduction) {
+    public Equipment(int _equipment_id, String _equipment_name, String _part, String _video_url, String _introduction) {
         this._equipment_id = _equipment_id;
-        this._part = _part;
         this._equipment_name = _equipment_name;
+        this._part = _part;
+        this._video_url = _video_url;
+        this._introduction = _introduction;
+    }
+
+    public Equipment(String _equipment_name, String _part, String _video_url, String _introduction) {
+        this._equipment_name = _equipment_name;
+        this._part = _part;
         this._video_url = _video_url;
         this._introduction = _introduction;
     }
@@ -29,11 +36,11 @@ public class Equipment {
         this._equipment_id = _equipment_id;
     }
 
-    public int get_part() {
+    public String get_part() {
         return _part;
     }
 
-    public void set_part(int _part) {
+    public void set_part(String _part) {
         this._part = _part;
     }
 

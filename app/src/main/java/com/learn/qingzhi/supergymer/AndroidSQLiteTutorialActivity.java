@@ -8,11 +8,13 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import db.Contact;
 import db.DBHandler;
 import db.DatabaseHandler;
+import db.Equipment;
 import db.User;
 
 public class AndroidSQLiteTutorialActivity extends AppCompatActivity {
@@ -21,8 +23,8 @@ public class AndroidSQLiteTutorialActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_android_sqlite_tutorial);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -63,11 +65,13 @@ public class AndroidSQLiteTutorialActivity extends AppCompatActivity {
          * CRUD Operations
          * */
         // Inserting Contacts
+        /*
         Log.d("Insert: ", "Inserting ..");
         db.addUser(new User("Tom1", 70, 180, 1,"skjfkdsf"));
         db.addUser(new User("John1", 60,190,1,"a34sdfsd"));
         db.addUser(new User("Lily0", 50,165,0,"sdfas234fdgas"));
         db.addUser(new User("Sue0", 65,170,0,"ahfi893r"));
+        */
 
         // Reading all contacts
         Log.d("Reading: ", "Reading all contacts..");
@@ -79,7 +83,16 @@ public class AndroidSQLiteTutorialActivity extends AppCompatActivity {
             Log.d("Name: ", log);
         }
 
+        //get users by name
+        contacts = db.getUser("Sue0");
 
+        for (User cn : contacts) {
+            String log = cn.toString();
+            // Writing Contacts to log
+            Log.d("Name: ", log);
+        }
+
+ /*
         //insert one user
         Log.d("User","insert new user:");
         db.addUser(new User("Lee1", 90,190,1,"a2738432jsdflkjsf"));
@@ -91,6 +104,8 @@ public class AndroidSQLiteTutorialActivity extends AppCompatActivity {
             // Writing Contacts to log
             Log.d("Name: ", log);
         }
+*/
+
 /*
         //delete one user
         Log.d("User","delete one user:");
@@ -107,6 +122,20 @@ public class AndroidSQLiteTutorialActivity extends AppCompatActivity {
             Log.d("Name: ", log);
         }
 */
+
+        Log.d("Inserting: ", "inserting equipments");
+        db.addEquipment(new Equipment("Dumbbell","arm","www.baidu.com",getResources().getString(R.string.introduction_da)));
+        db.addEquipment(new Equipment("Dumbbell","chest","www.baidu.com","introduction"));
+        db.addEquipment(new Equipment("Dumbbell","abdomen","www.baidu.com","introduction"));
+        db.addEquipment(new Equipment("Yoga mat","abdomen","www.baidu.com","introduction"));
+        db.addEquipment(new Equipment("Yoga mat","leg","www.baidu.com","introduction"));
+        db.addEquipment(new Equipment("Treadmill","running exercise","www.baidu.com","introduction"));
+
+        List<Equipment> equipmentList=new ArrayList<>();
+        equipmentList=db.getAllEquipment();
+        for (Equipment item:equipmentList){
+            Log.d("Equipment: ",item.toString());
+        }
 
     }
 

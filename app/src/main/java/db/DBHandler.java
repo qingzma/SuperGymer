@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,6 +75,11 @@ public class DBHandler extends SQLiteOpenHelper {
 
 
 
+
+
+
+
+
     }
 
     @Override
@@ -122,6 +128,10 @@ public class DBHandler extends SQLiteOpenHelper {
         values.put(KEY_ID,history.get_userId());
         values.put(KEY_DATE,history.get_date().toString());
         values.put(KEY_CALORY,history.get_calories());
+
+        //insert row
+        db.insert(TABLE_HISTORY,null,values);
+        db.close();
     }
 
     //get one user
@@ -129,14 +139,78 @@ public class DBHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor=db.query(TABLE_USER,new String[]{KEY_ID, KEY_NAME, KEY_WEIGHT,
-                KEY_HEIGHT, KEY_GENDER},KEY_ID+"=?",
+                KEY_HEIGHT, KEY_GENDER,KEY_PASSWORD},KEY_ID+"=?",
+                new String[]{String.valueOf(id)}, null, null, null, null);
+        if(cursor!=null) {
+            cursor.moveToFirst();
+
+        }
+        User user=new User(Integer.parseInt(cursor.getString(0)),cursor.getString(1),Float.parseFloat(cursor.getString(2)),
+                Float.parseFloat(cursor.getString(3)),Integer.parseInt(cursor.getString(4)),cursor.getString(5));
+
+        return user;
+    }
+
+    //get user(s) by name
+    public List<User> getUser(String name){
+        List<User> userList=new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String querySelect="SELECT  *  FROM  " +TABLE_USER+
+                "    WHERE "+KEY_NAME +" = "+ "\""+name+"\"";
+        //Cursor cursor=db.query(TABLE_USER,new String[]{KEY_ID, KEY_NAME, KEY_WEIGHT,
+        //                KEY_HEIGHT, KEY_GENDER,KEY_PASSWORD},KEY_NAME+"=?",
+        //        new String[]{name}, null, null, null, null);
+        Cursor cursor=db.rawQuery(querySelect,null);
+        if(cursor!=null) {
+            cursor.moveToFirst();
+            do{
+                User user=new User(Integer.parseInt(cursor.getString(0)),cursor.getString(1),Float.parseFloat(cursor.getString(2)),
+                        Float.parseFloat(cursor.getString(3)),Integer.parseInt(cursor.getString(4)),cursor.getString(5));
+                userList.add(user);
+            }while(cursor.moveToNext());
+        }
+
+        return userList;
+
+    }
+
+
+
+
+    //get one equipment
+    public Equipment getEquipment(int id){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor=db.query(TABLE_EQUIPMENT,new String[]{KEY_EQUIPMENT_ID,KEY_EQUIPMENT_NAME,KEY_PART,
+                        KEY_HYPERLINK,KEY_INTRO},KEY_EQUIPMENT_ID+"=?",
                 new String[]{String.valueOf(id)}, null, null, null, null);
         if(cursor!=null)
             cursor.moveToFirst();
 
-        User user=new User(Integer.parseInt(cursor.getString(0)),cursor.getString(1),Float.parseFloat(cursor.getString(2)),
-                Float.parseFloat(cursor.getString(3)),Integer.parseInt(cursor.getString(4)),cursor.getString(5));
-        return user;
+        Equipment equipment=new Equipment(Integer.parseInt(cursor.getString(0)),cursor.getString(1),cursor.getString(2),
+                cursor.getString(3),cursor.getString(4));
+        return equipment;
+    }
+
+    //get user(s) by name
+    public List<Equipment> getEquipmentByName(String name){
+        List<Equipment> equipmentList=new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String querySelect="SELECT  *  FROM  " +TABLE_EQUIPMENT+
+                "    WHERE "+KEY_EQUIPMENT_NAME +" = "+ "\""+name+"\"";
+        Cursor cursor=db.rawQuery(querySelect,null);
+        if(cursor!=null) {
+            cursor.moveToFirst();
+            do{
+                Equipment equipment=new Equipment(Integer.parseInt(cursor.getString(0)),
+                        cursor.getString(1),cursor.getString(2),
+                        cursor.getString(3),cursor.getString(4));
+                equipmentList.add(equipment);
+            }while(cursor.moveToNext());
+        }
+
+        return equipmentList;
+
     }
 
 
@@ -164,13 +238,49 @@ public class DBHandler extends SQLiteOpenHelper {
                 userList.add(user);
             } while(cursor.moveToNext());
         }
+        //cursor.close();
+
         return userList;
     }
+
+    //get all equipment.
+    public List<Equipment> getAllEquipment(){
+        List<Equipment> equipmentList=new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String querySelect="SELECT  *  FROM  " +TABLE_EQUIPMENT;
+        Cursor cursor=db.rawQuery(querySelect,null);
+        if(cursor!=null) {
+            cursor.moveToFirst();
+            do{
+                Equipment equipment=new Equipment(Integer.parseInt(cursor.getString(0)),
+                        cursor.getString(1),cursor.getString(2),
+                        cursor.getString(3),cursor.getString(4));
+                equipmentList.add(equipment);
+            }while(cursor.moveToNext());
+        }
+
+        return equipmentList;
+
+    }
+
+
 
 
     //get users count
     public int getUsersCount(){
         String countQuery = "SELECT  * FROM " + TABLE_USER;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery, null);
+        cursor.close();
+
+        // return count
+        return cursor.getCount();
+    }
+
+
+    //get equipments count
+    public int getEquipmentsCount(){
+        String countQuery = "SELECT  * FROM " + TABLE_EQUIPMENT;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
         cursor.close();
@@ -197,6 +307,21 @@ public class DBHandler extends SQLiteOpenHelper {
                 new String[] { String.valueOf(user.get_userId()) });
     }
 
+    // Updating single equipment
+    public int updateEquipment(Equipment equipment) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values=new ContentValues();
+        values.put(KEY_EQUIPMENT_NAME,equipment.get_equipment_name());
+        values.put(KEY_PART,equipment.get_part());
+        values.put(KEY_HYPERLINK,equipment.get_video_url());
+        values.put(KEY_INTRO,equipment.get_introduction());
+
+        // updating row
+        return db.update(TABLE_EQUIPMENT, values, KEY_ID + " = ?",
+                new String[] { String.valueOf(equipment.get_equipment_id()) });
+    }
+
     // Deleting single user
     public void deleteUser(User user) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -204,6 +329,15 @@ public class DBHandler extends SQLiteOpenHelper {
                 new String[] { String.valueOf(user.get_userId()) });
         db.close();
     }
+
+    // Deleting single equipment
+    public void deleteEquipment(Equipment equipment) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_USER, KEY_ID + " = ?",
+                new String[] { String.valueOf(equipment.get_equipment_id()) });
+        db.close();
+    }
+
 
 
 
