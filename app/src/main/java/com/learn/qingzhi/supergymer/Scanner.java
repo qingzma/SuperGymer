@@ -48,8 +48,24 @@ public class Scanner extends AppCompatActivity {
         //registerReceiver(mReceiver, filter); // Don't forget to unregister during onDestroy
 
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        try{
+            wait(1000);
+        }catch (InterruptedException e){
+            e.printStackTrace();
+        }
+        //enableorDisableBT()
         enableDisableBT();
+        try{
+            wait(1000);
+        }catch (InterruptedException e){
+            e.printStackTrace();
+        }
         enableDiscoverable();
+        try{
+            wait(1000);
+        }catch (InterruptedException e){
+            e.printStackTrace();
+        }
         discovery();
 
 
