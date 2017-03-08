@@ -44,43 +44,15 @@ public class Scanner extends AppCompatActivity {
         PulsatorLayout pulsator = (PulsatorLayout) findViewById(R.id.pulsator);
         pulsator.start();
 
-        IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
-        registerReceiver(mReceiver, filter); // Don't forget to unregister during onDestroy
-
-        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        //arrayListPairedBluetoothDevices = new ArrayList<BluetoothDevice>();
-        if (bluetoothAdapter == null) {
-            // Device does not support Bluetooth
-            Toast.makeText(getApplicationContext(),"Your Device does not support Bluetooth",Toast.LENGTH_LONG).show();
-        }else if(!bluetoothAdapter.isEnabled()) {
-            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
-        }
-        btnDiscovery();
-        /*
-        bluetoothAdapter.startDiscovery();
-        // Register the BroadcastReceiver
-        Set<BluetoothDevice> pairedDevices = bluetoothAdapter.getBondedDevices();
-        // If there are paired devices
-        if (pairedDevices.size() > 0) {
-            Toast.makeText(getApplicationContext(),"size: "+ pairedDevices.size(),Toast.LENGTH_LONG).show();
-            // Loop through paired devices
-            for (BluetoothDevice device : pairedDevices) {
-                // Add the name and address to an array adapter to show in a ListView
-                if(device.getName() != null && device.getName().equals("Dumbbell")){
-                    //Toast.makeText(getApplicationContext(),"Paired Dumbell",Toast.LENGTH_LONG).show();
-                    RelativeLayout relativeLayout = (RelativeLayout)findViewById(R.id.scannerLayout);
-                    FloatingActionButton fab = new FloatingActionButton(getApplicationContext());
-                    fab.setImageResource(R.drawable.btdevice_dumbbell);
-                    fab.setSize(FloatingActionButton.SIZE_NORMAL);
-                    relativeLayout.addView(fab);
-                    Toast.makeText(getApplicationContext(),"Dumbbell Founded",Toast.LENGTH_LONG).show();
-                }
-            }
-        }
         //IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
         //registerReceiver(mReceiver, filter); // Don't forget to unregister during onDestroy
-        */
+
+        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        enableDisableBT();
+        enableDiscoverable();
+        discovery();
+
+
         BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -107,25 +79,104 @@ public class Scanner extends AppCompatActivity {
                     }
                 });
     }
+    public void enableDisableBT(){
+        if(bluetoothAdapter ==  null){
+            Log.d(TAG,"Your Device does not support Bluetooth");
+        }
+        if(!bluetoothAdapter.isEnabled()) {
+            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
 
-    public void btnDiscovery(){
+            IntentFilter BTIntent = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
+            registerReceiver(mBroadcastReceiver1,BTIntent);
+        }
+        if(bluetoothAdapter.isEnabled()){
+            bluetoothAdapter.disable();
+
+            IntentFilter BTIntent = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
+            registerReceiver(mBroadcastReceiver1,BTIntent);
+        }
+    }
+
+    public void enableDiscoverable(){
+        Log.d(TAG,"Making device discoverable for 300 seconds");
+
+        Intent discoverableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
+        discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION,300);
+
+        IntentFilter intentFilter = new IntentFilter(bluetoothAdapter.ACTION_SCAN_MODE_CHANGED);
+        registerReceiver(mBroadcastReceiver2,intentFilter);
+    }
+
+    public void discovery(){
+        Log.d(TAG,"Discovery: looking for unpaired devices");
         if(bluetoothAdapter.isDiscovering()){
             bluetoothAdapter.cancelDiscovery();
-            //Log.d(TAG,"btnDiscovery:cancel discovery ");
+            Log.d(TAG,"Discovery:cancel discovery ");
 
             bluetoothAdapter.startDiscovery();
             IntentFilter discoveryDeviceIntent = new IntentFilter(BluetoothDevice.ACTION_FOUND);
-            registerReceiver(mBroadcastReceiver1,discoveryDeviceIntent);
+            registerReceiver(mBroadcastReceiver3,discoveryDeviceIntent);
         }
 
         if(!bluetoothAdapter.isDiscovering()){
             bluetoothAdapter.startDiscovery();
             IntentFilter discoveryDeviceIntent = new IntentFilter(BluetoothDevice.ACTION_FOUND);
-            registerReceiver(mBroadcastReceiver1,discoveryDeviceIntent);
+            registerReceiver(mBroadcastReceiver3,discoveryDeviceIntent);
         }
     }
 
     private BroadcastReceiver mBroadcastReceiver1 = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            final String action = intent.getAction();
+            if(action.equals(BluetoothAdapter.ACTION_STATE_CHANGED)){
+               final int state = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE,BluetoothAdapter.ERROR);
+               switch (state){
+                   case BluetoothAdapter.STATE_OFF:
+                       Log.d(TAG,"onReceive: STATE OFF");
+                       break;
+                   case BluetoothAdapter.STATE_TURNING_OFF:
+                       Log.d(TAG,"mBroadcastReceiver1: STATE TURNING OFF");
+                       break;
+                   case BluetoothAdapter.STATE_ON:
+                       Log.d(TAG,"mBroadcastReceiver1: STATE ON");
+                       break;
+                   case BluetoothAdapter.STATE_TURNING_ON:
+                       Log.d(TAG,"mBroadcastReceiver1: STATE TURNING ON");
+                       break;
+
+               }
+
+            }
+        }
+    };
+    private BroadcastReceiver mBroadcastReceiver2 = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            final String action = intent.getAction();
+            if(action.equals(BluetoothAdapter.ACTION_SCAN_MODE_CHANGED)){
+                final int state = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE,BluetoothAdapter.ERROR);
+                switch (state){
+                    case BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE:
+                        Log.d(TAG,"mBroadcastReceiver2: Discoverability enabled");
+                        break;
+                    case BluetoothAdapter.SCAN_MODE_CONNECTABLE:
+                        Log.d(TAG,"mBroadcastReceiver2: Discoverability disabled. Able to Receive connection");
+                        break;
+                    case BluetoothAdapter.STATE_CONNECTING:
+                        Log.d(TAG,"mBroadcastReceiver2: CONNECTING....");
+                        break;
+                    case BluetoothAdapter.STATE_CONNECTED:
+                        Log.d(TAG,"mBroadcastReceiver2: CONNECTED.");
+                        break;
+
+                }
+
+            }
+        }
+    };
+    private BroadcastReceiver mBroadcastReceiver3 = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             final String action = intent.getAction();
@@ -137,29 +188,10 @@ public class Scanner extends AppCompatActivity {
         }
     };
 
-    // Create a BroadcastReceiver for ACTION_FOUND
-    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
-        //ArrayAdapter<String> mArrayAdapter = new ArrayAdapter<String>();
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            // When discovery finds a device
-            if (BluetoothDevice.ACTION_FOUND.equals(action)) {
-                // Get the BluetoothDevice object from the Intent
-                BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                // Add the name and address to an array adapter to show in a ListView
-                //mArrayAdapter.add(device.getName() + "\n" + device.getAddress());
-                if(device.getName() != null && device.getName().equals("Kontakt")){
-                    RelativeLayout relativeLayout = (RelativeLayout)findViewById(R.id.pulsator);
-                    FloatingActionButton fab = new FloatingActionButton(getApplicationContext());
-                    fab.setImageResource(R.drawable.btdevice_dumbbell);
-                    fab.setSize(FloatingActionButton.SIZE_NORMAL);
-                    relativeLayout.addView(fab);
-                    Toast.makeText(getApplicationContext(),"Dumbbell Founded",Toast.LENGTH_LONG).show();
-                }
-                //Toast.makeText(getApplicationContext(), device.getName(), Toast.LENGTH_SHORT).show();
-            }
-        }
-    };
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(mBroadcastReceiver1);
+    }
 
 }
