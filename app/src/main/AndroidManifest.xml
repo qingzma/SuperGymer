@@ -39,10 +39,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".dumbbell.Arm_yalingActivity" />
-        <activity android:name=".dumbbell.Part_YalingActivity" />
+        <activity android:name=".Main_workflow.ExerciseDetailActivity" />
+        <activity android:name=".Main_workflow.PartActivity" />
 
-        <activity android:name=".EquiementActivity">
+        <activity android:name=".Main_workflow.EquipmentActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

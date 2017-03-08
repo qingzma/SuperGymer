@@ -1,4 +1,4 @@
-package com.learn.qingzhi.supergymer;
+package com.learn.qingzhi.supergymer.Main_workflow;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -6,21 +6,20 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.learn.qingzhi.supergymer.dumbbell.Part_YalingActivity;
+import com.learn.qingzhi.supergymer.R;
 
 import java.util.List;
 
 import db.DBHandler;
 
 
-public class EquiementActivity extends AppCompatActivity {
+public class EquipmentActivity extends AppCompatActivity {
     //DBHandler mDBHandler=new DBHandler(this);
     Button[] btnCategory;
 
@@ -28,7 +27,7 @@ public class EquiementActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //DBHandler dbHandler=new DBHandler(this);
-        Button[] btnCategory;
+
         DBHandler dbHandler=new DBHandler(this);
 
         dbHandler.initDb(this);
@@ -49,7 +48,7 @@ public class EquiementActivity extends AppCompatActivity {
             btnCategory[i].setLayoutParams(new AppBarLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
             btnCategory[i].setText(btnNames.get(i));
             btnCategory[i].setId(i);
-            btnCategory[i].setOnClickListener(new EquiementActivity.MyButtionListener(btnNames.get(i)));
+            btnCategory[i].setOnClickListener(new EquipmentActivity.MyButtionListener(btnNames.get(i)));
                 row.addView(btnCategory[i]);
                 layout.addView(row);
 
@@ -82,12 +81,12 @@ public class EquiementActivity extends AppCompatActivity {
         public void onClick(View v){
 
                 Intent intent =new Intent();
-                intent.setClass(EquiementActivity.this,Part_YalingActivity.class);
+                intent.setClass(EquipmentActivity.this,PartActivity.class);
 
 
                     intent.putExtra("equipment",equipment );
 
-                    EquiementActivity.this.startActivity(intent);
+            EquipmentActivity.this.startActivity(intent);
 
         }
     }

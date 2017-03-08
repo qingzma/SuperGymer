@@ -1,4 +1,4 @@
-package com.learn.qingzhi.supergymer.dumbbell;
+package com.learn.qingzhi.supergymer.Main_workflow;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -6,21 +6,16 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
-import com.learn.qingzhi.supergymer.EquiementActivity;
 import com.learn.qingzhi.supergymer.R;
 
-import java.util.List;
-
 import db.DBHandler;
-import db.Equipment;
 
-public class Arm_yalingActivity extends AppCompatActivity {
+public class ExerciseDetailActivity extends AppCompatActivity {
     private VideoView video1=null;
     private TextView Text1=null;
     private Button Button1=null;
@@ -32,9 +27,9 @@ public class Arm_yalingActivity extends AppCompatActivity {
         dbHandler.initDb(this);
 
         Intent intent=getIntent();
-        String equipment=intent.getStringExtra("equipment");
+        //String equipment=intent.getStringExtra("equipment");
 
-        List<Equipment> equipmentList=dbHandler.getEquipmentByName(equipment);
+        //List<Equipment> equipmentList=dbHandler.getEquipmentByName(equipment);
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(
@@ -47,8 +42,8 @@ public class Arm_yalingActivity extends AppCompatActivity {
 
 
                                 Intent intent =new Intent();
-                                intent.setClass(Arm_yalingActivity.this,EquiementActivity.class);
-                                Arm_yalingActivity.this.startActivity(intent);
+                                intent.setClass(ExerciseDetailActivity.this,EquipmentActivity.class);
+                                ExerciseDetailActivity.this.startActivity(intent);
 
 
                             case R.id.menu_scan:

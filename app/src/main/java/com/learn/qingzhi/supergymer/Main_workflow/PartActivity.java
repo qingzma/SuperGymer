@@ -1,4 +1,4 @@
-package com.learn.qingzhi.supergymer.dumbbell;
+package com.learn.qingzhi.supergymer.Main_workflow;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -12,16 +12,14 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.learn.qingzhi.supergymer.EquiementActivity;
 import com.learn.qingzhi.supergymer.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import db.DBHandler;
 import db.Equipment;
 
-public class Part_YalingActivity extends AppCompatActivity {
+public class PartActivity extends AppCompatActivity {
     Button[] btnCategory ;
 
     //private Button myButton4=null;
@@ -41,8 +39,8 @@ public class Part_YalingActivity extends AppCompatActivity {
 
 
                                 Intent intent =new Intent();
-                                intent.setClass(Part_YalingActivity.this,EquiementActivity.class);
-                                Part_YalingActivity.this.startActivity(intent);
+                                intent.setClass(PartActivity.this,EquipmentActivity.class);
+                                PartActivity.this.startActivity(intent);
 
 
                             case R.id.menu_scan:
@@ -74,7 +72,7 @@ public class Part_YalingActivity extends AppCompatActivity {
             btnCategory[i].setLayoutParams(new AppBarLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
             btnCategory[i].setText(equipmentList.get(i).get_part());
             btnCategory[i].setId(i);
-            btnCategory[i].setOnClickListener(new Part_YalingActivity.MyButtionListener());
+            btnCategory[i].setOnClickListener(new PartActivity.MyButtionListener());
             row.addView(btnCategory[i]);
             layout.addView(row);
         }
@@ -85,10 +83,10 @@ public class Part_YalingActivity extends AppCompatActivity {
         public void onClick(View v) {
             Intent intent =new Intent();
 
-            intent.setClass(Part_YalingActivity.this,Arm_yalingActivity.class);
+            intent.setClass(PartActivity.this,ExerciseDetailActivity.class);
            // intent.putExtra("part",part );
 
-            Part_YalingActivity.this.startActivity(intent);
+            PartActivity.this.startActivity(intent);
 
         }
     }
