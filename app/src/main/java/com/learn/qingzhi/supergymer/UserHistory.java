@@ -43,16 +43,20 @@ public class UserHistory extends AppCompatActivity {
                                 Intent intent =new Intent();
                                 intent.setClass(UserHistory.this, Equipment.class);
                                 UserHistory.this.startActivity(intent);
+                                break;
                             case R.id.menu_scan:
                                 Toast.makeText(getApplicationContext(),"menu_scan",Toast.LENGTH_SHORT).show();
                                 Intent intent1 =new Intent();
                                 intent1.setClass(UserHistory.this,Scanner.class);
                                 UserHistory.this.startActivity(intent1);
+                                break;
 
                             case R.id.menu_user:
                                 Toast.makeText(getApplicationContext(),"menu_user",Toast.LENGTH_SHORT).show();
+                                break;
                         }
                         return true;
+
                     }
                 });
 
