@@ -15,6 +15,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.learn.qingzhi.supergymer.Main_workflow.EquipmentActivity;
+
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -112,7 +114,7 @@ public class UserLogin extends AppCompatActivity {
             editor.putString("UserId",Integer.toString(user.get_userId()));
             //put key value pair
             editor.commit();
-            Intent intent = new Intent(UserLogin.this,EquiementActivity.class);
+            Intent intent = new Intent(UserLogin.this,EquipmentActivity.class);
             startActivity(intent);
 
         }else{
