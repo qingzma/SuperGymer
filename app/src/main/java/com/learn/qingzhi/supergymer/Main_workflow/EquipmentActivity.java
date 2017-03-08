@@ -1,6 +1,7 @@
 package com.learn.qingzhi.supergymer.Main_workflow;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomNavigationView;
@@ -18,11 +19,13 @@ import java.util.List;
 
 import db.DBHandler;
 
+import static com.learn.qingzhi.supergymer.R.drawable.btdevice_dumbbell;
+
 
 public class EquipmentActivity extends AppCompatActivity {
     //DBHandler mDBHandler=new DBHandler(this);
     Button[] btnCategory;
-
+    //private Drawable buttonDrawable;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,13 +47,25 @@ public class EquipmentActivity extends AppCompatActivity {
             btnCategory[i] = new Button(this);
             btnCategory[i].setLayoutParams(new AppBarLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
             btnCategory[i].setText(btnNames.get(i));
-            btnCategory[i].setId(i);
+           // btnCategory[i].setCompoundDrawables(drawable1,null,null,null);
+            //btnCategory[i].setCompoundDrawablesWithIntrinsicBounds(R.drawable.btdevice_dumbbell, 0, 0, 0);
+
+           // String imagePath=btnNames.get(i).toLowerCase()+".png";
+            //btnCategory[i].setBackground();
+
+
             btnCategory[i].setOnClickListener(new EquipmentActivity.MyButtionListener(btnNames.get(i)));
                 row.addView(btnCategory[i]);
                 layout.addView(row);
 
 
         }
+
+        btnCategory[0].setCompoundDrawablesWithIntrinsicBounds(R.drawable.dumbbell, 0,0 , 0);
+        btnCategory[1].setCompoundDrawablesWithIntrinsicBounds(R.drawable.yoga_mat, 0, 0, 0);
+        btnCategory[2].setCompoundDrawablesWithIntrinsicBounds(R.drawable.treadmill, 0, 0, 0);
+
+
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(

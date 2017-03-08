@@ -39,7 +39,7 @@
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.62"
+            android:layout_weight="0.53"
             android:text="arm" />
 
         <Chronometer
@@ -48,14 +48,12 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.06" />
 
-        <ToggleButton
-            android:id="@+id/toggleButton"
+        <Button
+            android:id="@+id/button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.07"
-            android:text=""
-            android:textOn="Stop"
-            android:textOff="Begin!" />
+            android:layout_weight="0.09"
+            android:text="Button" />
 
     </LinearLayout>
 
