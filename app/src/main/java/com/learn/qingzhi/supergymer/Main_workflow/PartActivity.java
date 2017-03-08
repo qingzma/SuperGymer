@@ -22,7 +22,7 @@ import db.Equipment;
 public class PartActivity extends AppCompatActivity {
     Button[] btnCategory ;
 
-    //private Button myButton4=null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +54,7 @@ public class PartActivity extends AppCompatActivity {
         DBHandler dbHandler=new DBHandler(this);
         dbHandler.initDb(this);
         Intent intent = getIntent();
-        //Bundle extras=intent.getExtras();
+
         String equipment=intent.getStringExtra("equipment");
         List<Equipment> equipmentList=dbHandler.getEquipmentByName(equipment);
 
@@ -78,14 +78,14 @@ public class PartActivity extends AppCompatActivity {
         }
         //String a="Dumbbell";
         if(equipment.equals("Dumbbell")){
-            btnCategory[0].setCompoundDrawablesWithIntrinsicBounds(R.drawable.arm1, 0,0 , 0);
-            btnCategory[1].setCompoundDrawablesWithIntrinsicBounds(R.drawable.chest1, 0, 0, 0);
-            btnCategory[2].setCompoundDrawablesWithIntrinsicBounds(R.drawable.abs1, 0, 0, 0);
+            btnCategory[0].setCompoundDrawablesWithIntrinsicBounds(R.drawable.dumbbell, 0,0 , 0);
+            btnCategory[1].setCompoundDrawablesWithIntrinsicBounds(R.drawable.dumbbell, 0, 0, 0);
+            btnCategory[2].setCompoundDrawablesWithIntrinsicBounds(R.drawable.dumbbell, 0, 0, 0);
         }else if(equipment.equals("Yoga mat")){
-            btnCategory[0].setCompoundDrawablesWithIntrinsicBounds(R.drawable.abs1, 0,0 , 0);
-            btnCategory[1].setCompoundDrawablesWithIntrinsicBounds(R.drawable.leg1, 0, 0, 0);
+            btnCategory[0].setCompoundDrawablesWithIntrinsicBounds(R.drawable.dumbbell, 0,0 , 0);
+            btnCategory[1].setCompoundDrawablesWithIntrinsicBounds(R.drawable.dumbbell, 0, 0, 0);
         }else if(equipment.equals("Treadmill")){
-            btnCategory[0].setCompoundDrawablesWithIntrinsicBounds(R.drawable.reduce_fat, 0,0 , 0);
+            btnCategory[0].setCompoundDrawablesWithIntrinsicBounds(R.drawable.dumbbell, 0,0 , 0);
         }
     }
     class MyButtionListener implements View.OnClickListener{

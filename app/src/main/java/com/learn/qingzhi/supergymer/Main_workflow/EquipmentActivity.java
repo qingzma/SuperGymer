@@ -23,9 +23,9 @@ import static com.learn.qingzhi.supergymer.R.drawable.btdevice_dumbbell;
 
 
 public class EquipmentActivity extends AppCompatActivity {
-    //DBHandler mDBHandler=new DBHandler(this);
+
     Button[] btnCategory;
-    //private Drawable buttonDrawable;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,10 +48,6 @@ public class EquipmentActivity extends AppCompatActivity {
             btnCategory[i].setLayoutParams(new AppBarLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
             btnCategory[i].setText(btnNames.get(i));
 
-            //btnCategory[i].setCompoundDrawablesWithIntrinsicBounds(R.drawable.btdevice_dumbbell, 0, 0, 0);
-
-           // String imagePath=btnNames.get(i).toLowerCase()+".png";
-            //btnCategory[i].setBackground();
 
 
             btnCategory[i].setOnClickListener(new EquipmentActivity.MyButtionListener(btnNames.get(i)));
@@ -88,6 +84,7 @@ public class EquipmentActivity extends AppCompatActivity {
     class MyButtionListener implements View.OnClickListener{
         String equipment = null;
         public MyButtionListener(String equipment){
+
             this.equipment = equipment;
         }
         public void onClick(View v){

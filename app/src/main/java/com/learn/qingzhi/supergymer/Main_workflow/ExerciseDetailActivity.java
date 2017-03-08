@@ -86,12 +86,7 @@ public class ExerciseDetailActivity extends YouTubeBaseActivity implements YouTu
         button.setText("Begin");
         time = (Chronometer) findViewById(R.id.chronometer2);
 
-       /* time.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
-            @Override
-            public void onChronometerTick(Chronometer chronometer) {
 
-            }
-        });*/
 
         Text1 = (TextView) findViewById(R.id.textView);
         Text1.setText(equip.get_introduction());
@@ -125,20 +120,7 @@ public class ExerciseDetailActivity extends YouTubeBaseActivity implements YouTu
             }
 
         });
-        //togglebutton = (ToggleButton) findViewById(R.id.toggleButton);
-        //togglebutton.setOnClickListener(new View.OnClickListener(){
-         /*   public void onClick(View v) {
 
-                if (togglebutton.isChecked()) {
-                    time.start();
-                }
-
-                else if(togglebutton.isActivated()) {
-
-                    time.stop();
-                }
-            }
-        });*/
 
     }
 

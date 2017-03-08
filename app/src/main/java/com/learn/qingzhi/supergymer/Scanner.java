@@ -149,7 +149,7 @@ public class Scanner extends AppCompatActivity {
                 // Add the name and address to an array adapter to show in a ListView
                 //mArrayAdapter.add(device.getName() + "\n" + device.getAddress());
                 if(device.getName() != null && device.getName().equals("Kontakt")){
-                    RelativeLayout relativeLayout = (RelativeLayout)findViewById(R.id.scannerLayout);
+                    RelativeLayout relativeLayout = (RelativeLayout)findViewById(R.id.pulsator);
                     FloatingActionButton fab = new FloatingActionButton(getApplicationContext());
                     fab.setImageResource(R.drawable.btdevice_dumbbell);
                     fab.setSize(FloatingActionButton.SIZE_NORMAL);
