@@ -99,35 +99,35 @@ public class ExerciseDetailActivity extends YouTubeBaseActivity implements YouTu
         youTubeView=(YouTubePlayerView) findViewById(R.id.youtube_view);
         youTubeView.initialize(Config.YOUTUBE_API_KEY,this);
         togglebutton = (ToggleButton) findViewById(R.id.toggleButton);
-        togglebutton.setOnClickListener(new View.OnClickListener(){
+        togglebutton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-        //video1 = (VideoView) findViewById(R.id.videoView);
-        time.setFormat("Exercise time:%s");
-        time.setBase(SystemClock.elapsedRealtime());
+                //video1 = (VideoView) findViewById(R.id.videoView);
+                time.setFormat("Exercise time:%s");
+                time.setBase(SystemClock.elapsedRealtime());
 
-        button.setOnClickListener(new View.OnClickListener() {
+                button.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick (View v) {
-                int status =(Integer) v.getTag();
-               // time.setBase(SystemClock.elapsedRealtime());
+                    @Override
+                    public void onClick(View v) {
+                        int status = (Integer) v.getTag();
+                        // time.setBase(SystemClock.elapsedRealtime());
 
-                if(status == 1) {
-                    time.setBase(SystemClock.elapsedRealtime());
-                    time.start();
-                    button.setText("Pause");
-                    v.setTag(0); //pause
-                } else {
-                    button.setText("Begin");
+                        if (status == 1) {
+                            time.setBase(SystemClock.elapsedRealtime());
+                            time.start();
+                            button.setText("Pause");
+                            v.setTag(0); //pause
+                        } else {
+                            button.setText("Begin");
 
-                    time.stop();
-                    //v.setTag(1); //pause
-                }
-            }
+                            time.stop();
+                            //v.setTag(1); //pause
+                        }
+                    }
 
-        });
-        //togglebutton = (ToggleButton) findViewById(R.id.toggleButton);
-        //togglebutton.setOnClickListener(new View.OnClickListener(){
+                });
+                //togglebutton = (ToggleButton) findViewById(R.id.toggleButton);
+                //togglebutton.setOnClickListener(new View.OnClickListener(){
          /*   public void onClick(View v) {
 
                 if (togglebutton.isChecked()) {
@@ -142,27 +142,33 @@ public class ExerciseDetailActivity extends YouTubeBaseActivity implements YouTu
         });*/
 
 
+            }
+
+
+        });
+
+}
+
+
+    @Override
+    public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
+        if (!b) {
+            youTubePlayer.cueVideo("fhWaJi1Hsfo"); // Plays https://www.youtube.com/watch?v=fhWaJi1Hsfo
+        }
     }
 
-        @Override
-        public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
-            if (!b) {
-                youTubePlayer.cueVideo("fhWaJi1Hsfo"); // Plays https://www.youtube.com/watch?v=fhWaJi1Hsfo
-            }
+    @Override
+    public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
+        if (youTubeInitializationResult.isUserRecoverableError()) {
+            youTubeInitializationResult.getErrorDialog(this, RECOVERY_REQUEST).show();
+        } else {
+            String error = String.format(getString(R.string.player_error), youTubeInitializationResult.toString());
+            Toast.makeText(this, error, Toast.LENGTH_LONG).show();
         }
-
-        @Override
-        public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
-            if (youTubeInitializationResult.isUserRecoverableError()) {
-                youTubeInitializationResult.getErrorDialog(this, RECOVERY_REQUEST).show();
-            } else {
-                String error = String.format(getString(R.string.player_error), youTubeInitializationResult.toString());
-                Toast.makeText(this, error, Toast.LENGTH_LONG).show();
-            }
-        }
-        protected YouTubePlayer.Provider getYouTubePlayerProvider() {
-            return youTubeView;
-        }
+    }
+    protected YouTubePlayer.Provider getYouTubePlayerProvider() {
+        return youTubeView;
+    }
 }
 
 
