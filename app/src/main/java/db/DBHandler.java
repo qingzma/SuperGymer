@@ -577,9 +577,12 @@ public class DBHandler extends SQLiteOpenHelper {
                 Log.d("Name: ", log);
             }
 
-            String imageUribtdevice_dumbbell = "drawable://" + R.drawable.btdevice_dumbbell;
-            String imageUribtdevice_treadmill = "drawable://" + R.drawable.btdevice_treadmill;
-            String imageUribtdevice_yoga_mat = "drawable://" + R.drawable.btdevice_yoga_mat;
+            String imageUriArm = "drawable://" + R.drawable.arm;
+            String imageUriBack = "drawable://" + R.drawable.back;
+            String imageUrileg = "drawable://" + R.drawable.leg;
+            String imageUriReduceFat = "drawable://" + R.drawable.btdevice_yoga_mat;
+            String imageUriChest = "drawable://" + R.drawable.chest;
+            String imageUriAbdomen = "drawable://" + R.drawable.chest;
 
 
             Log.d("Inserting: ", "inserting equipments");
@@ -587,32 +590,32 @@ public class DBHandler extends SQLiteOpenHelper {
                     context.getResources().getString(R.string.part_arm),
                     "www.baidu.com",
                     context.getResources().getString(R.string.dumbbell_arm_introduction),
-                    imageUribtdevice_dumbbell));
+                    imageUriArm));
             db.addEquipment(new Equipment(context.getResources().getString(R.string.dumbbell_name),
                     context.getResources().getString(R.string.part_chest),
                     "www.baidu.com",
                     context.getResources().getString(R.string.dumbbell_chest_introduction),
-                    imageUribtdevice_dumbbell));
+                    imageUriChest));
             db.addEquipment(new Equipment(context.getResources().getString(R.string.dumbbell_name),
                     context.getResources().getString(R.string.part_abdomen),
                     "www.baidu.com",
                     context.getResources().getString(R.string.dumbbell_abdomen_introduction),
-                    imageUribtdevice_dumbbell));
+                    imageUriAbdomen));
             db.addEquipment(new Equipment(context.getResources().getString(R.string.yoga_name),
                     context.getResources().getString(R.string.part_abdomen),
                     "www.baidu.com",
                     context.getResources().getString(R.string.yoga_abdomen_introduction),
-                    imageUribtdevice_yoga_mat));
+                    imageUriAbdomen));
             db.addEquipment(new Equipment(context.getResources().getString(R.string.yoga_name),
                     context.getResources().getString(R.string.part_leg),
                     "www.baidu.com",
                     context.getResources().getString(R.string.yoga_leg_introduction),
-                    imageUribtdevice_yoga_mat));
+                    imageUrileg));
             db.addEquipment(new Equipment(context.getResources().getString(R.string.treadmill_name),
                     context.getResources().getString(R.string.part_reduce_fate),
                     "www.baidu.com",
                     context.getResources().getString(R.string.treadmill_reduce_fat_introduction),
-                    imageUribtdevice_treadmill));
+                    imageUriReduceFat));
 
             List<Equipment> equipmentList=new ArrayList<>();
             equipmentList=db.getAllEquipment();
@@ -651,9 +654,9 @@ public class DBHandler extends SQLiteOpenHelper {
             //String path = Environment.getExternalStorageDirectory()+" ";
 
             Log.d("Inserting: ", "inserting bluetooth devices");
-             imageUribtdevice_dumbbell = "drawable://" + R.drawable.btdevice_dumbbell;
-             imageUribtdevice_treadmill = "drawable://" + R.drawable.btdevice_treadmill;
-             imageUribtdevice_yoga_mat = "drawable://" + R.drawable.btdevice_yoga_mat;
+            String imageUribtdevice_dumbbell = "drawable://" + R.drawable.btdevice_dumbbell;
+            String imageUribtdevice_treadmill = "drawable://" + R.drawable.btdevice_treadmill;
+            String imageUribtdevice_yoga_mat = "drawable://" + R.drawable.btdevice_yoga_mat;
             Log.d("Inserting: ", imageUribtdevice_dumbbell);
 
             BTDevice btDevice1=new BTDevice(context.getResources().getString(R.string.dumbbell_name),
