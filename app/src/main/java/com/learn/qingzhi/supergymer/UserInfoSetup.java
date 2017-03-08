@@ -2,6 +2,7 @@ package com.learn.qingzhi.supergymer;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -10,7 +11,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.learn.qingzhi.supergymer.Main_workflow.EquipmentActivity;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -82,7 +86,18 @@ public class UserInfoSetup extends AppCompatActivity {
         }
         User user = new User(name,weight,height,genderFlag,password);
         dbHandler.addUser(user);
-        Intent intent_new = new Intent(UserInfoSetup.this,UserLogin.class);
+        List<User> users = dbHandler.getUser(name);
+        User user1 = users.get(0);
+
+        //put user info into sharedPreferences
+        SharedPreferences sharedPreferences = getSharedPreferences("UserInfo", MODE_PRIVATE);
+        //Get SharedPreferences.Editor object，save object to sharedPreferences
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("UserId",Integer.toString(user1.get_userId()));
+        //put key value pair
+        editor.commit();
+
+        Intent intent_new = new Intent(UserInfoSetup.this, EquipmentActivity.class);
         startActivity(intent_new);
     }
 

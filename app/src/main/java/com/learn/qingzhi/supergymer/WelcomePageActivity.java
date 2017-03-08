@@ -8,9 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
 import android.view.WindowManager;
 
-
-import com.learn.qingzhi.supergymer.Main_workflow.EquipmentActivity;
-
 import db.DBHandler;
 
 
@@ -33,8 +30,8 @@ public class WelcomePageActivity extends AppCompatActivity {
             @Override
             public void run() {
 
-           //     Intent homeIntent = new Intent(WelcomePageActivity.this,UserSignUp.class);
-                Intent homeIntent = new Intent(WelcomePageActivity.this,EquipmentActivity.class);
+                Intent homeIntent = new Intent(WelcomePageActivity.this,UserSignUp.class);
+                //Intent homeIntent = new Intent(WelcomePageActivity.this,EquiementActivity.class);
                 startActivity(homeIntent);
                 finish();
             }
