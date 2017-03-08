@@ -577,43 +577,43 @@ public class DBHandler extends SQLiteOpenHelper {
                 Log.d("Name: ", log);
             }
 
-            String imageUriArm = "drawable://" + R.drawable.arm;
+            String imageUriArm = "drawable://" + R.drawable.arm1;
             String imageUriBack = "drawable://" + R.drawable.back;
-            String imageUrileg = "drawable://" + R.drawable.leg;
+            String imageUrileg = "drawable://" + R.drawable.leg1;
             String imageUriReduceFat = "drawable://" + R.drawable.btdevice_yoga_mat;
-            String imageUriChest = "drawable://" + R.drawable.chest;
-            String imageUriAbdomen = "drawable://" + R.drawable.chest;
+            String imageUriChest = "drawable://" + R.drawable.chest1;
+            String imageUriAbdomen = "drawable://" + R.drawable.abs1;
 
 
             Log.d("Inserting: ", "inserting equipments");
             db.addEquipment(new Equipment(context.getResources().getString(R.string.dumbbell_name),
                     context.getResources().getString(R.string.part_arm),
-                    "www.baidu.com",
+                    "Qskz8c1C0Ds",
                     context.getResources().getString(R.string.dumbbell_arm_introduction),
                     imageUriArm));
             db.addEquipment(new Equipment(context.getResources().getString(R.string.dumbbell_name),
                     context.getResources().getString(R.string.part_chest),
-                    "www.baidu.com",
+                    "mQMA88jJrFc",
                     context.getResources().getString(R.string.dumbbell_chest_introduction),
                     imageUriChest));
             db.addEquipment(new Equipment(context.getResources().getString(R.string.dumbbell_name),
                     context.getResources().getString(R.string.part_abdomen),
-                    "www.baidu.com",
+                    "7Nu7eSe9KHQ",
                     context.getResources().getString(R.string.dumbbell_abdomen_introduction),
                     imageUriAbdomen));
             db.addEquipment(new Equipment(context.getResources().getString(R.string.yoga_name),
                     context.getResources().getString(R.string.part_abdomen),
-                    "www.baidu.com",
+                    "VkBxPdqczzo",
                     context.getResources().getString(R.string.yoga_abdomen_introduction),
                     imageUriAbdomen));
             db.addEquipment(new Equipment(context.getResources().getString(R.string.yoga_name),
                     context.getResources().getString(R.string.part_leg),
-                    "www.baidu.com",
+                    "4mqPJmzXW0A",
                     context.getResources().getString(R.string.yoga_leg_introduction),
                     imageUrileg));
             db.addEquipment(new Equipment(context.getResources().getString(R.string.treadmill_name),
                     context.getResources().getString(R.string.part_reduce_fate),
-                    "www.baidu.com",
+                    "ya_WI8TuFBY",
                     context.getResources().getString(R.string.treadmill_reduce_fat_introduction),
                     imageUriReduceFat));
 
