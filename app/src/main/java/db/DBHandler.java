@@ -188,7 +188,7 @@ public class DBHandler extends SQLiteOpenHelper {
         Cursor cursor=db.query(TABLE_USER,new String[]{KEY_ID, KEY_NAME, KEY_WEIGHT,
                 KEY_HEIGHT, KEY_GENDER,KEY_PASSWORD},KEY_ID+"=?",
                 new String[]{String.valueOf(id)}, null, null, null, null);
-        if(cursor!=null) {
+        if(cursor.getCount()!=0) {
             cursor.moveToFirst();
 
         }
@@ -373,7 +373,7 @@ public class DBHandler extends SQLiteOpenHelper {
         String querySelect="SELECT  *  FROM  " +TABLE_HISTORY+
                 "    WHERE "+KEY_ID +" = " +uid;
         Cursor cursor=db.rawQuery(querySelect,null);
-        if(cursor!=null) {
+        if(cursor.getCount() != 0) {
             cursor.moveToFirst();
             do{
                 History history=new History(cursor.getInt(0),
@@ -633,7 +633,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
             User user=db.getUser(0);
             int uid=user.get_userId();
-            //uid=2;
+            uid=0;
             Date dt1=Calendar.getInstance().getTime();
             Date dt2=new Date(new Date().getTime()- 1*24*3600*1000);
             Date dt3=new Date(new Date().getTime()- 2*24*3600*1000);
