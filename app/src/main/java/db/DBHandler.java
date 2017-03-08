@@ -92,7 +92,8 @@ public class DBHandler extends SQLiteOpenHelper {
         String CREATE_EQUIPMENT_TABLE="CREATE TABLE " + TABLE_EQUIPMENT  + "("
                 +KEY_EQUIPMENT_ID + " INTEGER PRIMARY KEY,"+ KEY_EQUIPMENT_NAME + " TEXT,"
                 +KEY_PART+ " TEXT,"+KEY_HYPERLINK +" TEXT,"
-                +KEY_INTRO+" TEXT"+")";
+                +KEY_INTRO+" TEXT, "
+                +KEY_IMAGE_PATH+" TEXT "+")";
         db.execSQL(CREATE_EQUIPMENT_TABLE);
 
         String CREATE_BTDEVICE_TABLE="CREATE TABLE " + TABLE_BTDEVICE  + "("
@@ -143,6 +144,7 @@ public class DBHandler extends SQLiteOpenHelper {
         values.put(KEY_PART,eq.get_part());
         values.put(KEY_HYPERLINK,eq.get_video_url());
         values.put(KEY_INTRO,eq.get_introduction());
+        values.put(KEY_IMAGE_PATH,eq.get_image_path());
 
         //insert row
         db.insert(TABLE_EQUIPMENT,null,values);
@@ -229,13 +231,13 @@ public class DBHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor=db.query(TABLE_EQUIPMENT,new String[]{KEY_EQUIPMENT_ID,KEY_EQUIPMENT_NAME,KEY_PART,
-                        KEY_HYPERLINK,KEY_INTRO},KEY_EQUIPMENT_ID+"=?",
+                        KEY_HYPERLINK,KEY_INTRO,KEY_IMAGE_PATH},KEY_EQUIPMENT_ID+"=?",
                 new String[]{String.valueOf(id)}, null, null, null, null);
         if(cursor!=null)
             cursor.moveToFirst();
 
         Equipment equipment=new Equipment(Integer.parseInt(cursor.getString(0)),cursor.getString(1),cursor.getString(2),
-                cursor.getString(3),cursor.getString(4));
+                cursor.getString(3),cursor.getString(4),cursor.getString(5));
         return equipment;
     }
 
@@ -251,7 +253,8 @@ public class DBHandler extends SQLiteOpenHelper {
             do{
                 Equipment equipment=new Equipment(Integer.parseInt(cursor.getString(0)),
                         cursor.getString(1),cursor.getString(2),
-                        cursor.getString(3),cursor.getString(4));
+                        cursor.getString(3),cursor.getString(4),
+                        cursor.getString(5));
                 equipmentList.add(equipment);
             }while(cursor.moveToNext());
         }
@@ -353,7 +356,8 @@ public class DBHandler extends SQLiteOpenHelper {
             do{
                 Equipment equipment=new Equipment(Integer.parseInt(cursor.getString(0)),
                         cursor.getString(1),cursor.getString(2),
-                        cursor.getString(3),cursor.getString(4));
+                        cursor.getString(3),cursor.getString(4),
+                        cursor.getString(5));
                 equipmentList.add(equipment);
             }while(cursor.moveToNext());
         }
@@ -505,6 +509,7 @@ public class DBHandler extends SQLiteOpenHelper {
         values.put(KEY_PART,equipment.get_part());
         values.put(KEY_HYPERLINK,equipment.get_video_url());
         values.put(KEY_INTRO,equipment.get_introduction());
+        values.put(KEY_IMAGE_PATH,equipment.get_image_path());
 
         // updating row
         return db.update(TABLE_EQUIPMENT, values, KEY_ID + " = ?",
@@ -572,33 +577,42 @@ public class DBHandler extends SQLiteOpenHelper {
                 Log.d("Name: ", log);
             }
 
+            String imageUribtdevice_dumbbell = "drawable://" + R.drawable.btdevice_dumbbell;
+            String imageUribtdevice_treadmill = "drawable://" + R.drawable.btdevice_treadmill;
+            String imageUribtdevice_yoga_mat = "drawable://" + R.drawable.btdevice_yoga_mat;
 
 
             Log.d("Inserting: ", "inserting equipments");
             db.addEquipment(new Equipment(context.getResources().getString(R.string.dumbbell_name),
                     context.getResources().getString(R.string.part_arm),
                     "www.baidu.com",
-                    context.getResources().getString(R.string.dumbbell_arm_introduction)));
+                    context.getResources().getString(R.string.dumbbell_arm_introduction),
+                    imageUribtdevice_dumbbell));
             db.addEquipment(new Equipment(context.getResources().getString(R.string.dumbbell_name),
                     context.getResources().getString(R.string.part_chest),
                     "www.baidu.com",
-                    context.getResources().getString(R.string.dumbbell_chest_introduction)));
+                    context.getResources().getString(R.string.dumbbell_chest_introduction),
+                    imageUribtdevice_dumbbell));
             db.addEquipment(new Equipment(context.getResources().getString(R.string.dumbbell_name),
                     context.getResources().getString(R.string.part_abdomen),
                     "www.baidu.com",
-                    context.getResources().getString(R.string.dumbbell_abdomen_introduction)));
+                    context.getResources().getString(R.string.dumbbell_abdomen_introduction),
+                    imageUribtdevice_dumbbell));
             db.addEquipment(new Equipment(context.getResources().getString(R.string.yoga_name),
                     context.getResources().getString(R.string.part_abdomen),
                     "www.baidu.com",
-                    context.getResources().getString(R.string.yoga_abdomen_introduction)));
+                    context.getResources().getString(R.string.yoga_abdomen_introduction),
+                    imageUribtdevice_yoga_mat));
             db.addEquipment(new Equipment(context.getResources().getString(R.string.yoga_name),
                     context.getResources().getString(R.string.part_leg),
                     "www.baidu.com",
-                    context.getResources().getString(R.string.yoga_leg_introduction)));
+                    context.getResources().getString(R.string.yoga_leg_introduction),
+                    imageUribtdevice_yoga_mat));
             db.addEquipment(new Equipment(context.getResources().getString(R.string.treadmill_name),
                     context.getResources().getString(R.string.part_reduce_fate),
                     "www.baidu.com",
-                    context.getResources().getString(R.string.treadmill_reduce_fat_introduction)));
+                    context.getResources().getString(R.string.treadmill_reduce_fat_introduction),
+                    imageUribtdevice_treadmill));
 
             List<Equipment> equipmentList=new ArrayList<>();
             equipmentList=db.getAllEquipment();
@@ -637,9 +651,9 @@ public class DBHandler extends SQLiteOpenHelper {
             //String path = Environment.getExternalStorageDirectory()+" ";
 
             Log.d("Inserting: ", "inserting bluetooth devices");
-            String imageUribtdevice_dumbbell = "drawable://" + R.drawable.btdevice_dumbbell;
-            String imageUribtdevice_treadmill = "drawable://" + R.drawable.btdevice_treadmill;
-            String imageUribtdevice_yoga_mat = "drawable://" + R.drawable.btdevice_yoga_mat;
+             imageUribtdevice_dumbbell = "drawable://" + R.drawable.btdevice_dumbbell;
+             imageUribtdevice_treadmill = "drawable://" + R.drawable.btdevice_treadmill;
+             imageUribtdevice_yoga_mat = "drawable://" + R.drawable.btdevice_yoga_mat;
             Log.d("Inserting: ", imageUribtdevice_dumbbell);
 
             BTDevice btDevice1=new BTDevice(context.getResources().getString(R.string.dumbbell_name),
