@@ -81,10 +81,10 @@ public class ExerciseDetailActivity extends YouTubeBaseActivity implements YouTu
                         return true;
                     }
                 });
-        button=(Button)findViewById(R.id.button);
+        button = (Button) findViewById(R.id.button);
         button.setTag(1);
         button.setText("Begin");
-        time=(Chronometer) findViewById(R.id.chronometer2);
+        time = (Chronometer) findViewById(R.id.chronometer2);
 
        /* time.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
             @Override
@@ -96,38 +96,37 @@ public class ExerciseDetailActivity extends YouTubeBaseActivity implements YouTu
         Text1 = (TextView) findViewById(R.id.textView);
         Text1.setText(equip.get_introduction());
         //video1 = (VideoView) findViewById(R.id.videoView);
-        youTubeView=(YouTubePlayerView) findViewById(R.id.youtube_view);
-        youTubeView.initialize(Config.YOUTUBE_API_KEY,this);
-        togglebutton = (ToggleButton) findViewById(R.id.toggleButton);
-        togglebutton.setOnClickListener(new View.OnClickListener() {
+        youTubeView = (YouTubePlayerView) findViewById(R.id.youtube_view);
+        youTubeView.initialize(Config.YOUTUBE_API_KEY, this);
+
+
+        //video1 = (VideoView) findViewById(R.id.videoView);
+        time.setFormat("Exercise time:%s");
+        time.setBase(SystemClock.elapsedRealtime());
+
+        button.setOnClickListener(new View.OnClickListener() {
+
+            @Override
             public void onClick(View v) {
-                //video1 = (VideoView) findViewById(R.id.videoView);
-                time.setFormat("Exercise time:%s");
-                time.setBase(SystemClock.elapsedRealtime());
+                int status = (Integer) v.getTag();
+                // time.setBase(SystemClock.elapsedRealtime());
 
-                button.setOnClickListener(new View.OnClickListener() {
+                if (status == 1) {
+                    time.setBase(SystemClock.elapsedRealtime());
+                    time.start();
+                    button.setText("Pause");
+                    v.setTag(0); //pause
+                } else {
+                    button.setText("Begin");
 
-                    @Override
-                    public void onClick(View v) {
-                        int status = (Integer) v.getTag();
-                        // time.setBase(SystemClock.elapsedRealtime());
+                    time.stop();
+                    //v.setTag(1); //pause
+                }
+            }
 
-                        if (status == 1) {
-                            time.setBase(SystemClock.elapsedRealtime());
-                            time.start();
-                            button.setText("Pause");
-                            v.setTag(0); //pause
-                        } else {
-                            button.setText("Begin");
-
-                            time.stop();
-                            //v.setTag(1); //pause
-                        }
-                    }
-
-                });
-                //togglebutton = (ToggleButton) findViewById(R.id.toggleButton);
-                //togglebutton.setOnClickListener(new View.OnClickListener(){
+        });
+        //togglebutton = (ToggleButton) findViewById(R.id.toggleButton);
+        //togglebutton.setOnClickListener(new View.OnClickListener(){
          /*   public void onClick(View v) {
 
                 if (togglebutton.isChecked()) {
@@ -141,13 +140,13 @@ public class ExerciseDetailActivity extends YouTubeBaseActivity implements YouTu
             }
         });*/
 
+    }
 
-            }
 
 
-        });
 
-}
+
+
 
 
     @Override
