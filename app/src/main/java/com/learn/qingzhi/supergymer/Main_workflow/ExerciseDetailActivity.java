@@ -23,6 +23,7 @@ import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
 import com.learn.qingzhi.supergymer.R;
+import com.learn.qingzhi.supergymer.UserHistory;
 
 import java.net.URL;
 import java.util.List;
@@ -66,18 +67,25 @@ public class ExerciseDetailActivity extends YouTubeBaseActivity implements YouTu
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.menu_home:
-                                Toast.makeText(getApplicationContext(), "menu_home", Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(getApplicationContext(), "menu_home", Toast.LENGTH_SHORT).show();
 
 
                                 Intent intent = new Intent();
                                 intent.setClass(ExerciseDetailActivity.this, EquipmentActivity.class);
                                 ExerciseDetailActivity.this.startActivity(intent);
+                                ExerciseDetailActivity.this.finish();
+                                break;
 
 
                             case R.id.menu_scan:
                                 Toast.makeText(getApplicationContext(), "menu_scan", Toast.LENGTH_SHORT).show();
                             case R.id.menu_user:
                                 Toast.makeText(getApplicationContext(), "menu_user", Toast.LENGTH_SHORT).show();
+                                Intent intent1 = new Intent();
+                                intent1.setClass(ExerciseDetailActivity.this, UserHistory.class);
+                                ExerciseDetailActivity.this.startActivity(intent1);
+                                ExerciseDetailActivity.this.finish();
+                                break;
                         }
                         return true;
                     }
