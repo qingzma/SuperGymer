@@ -11,11 +11,17 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.learn.qingzhi.supergymer.Main_workflow.EquipmentActivity;
+
+import java.util.ArrayList;
+import java.util.Set;
 
 import pl.bclogic.pulsator4droid.library.PulsatorLayout;
 
@@ -25,25 +31,56 @@ import pl.bclogic.pulsator4droid.library.PulsatorLayout;
 
 public class Scanner extends AppCompatActivity {
     private static int REQUEST_ENABLE_BT = 2;
+    //private static int TAG = 100;
+    private static final String TAG = "Scanner";
+
+    BluetoothAdapter bluetoothAdapter = null;
+    ArrayList<BluetoothDevice> arrayListPairedBluetoothDevices;
+    ArrayList<BluetoothDevice> mBTDevices = new ArrayList<>();
+
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.scanner);
         PulsatorLayout pulsator = (PulsatorLayout) findViewById(R.id.pulsator);
         pulsator.start();
 
-        BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        if (mBluetoothAdapter == null) {
-            // Device does not support Bluetooth
-            Toast.makeText(getApplicationContext(),"Your Device does not support Bluetooth",Toast.LENGTH_LONG).show();
-        }else if(!mBluetoothAdapter.isEnabled()) {
-            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
-        }
-        mBluetoothAdapter.startDiscovery();
-        // Register the BroadcastReceiver
         IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
         registerReceiver(mReceiver, filter); // Don't forget to unregister during onDestroy
 
+        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        //arrayListPairedBluetoothDevices = new ArrayList<BluetoothDevice>();
+        if (bluetoothAdapter == null) {
+            // Device does not support Bluetooth
+            Toast.makeText(getApplicationContext(),"Your Device does not support Bluetooth",Toast.LENGTH_LONG).show();
+        }else if(!bluetoothAdapter.isEnabled()) {
+            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+        }
+        btnDiscovery();
+        /*
+        bluetoothAdapter.startDiscovery();
+        // Register the BroadcastReceiver
+        Set<BluetoothDevice> pairedDevices = bluetoothAdapter.getBondedDevices();
+        // If there are paired devices
+        if (pairedDevices.size() > 0) {
+            Toast.makeText(getApplicationContext(),"size: "+ pairedDevices.size(),Toast.LENGTH_LONG).show();
+            // Loop through paired devices
+            for (BluetoothDevice device : pairedDevices) {
+                // Add the name and address to an array adapter to show in a ListView
+                if(device.getName() != null && device.getName().equals("Dumbbell")){
+                    //Toast.makeText(getApplicationContext(),"Paired Dumbell",Toast.LENGTH_LONG).show();
+                    RelativeLayout relativeLayout = (RelativeLayout)findViewById(R.id.scannerLayout);
+                    FloatingActionButton fab = new FloatingActionButton(getApplicationContext());
+                    fab.setImageResource(R.drawable.btdevice_dumbbell);
+                    fab.setSize(FloatingActionButton.SIZE_NORMAL);
+                    relativeLayout.addView(fab);
+                    Toast.makeText(getApplicationContext(),"Dumbbell Founded",Toast.LENGTH_LONG).show();
+                }
+            }
+        }
+        //IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+        //registerReceiver(mReceiver, filter); // Don't forget to unregister during onDestroy
+        */
         BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -71,6 +108,35 @@ public class Scanner extends AppCompatActivity {
                 });
     }
 
+    public void btnDiscovery(){
+        if(bluetoothAdapter.isDiscovering()){
+            bluetoothAdapter.cancelDiscovery();
+            //Log.d(TAG,"btnDiscovery:cancel discovery ");
+
+            bluetoothAdapter.startDiscovery();
+            IntentFilter discoveryDeviceIntent = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+            registerReceiver(mBroadcastReceiver1,discoveryDeviceIntent);
+        }
+
+        if(!bluetoothAdapter.isDiscovering()){
+            bluetoothAdapter.startDiscovery();
+            IntentFilter discoveryDeviceIntent = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+            registerReceiver(mBroadcastReceiver1,discoveryDeviceIntent);
+        }
+    }
+
+    private BroadcastReceiver mBroadcastReceiver1 = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            final String action = intent.getAction();
+            if(action.equals(BluetoothDevice.ACTION_FOUND)){
+                BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+                mBTDevices.add(device);
+                Log.d(TAG,"OnReceive: " + device.getName()+": "+device.getAddress());
+            }
+        }
+    };
+
     // Create a BroadcastReceiver for ACTION_FOUND
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         //ArrayAdapter<String> mArrayAdapter = new ArrayAdapter<String>();
@@ -82,13 +148,18 @@ public class Scanner extends AppCompatActivity {
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                 // Add the name and address to an array adapter to show in a ListView
                 //mArrayAdapter.add(device.getName() + "\n" + device.getAddress());
-                if(device.getName().equals("Kontakt")){
+                if(device.getName() != null && device.getName().equals("Kontakt")){
+                    RelativeLayout relativeLayout = (RelativeLayout)findViewById(R.id.scannerLayout);
                     FloatingActionButton fab = new FloatingActionButton(getApplicationContext());
-                    //fab.setBackgroundDrawable(R.drawable.);
+                    fab.setImageResource(R.drawable.btdevice_dumbbell);
+                    fab.setSize(FloatingActionButton.SIZE_NORMAL);
+                    relativeLayout.addView(fab);
+                    Toast.makeText(getApplicationContext(),"Dumbbell Founded",Toast.LENGTH_LONG).show();
                 }
                 //Toast.makeText(getApplicationContext(), device.getName(), Toast.LENGTH_SHORT).show();
             }
         }
     };
+
 
 }
