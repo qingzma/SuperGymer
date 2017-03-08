@@ -3,6 +3,7 @@ package com.learn.qingzhi.supergymer;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.helper.StaticLabelsFormatter;
@@ -27,6 +28,7 @@ public class UserHistory extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         int userid=Integer.parseInt(sharedPreferences.getString("UserId","0"));
+        userid=1;
         DBHandler db=new DBHandler(this);
         List<History> historyList=db.getAllHistory(userid);
 
@@ -37,6 +39,7 @@ public class UserHistory extends AppCompatActivity {
             calories[i]=new DataPoint(i,historyList.get(i).get_calories());
             durations[i]=new DataPoint(i,historyList.get(i).get_duration());
             xlabels[i]=historyList.get(i).get_date().toString().substring(4,8);
+            Log.d("history: ", xlabels[i]);
         }
 
         GraphView graph = (GraphView) findViewById(R.id.history_graph);
@@ -50,7 +53,7 @@ public class UserHistory extends AppCompatActivity {
 
 
         StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(graph);
-        staticLabelsFormatter.setHorizontalLabels(new String[] {"old", "middle", "new"});
+        staticLabelsFormatter.setHorizontalLabels(xlabels);
         graph.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
     }
 }
