@@ -22,7 +22,7 @@ import db.User;
  */
 
 public class UserInfoSetup extends AppCompatActivity {
-    /*
+
     private static final String TAG = "UserInfoSetup";
 
     @BindView(R.id.input_weight) EditText _input_weight;
@@ -62,11 +62,13 @@ public class UserInfoSetup extends AppCompatActivity {
     }
 
     public void SignupSuccess(){
+        /*
         final ProgressDialog progressDialog = new ProgressDialog(UserInfoSetup.this,
                 R.style.AppTheme_Dark_Dialog);
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Creating Account...");
         progressDialog.show();
+        */
         Intent intent = getIntent();
         String name = intent.getStringExtra("name");
         String password = intent.getStringExtra("password");
@@ -91,7 +93,7 @@ public class UserInfoSetup extends AppCompatActivity {
 
     public boolean validate() {
         boolean valid = true;
-        DBHandler dbHandler = new DBHandler(this);
+        //DBHandler dbHandler = new DBHandler(this);
 
         float weight;
         float height;
@@ -131,5 +133,5 @@ public class UserInfoSetup extends AppCompatActivity {
         }
         return valid;
     }
-*/
+
 }
