@@ -131,17 +131,18 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
     //Adding new history
-    public void addHistory(History history){
+    public long addHistory(History history){
         SQLiteDatabase db=this.getWritableDatabase();
         ContentValues values=new ContentValues();
         values.put(KEY_ID,history.get_userId());
-        values.put(KEY_DATE,history.get_date().toString());
+        values.put(KEY_DATE,MyDateFormat.Date2String.format(history.get_date()));
         values.put(KEY_CALORY,history.get_calories());
         values.put(KEY_DURATION,history.get_duration());
 
         //insert row
-        db.insert(TABLE_HISTORY,null,values);
+        long index=db.insert(TABLE_HISTORY,null,values);
         db.close();
+        return index;
     }
 
     //get one user
@@ -239,7 +240,19 @@ public class DBHandler extends SQLiteOpenHelper {
         return -1;
     }
     //get one day's duration history
-
+    public float getHistoryDurationOfDay(int uid ,Date date){
+        //Date dt= Calendar.getInstance().getTime();
+        //Log.d("hah",MyDateFormat.Date2String.format(dt));
+        SQLiteDatabase db = this.getReadableDatabase();
+        String querySelect="SELECT  *  FROM  " +TABLE_HISTORY+
+                "    WHERE "+KEY_ID +" = " +uid +
+                " AND "+KEY_DATE+" = "+"\""+MyDateFormat.Date2String.format(date)+"\"";
+        Cursor cursor=db.rawQuery(querySelect,null);
+        if(cursor.moveToFirst()){
+            return cursor.getFloat(4);
+        }
+        return -1;
+    }
 
 
     //get all users.
@@ -253,7 +266,8 @@ public class DBHandler extends SQLiteOpenHelper {
         Cursor cursor=db.rawQuery(selectQuery,null);
 
         //looping through all rows and adding to list
-        if(cursor.moveToFirst()){
+        if(cursor!=null){
+            cursor.moveToFirst();
             do{
                 User user=new User();
                 user.set_userId(Integer.parseInt(cursor.getString(0)));
@@ -289,6 +303,27 @@ public class DBHandler extends SQLiteOpenHelper {
 
         return equipmentList;
 
+    }
+
+    //get all history of a user
+    public List<History> getAllHistory(int uid){
+        List<History> historyList=new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String querySelect="SELECT  *  FROM  " +TABLE_HISTORY+
+                "    WHERE "+KEY_ID +" = " +uid;
+        Cursor cursor=db.rawQuery(querySelect,null);
+        if(cursor!=null) {
+            cursor.moveToFirst();
+            do{
+                History history=new History(cursor.getInt(0),
+                        cursor.getInt(1),MyDateFormat.toDate(cursor.getString(2)),
+                        cursor.getFloat(3),cursor.getFloat(4));
+                historyList.add(history);
+            }while(cursor.moveToNext());
+        }else
+            return  null;
+
+        return historyList;
     }
 
 
@@ -342,6 +377,20 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
 
+    //get equipments count
+    public int getHistoryCount(int uid){
+        String countQuery = "SELECT  * FROM " + TABLE_HISTORY+
+                "    WHERE "+KEY_ID +" = " +uid;;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery, null);
+        cursor.close();
+
+        // return count
+        return cursor.getCount();
+    }
+
+
+
     // Updating single user
     public int updateUser(User user) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -372,6 +421,23 @@ public class DBHandler extends SQLiteOpenHelper {
         return db.update(TABLE_EQUIPMENT, values, KEY_ID + " = ?",
                 new String[] { String.valueOf(equipment.get_equipment_id()) });
     }
+
+    // Updating single equipment
+    public int updateHistory(Long histID,History history) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values=new ContentValues();
+        values.put(KEY_ID,history.get_userId());
+        values.put(KEY_DATE,MyDateFormat.Date2String.format(history.get_date()));
+        values.put(KEY_CALORY,history.get_calories());
+        values.put(KEY_DURATION,history.get_duration());
+
+        // updating row
+        return db.update(TABLE_HISTORY, values, KEY_EQUIPMENT_ID + " = ?",
+                new String[] { String.valueOf(histID) });
+    }
+
+
 
     // Deleting single user
     public void deleteUser(User user) {
@@ -459,12 +525,23 @@ public class DBHandler extends SQLiteOpenHelper {
 
 
 
-
+            User user=db.getUser(2);
+            int uid=user.get_userId();
+            uid=2;
             Date dt1=Calendar.getInstance().getTime();
-           // Date dt2=
+            Date dt2=new Date(new Date().getTime()- 1*24*3600*1000);
+            Date dt3=new Date(new Date().getTime()- 2*24*3600*1000);
+            Date dt4=new Date(new Date().getTime()- 3*24*3600*1000);
 
+            History history1=new History(uid,dt1,200,40);
+            History history2=new History(uid,dt2,300,350);
+            History history3=new History(uid,dt3,100,20);
+            History history4=new History(uid,dt4,150,50);
 
-            //db.addHistory(new History(1,));
+            db.addHistory(history1);
+            db.addHistory(history2);
+            db.addHistory(history3);
+            db.addHistory(history4);
         }
 
 

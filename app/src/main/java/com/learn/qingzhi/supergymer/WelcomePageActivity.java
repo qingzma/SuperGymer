@@ -30,7 +30,8 @@ public class WelcomePageActivity extends AppCompatActivity {
             @Override
             public void run() {
 
-                Intent homeIntent = new Intent(WelcomePageActivity.this,UserSignUp.class);
+           //     Intent homeIntent = new Intent(WelcomePageActivity.this,UserSignUp.class);
+                Intent homeIntent = new Intent(WelcomePageActivity.this,EquiementActivity.class);
                 startActivity(homeIntent);
                 finish();
             }
