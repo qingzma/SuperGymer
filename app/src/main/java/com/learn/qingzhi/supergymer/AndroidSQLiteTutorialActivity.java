@@ -13,6 +13,8 @@ import java.util.List;
 
 import db.DBHandler;
 import db.Equipment;
+import db.History;
+import db.MyDateFormat;
 import db.User;
 
 public class AndroidSQLiteTutorialActivity extends AppCompatActivity {
@@ -52,7 +54,22 @@ public class AndroidSQLiteTutorialActivity extends AppCompatActivity {
         }
 
         Date date= Calendar.getInstance().getTime();
-        db.getHistoryCaloryOfDay(1,date);
+        //db.getHistoryCaloryOfDay(2,date);
+        Log.d("Name: ",  Float.toString(db.getHistoryCaloryOfDay(2, date) )   );
+
+        List<History> historyList=db.getAllHistory(2);
+        for (History cn : historyList) {
+            String log = cn.toString();
+            // Writing Contacts to log
+            Log.d("Name: ", log);
+        }
+
+        Log.d("Date: ", date.toString());
+        String str=MyDateFormat.Date2String.format(date);
+        Log.d("Date: ", str);
+        Log.d("Date", MyDateFormat.Date2String.format(MyDateFormat.toDate(str))   );
+
+
 
         /*
 

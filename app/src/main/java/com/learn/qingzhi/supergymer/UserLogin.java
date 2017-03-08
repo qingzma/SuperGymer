@@ -82,6 +82,7 @@ public class UserLogin extends AppCompatActivity {
             return;
         }
 
+
         _loginButton.setEnabled(false);
         final ProgressDialog progressDialog = new ProgressDialog(UserLogin.this,
                 R.style.AppTheme_Dark_Dialog);
@@ -89,9 +90,36 @@ public class UserLogin extends AppCompatActivity {
         progressDialog.setMessage("Authenticating...");
         progressDialog.show();
 
+        String name = _nameText.getText().toString();
+        String password = _passwordText.getText().toString();
+        //System.out.println("name:" + name);
+        //System.out.println("password: " + password);
+        DBHandler dbHandler = new DBHandler(this);
+        List<User> users = dbHandler.getUser(name);
 
-
+        if(users.isEmpty()){
+            _nameText.setError("username not exist");
+            return;
+        }
         //implement the authentication here !!!
+        User user = users.get(0);
+        Log.d("user_id:", Integer.toString(user.get_userId()));
+
+        if(user.get_password().equals(password)){
+            SharedPreferences sharedPreferences = getSharedPreferences("UserInfo", MODE_PRIVATE);
+            //Get SharedPreferences.Editor object，save object to sharedPreferences
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("UserId",Integer.toString(user.get_userId()));
+            //put key value pair
+            editor.commit();
+            Intent intent = new Intent(UserLogin.this,EquiementActivity.class);
+            startActivity(intent);
+
+        }else{
+            return;
+        }
+        //System.out.print("user id : " + user.get_userId() );
+        //Toast.makeText(getBaseContext(), user.get_userId(), Toast.LENGTH_LONG).show();
 
         new android.os.Handler().postDelayed(
                 new Runnable() {
@@ -102,12 +130,14 @@ public class UserLogin extends AppCompatActivity {
                         progressDialog.dismiss();
                     }
                 }, 2000);
-
-        /*if(authenticating()){
+        /*
+        if(authenticating()){
             String name = _nameText.getText().toString();
-            DBHandler dbHandler = new DBHandler(this);
-            List<User> users = dbHandler.getUser(name);
-            User user = users.get(0);
+            //DBHandler dbHandler = new DBHandler(this);
+            //List<User> users = dbHandler.getUser(name);
+            //User user = users.get(0);
+            System.out.print("userpassword: " + "password");
+            /*
             //put user Info into sharedPreferences
             SharedPreferences sharedPreferences = getSharedPreferences("UserInfo", MODE_PRIVATE);
 
@@ -116,7 +146,8 @@ public class UserLogin extends AppCompatActivity {
             editor.putString("UserId",Integer.toString(user.get_userId()));
             //put key value pair
             editor.commit();
-            Intent intent = new Intent(UserLogin.this,UserSignUp.class);
+            Intent intent = new Intent(UserLogin.this,EquiementActivity.class);
+            startActivity(intent);
         }else{
             Toast.makeText(getBaseContext(), "username not exists or Wrong Password", Toast.LENGTH_LONG).show();
         }*/
@@ -138,13 +169,13 @@ public class UserLogin extends AppCompatActivity {
     }
 
     public boolean authenticating(){
-        boolean authenticate = true;
         String name = _nameText.getText().toString();
         String password = _passwordText.getText().toString();
 
         //get user account information
         DBHandler dbHandler = new DBHandler(this);
         List<User> users = dbHandler.getUser(name);
+        System.out.print("authenticating !!!!!!!!!");
         if(users.isEmpty()){
             return false;
         }
