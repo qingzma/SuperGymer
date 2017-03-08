@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.learn.qingzhi.supergymer.R;
+import com.learn.qingzhi.supergymer.UserHistory;
 
 import java.util.List;
 
@@ -41,12 +42,18 @@ public class PartActivity extends AppCompatActivity {
                                 Intent intent =new Intent();
                                 intent.setClass(PartActivity.this,EquipmentActivity.class);
                                 PartActivity.this.startActivity(intent);
-
+                                PartActivity.this.finish();
+                                break;
 
                             case R.id.menu_scan:
                                 Toast.makeText(getApplicationContext(),"menu_scan",Toast.LENGTH_SHORT).show();
                             case R.id.menu_user:
                                 Toast.makeText(getApplicationContext(),"menu_user",Toast.LENGTH_SHORT).show();
+                                Intent intent1 = new Intent();
+                                intent1.setClass(PartActivity.this, UserHistory.class);
+                                PartActivity.this.startActivity(intent1);
+                                PartActivity.this.finish();
+                                break;
                         }
                         return true;
                     }

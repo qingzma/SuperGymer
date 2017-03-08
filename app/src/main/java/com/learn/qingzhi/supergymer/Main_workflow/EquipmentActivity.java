@@ -76,12 +76,14 @@ public class EquipmentActivity extends AppCompatActivity {
                                 Intent intent2 =new Intent();
                                 intent2.setClass(EquipmentActivity.this,EquipmentActivity.class);
                                 EquipmentActivity.this.startActivity(intent2);
+                                EquipmentActivity.this.finish();
                                 break;
                             case R.id.menu_scan:
                                 //Toast.makeText(getApplicationContext(),"menu_scan",Toast.LENGTH_SHORT).show();
                                 Intent intent =new Intent();
                                 intent.setClass(EquipmentActivity.this,Scanner.class);
                                 EquipmentActivity.this.startActivity(intent);
+                                EquipmentActivity.this.finish();
                                 break;
 
                             case R.id.menu_user:
@@ -89,6 +91,7 @@ public class EquipmentActivity extends AppCompatActivity {
                                 Intent intent1 =new Intent();
                                 intent1.setClass(EquipmentActivity.this,UserHistory.class);
                                 EquipmentActivity.this.startActivity(intent1);
+                                EquipmentActivity.this.finish();
                                 break;
                         }
                         return true;
