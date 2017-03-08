@@ -1,14 +1,18 @@
 package com.learn.qingzhi.supergymer.Main_workflow;
 
 import android.content.Intent;
+import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 import android.widget.VideoView;
 
 import com.learn.qingzhi.supergymer.R;
@@ -19,26 +23,29 @@ import java.util.List;
 import db.DBHandler;
 import db.Equipment;
 
+import static android.support.v7.appcompat.R.id.text;
+
 public class ExerciseDetailActivity extends AppCompatActivity {
     private VideoView video1=null;
     private TextView Text1=null;
-    private Button Button1=null;
+    private ToggleButton togglebutton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.arm_yaling);
-        DBHandler dbHandler=new DBHandler(this);
+
+        DBHandler dbHandler = new DBHandler(this);
 
 
-        Intent intent=getIntent();
-        int id=intent.getIntExtra("id",0);
-        String equipment=intent.getStringExtra("equipment");
-        Equipment equip=dbHandler.getEquipmentByName(equipment).get(id);
+        Intent intent = getIntent();
+        int id = intent.getIntExtra("id", 0);
+        String equipment = intent.getStringExtra("equipment");
+        Equipment equip = dbHandler.getEquipmentByName(equipment).get(id);
         //URL url=equip.get_video_url();
 
-        List<Equipment> equipmentList=dbHandler.getEquipmentByName(equipment);
+        List<Equipment> equipmentList = dbHandler.getEquipmentByName(equipment);
 
-        BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottom_navigation);
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override
@@ -48,22 +55,42 @@ public class ExerciseDetailActivity extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(), "menu_home", Toast.LENGTH_SHORT).show();
 
 
-                                Intent intent =new Intent();
-                                intent.setClass(ExerciseDetailActivity.this,EquipmentActivity.class);
+                                Intent intent = new Intent();
+                                intent.setClass(ExerciseDetailActivity.this, EquipmentActivity.class);
                                 ExerciseDetailActivity.this.startActivity(intent);
 
 
                             case R.id.menu_scan:
-                                Toast.makeText(getApplicationContext(),"menu_scan",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "menu_scan", Toast.LENGTH_SHORT).show();
                             case R.id.menu_user:
-                                Toast.makeText(getApplicationContext(),"menu_user",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "menu_user", Toast.LENGTH_SHORT).show();
                         }
                         return true;
                     }
                 });
-        Button1=(Button)findViewById(R.id.button);
-        Text1=(TextView)findViewById(R.id.textView);
+
+
+        Text1 = (TextView) findViewById(R.id.textView);
         Text1.setText(equip.get_introduction());
-        video1=(VideoView)findViewById(R.id.videoView);
+        video1 = (VideoView) findViewById(R.id.videoView);
+        togglebutton = (ToggleButton) findViewById(R.id.toggleButton);
+        togglebutton.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v) {
+
+                if (togglebutton.isChecked()) {
+                    Toast.makeText(ExerciseDetailActivity.this, "begin", Toast.LENGTH_SHORT).show();
+                }
+
+                else {
+                    Toast.makeText(ExerciseDetailActivity.this, "end", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+
     }
+
+
+
 }
+
