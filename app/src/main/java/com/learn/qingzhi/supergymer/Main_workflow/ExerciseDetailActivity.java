@@ -41,6 +41,7 @@ public class ExerciseDetailActivity extends YouTubeBaseActivity implements YouTu
     //private ToggleButton togglebutton;
     private Button button=null;
     private Chronometer time;
+    Equipment equip;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +54,7 @@ public class ExerciseDetailActivity extends YouTubeBaseActivity implements YouTu
         Intent intent = getIntent();
         int id = intent.getIntExtra("id", 0);
         String equipment = intent.getStringExtra("equipment");
-        Equipment equip = dbHandler.getEquipmentByName(equipment).get(id);
+        equip = dbHandler.getEquipmentByName(equipment).get(id);
         //URL url=equip.get_video_url();
 
         List<Equipment> equipmentList = dbHandler.getEquipmentByName(equipment);
@@ -134,7 +135,7 @@ public class ExerciseDetailActivity extends YouTubeBaseActivity implements YouTu
     @Override
     public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
         if (!b) {
-            youTubePlayer.cueVideo("fhWaJi1Hsfo"); // Plays https://www.youtube.com/watch?v=fhWaJi1Hsfo
+            youTubePlayer.cueVideo(equip.get_video_url()); // Plays https://www.youtube.com/watch?v=fhWaJi1Hsfo
         }
     }
 
