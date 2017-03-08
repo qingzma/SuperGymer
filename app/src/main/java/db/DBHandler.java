@@ -172,7 +172,8 @@ public class DBHandler extends SQLiteOpenHelper {
         //                KEY_HEIGHT, KEY_GENDER,KEY_PASSWORD},KEY_NAME+"=?",
         //        new String[]{name}, null, null, null, null);
         Cursor cursor=db.rawQuery(querySelect,null);
-        if(cursor.moveToFirst()) {
+        if(cursor.getCount()!=0) {
+            cursor.moveToFirst();
             do{
                 User user=new User(Integer.parseInt(cursor.getString(0)),cursor.getString(1),Float.parseFloat(cursor.getString(2)),
                         Float.parseFloat(cursor.getString(3)),Integer.parseInt(cursor.getString(4)),cursor.getString(5));
@@ -211,7 +212,7 @@ public class DBHandler extends SQLiteOpenHelper {
         String querySelect="SELECT  *  FROM  " +TABLE_EQUIPMENT+
                 "    WHERE "+KEY_EQUIPMENT_NAME +" = "+ "\""+name+"\"";
         Cursor cursor=db.rawQuery(querySelect,null);
-        if(cursor!=null) {
+        if(cursor.getCount()!=0) {
             cursor.moveToFirst();
             do{
                 Equipment equipment=new Equipment(Integer.parseInt(cursor.getString(0)),
@@ -291,7 +292,7 @@ public class DBHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         String querySelect="SELECT  *  FROM  " +TABLE_EQUIPMENT;
         Cursor cursor=db.rawQuery(querySelect,null);
-        if(cursor!=null) {
+        if(cursor.getCount()!=0) {
             cursor.moveToFirst();
             do{
                 Equipment equipment=new Equipment(Integer.parseInt(cursor.getString(0)),
