@@ -134,7 +134,7 @@ public class ExerciseDetailActivity extends YouTubeBaseActivity implements YouTu
     @Override
     public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
         if (!b) {
-            youTubePlayer.cueVideo("fhWaJi1Hsfo"); // Plays https://www.youtube.com/watch?v=fhWaJi1Hsfo
+            youTubePlayer.cueVideo("5xsgulN-0-U"); // Plays https://www.youtube.com/watch?v=fhWaJi1Hsfo
         }
     }
 
