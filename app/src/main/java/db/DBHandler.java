@@ -631,9 +631,9 @@ public class DBHandler extends SQLiteOpenHelper {
 
 
 
-            User user=db.getUser(2);
+            User user=db.getUser(0);
             int uid=user.get_userId();
-            uid=2;
+            //uid=2;
             Date dt1=Calendar.getInstance().getTime();
             Date dt2=new Date(new Date().getTime()- 1*24*3600*1000);
             Date dt3=new Date(new Date().getTime()- 2*24*3600*1000);
