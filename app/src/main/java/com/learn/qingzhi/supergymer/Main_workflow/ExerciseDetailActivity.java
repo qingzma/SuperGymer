@@ -13,7 +13,11 @@ import android.widget.VideoView;
 
 import com.learn.qingzhi.supergymer.R;
 
+import java.net.URL;
+import java.util.List;
+
 import db.DBHandler;
+import db.Equipment;
 
 public class ExerciseDetailActivity extends AppCompatActivity {
     private VideoView video1=null;
@@ -24,12 +28,15 @@ public class ExerciseDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.arm_yaling);
         DBHandler dbHandler=new DBHandler(this);
-        dbHandler.initDb(this);
+
 
         Intent intent=getIntent();
-        //String equipment=intent.getStringExtra("equipment");
+        int id=intent.getIntExtra("id",0);
+        String equipment=intent.getStringExtra("equipment");
+        Equipment equip=dbHandler.getEquipmentByName(equipment).get(id);
+        //URL url=equip.get_video_url();
 
-        //List<Equipment> equipmentList=dbHandler.getEquipmentByName(equipment);
+        List<Equipment> equipmentList=dbHandler.getEquipmentByName(equipment);
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(
@@ -56,7 +63,7 @@ public class ExerciseDetailActivity extends AppCompatActivity {
                 });
         Button1=(Button)findViewById(R.id.button);
         Text1=(TextView)findViewById(R.id.textView);
-      //  Text1.setText(equipmentList.get(equipment).get_introduction());
+        Text1.setText(equip.get_introduction());
         video1=(VideoView)findViewById(R.id.videoView);
     }
 }

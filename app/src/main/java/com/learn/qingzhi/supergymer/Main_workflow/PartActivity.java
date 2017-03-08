@@ -72,19 +72,25 @@ public class PartActivity extends AppCompatActivity {
             btnCategory[i].setLayoutParams(new AppBarLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
             btnCategory[i].setText(equipmentList.get(i).get_part());
             btnCategory[i].setId(i);
-            btnCategory[i].setOnClickListener(new PartActivity.MyButtionListener());
+            btnCategory[i].setOnClickListener(new PartActivity.MyButtionListener(equipmentList.get(i).get_equipment_name()));
             row.addView(btnCategory[i]);
             layout.addView(row);
         }
     }
     class MyButtionListener implements View.OnClickListener{
+        String equipment = null;
+        public MyButtionListener(String equipment){
 
+            this.equipment = equipment;
+        }
         @Override
         public void onClick(View v) {
             Intent intent =new Intent();
-
+            v.getId();
             intent.setClass(PartActivity.this,ExerciseDetailActivity.class);
-           // intent.putExtra("part",part );
+
+            intent.putExtra("id",v.getId());
+            intent.putExtra("equipment",equipment);
 
             PartActivity.this.startActivity(intent);
 
