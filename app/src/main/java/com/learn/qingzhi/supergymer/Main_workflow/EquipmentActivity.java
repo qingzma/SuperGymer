@@ -26,14 +26,11 @@ public class EquipmentActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //DBHandler dbHandler=new DBHandler(this);
 
         DBHandler dbHandler=new DBHandler(this);
 
         dbHandler.initDb(this);
         List<String> btnNames=dbHandler.getEquipmentNames();
-       // List<String> btnNames=dbHandler.getEquipmentNames();
-
         btnCategory = new Button[btnNames.size()];
         setContentView(R.layout.activity_equiement);
         LinearLayout layout = (LinearLayout) findViewById(R.id.layout2);
@@ -45,7 +42,7 @@ public class EquipmentActivity extends AppCompatActivity {
 
 
             btnCategory[i] = new Button(this);
-            btnCategory[i].setLayoutParams(new AppBarLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+            btnCategory[i].setLayoutParams(new AppBarLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
             btnCategory[i].setText(btnNames.get(i));
             btnCategory[i].setId(i);
             btnCategory[i].setOnClickListener(new EquipmentActivity.MyButtionListener(btnNames.get(i)));
