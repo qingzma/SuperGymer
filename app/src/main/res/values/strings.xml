@@ -22,4 +22,10 @@
     <string name="yoga_abdomen_introduction">Muscle: rectus abdomins\nStep 1: While lying on your back, Straighten your legs, raise your heels an inch off the floor, and place your hands by your sides.\nStep 2: Keeping your arms parallel to the floor, lift your torso and legs so they form a e. As you raise yourself, bend your knees and pull them up toward your chest.</string>
     <string name="yoga_leg_introduction">Muscle: Glutes\nStep 1: Stand with your feet shoulder width apart. Lift your stronger or dominant leg straight out in front of your, as high as possible.\nStep 2: Such air into the stomach, then push your hips back and squat down as far as possible while keeping your torso as upright as possible. The heel of your front leg can touch the floor at the bottom of the squat, if you can get down that far.\nStep 3: Return to the starting position and exhale. Do all your repetitions with your non dominant leg, then repeat with your dominant leg.</string>
     <string name="treadmill_reduce_fat_introduction">Tips:\n1. Do not stop during your running, keep running until last minutes.\n2. Try to running in the morning because the glycogen level is lowest in your body and therefore you can gain a better result of fat reduced .\n3. warm-up exercise is necessary, do not ignore it!</string>
+    <string name="h">/Users/qingzhi/AndroidStudioProjects/SuperGymer/app/src/main/res/drawable/btdevice_treadmill.png</string>
+
+
+    <string name="player_error">Error initializing YouTube player: %s</string>
+    <string name="seek_to">Jump To</string>
+    <string name="seek_to_hint">Seconds</string>
 </resources>
