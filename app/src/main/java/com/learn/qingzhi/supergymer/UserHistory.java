@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.helper.StaticLabelsFormatter;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
@@ -31,9 +32,11 @@ public class UserHistory extends AppCompatActivity {
 
         DataPoint[] calories=new DataPoint[historyList.size()];
         DataPoint[] durations=new DataPoint[historyList.size()];
+        String[] xlabels=new String[historyList.size()];
         for(int i=0;i<historyList.size();i++){
             calories[i]=new DataPoint(i,historyList.get(i).get_calories());
             durations[i]=new DataPoint(i,historyList.get(i).get_duration());
+            xlabels[i]=historyList.get(i).get_date().toString().substring(4,8);
         }
 
         GraphView graph = (GraphView) findViewById(R.id.history_graph);
@@ -44,5 +47,10 @@ public class UserHistory extends AppCompatActivity {
 
         graph.addSeries(series1);
         graph.addSeries(series2);
+
+
+        StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(graph);
+        staticLabelsFormatter.setHorizontalLabels(new String[] {"old", "middle", "new"});
+        graph.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
     }
 }
