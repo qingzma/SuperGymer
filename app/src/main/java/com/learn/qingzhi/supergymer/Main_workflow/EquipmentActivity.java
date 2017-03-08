@@ -73,17 +73,20 @@ public class EquipmentActivity extends AppCompatActivity {
                         switch (item.getItemId()) {
                             case R.id.menu_home:
                                 Toast.makeText(getApplicationContext(), "menu_home", Toast.LENGTH_SHORT).show();
+                                break;
                             case R.id.menu_scan:
                                 Toast.makeText(getApplicationContext(),"menu_scan",Toast.LENGTH_SHORT).show();
                                 Intent intent =new Intent();
                                 intent.setClass(EquipmentActivity.this,Scanner.class);
                                 EquipmentActivity.this.startActivity(intent);
+                                break;
 
                             case R.id.menu_user:
                                 Toast.makeText(getApplicationContext(),"menu_user",Toast.LENGTH_SHORT).show();
                                 Intent intent1 =new Intent();
                                 intent1.setClass(EquipmentActivity.this,UserHistory.class);
                                 EquipmentActivity.this.startActivity(intent1);
+                                break;
                         }
                         return true;
                     }

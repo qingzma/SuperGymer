@@ -12,11 +12,23 @@
         android:layout_alignParentBottom="true"
         app:itemBackground="@drawable/bottom_background"
         app:menu="@menu/bottom_nav_items" />
-    <com.jjoe64.graphview.GraphView
+    <LinearLayout
+        android:id="@+id/history_linear"
         android:layout_width="match_parent"
-        android:layout_height="200dip"
-        android:id="@+id/history_graph">
-    </com.jjoe64.graphview.GraphView>
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical"
+        android:weightSum="1">
+      <com.jjoe64.graphview.GraphView
+            android:layout_width="match_parent"
+            android:layout_height="200dip"
+            android:id="@+id/history_graph">
+        </com.jjoe64.graphview.GraphView>
+
+    </LinearLayout>
+
 
 
 </RelativeLayout>

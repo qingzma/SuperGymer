@@ -41,14 +41,16 @@ public class UserHistory extends AppCompatActivity {
                             case R.id.menu_home:
                                 Toast.makeText(getApplicationContext(), "menu_home", Toast.LENGTH_SHORT).show();
                                 Intent intent =new Intent();
-                                intent.setClass(UserHistory.this, Equipment.class);
+                                intent.setClass(UserHistory.this, EquipmentActivity.class);
                                 UserHistory.this.startActivity(intent);
+                                UserHistory.this.finish();
                                 break;
                             case R.id.menu_scan:
                                 Toast.makeText(getApplicationContext(),"menu_scan",Toast.LENGTH_SHORT).show();
                                 Intent intent1 =new Intent();
                                 intent1.setClass(UserHistory.this,Scanner.class);
                                 UserHistory.this.startActivity(intent1);
+                                UserHistory.this.finish();
                                 break;
 
                             case R.id.menu_user:
@@ -81,7 +83,7 @@ public class UserHistory extends AppCompatActivity {
         }
 
         GraphView graph = (GraphView) findViewById(R.id.history_graph);
-
+        //GraphView graph= new GraphView(this);
         LineGraphSeries<DataPoint> series1 = new LineGraphSeries<>(calories);
         LineGraphSeries<DataPoint> series2 = new LineGraphSeries<>(durations);
 
