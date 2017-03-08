@@ -80,7 +80,7 @@ public class EquipmentActivity extends AppCompatActivity {
                                 EquipmentActivity.this.startActivity(intent);
 
                             case R.id.menu_user:
-                                //Toast.makeText(getApplicationContext(),"menu_user",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(),"menu_user",Toast.LENGTH_SHORT).show();
                                 Intent intent1 =new Intent();
                                 intent1.setClass(EquipmentActivity.this,UserHistory.class);
                                 EquipmentActivity.this.startActivity(intent1);
