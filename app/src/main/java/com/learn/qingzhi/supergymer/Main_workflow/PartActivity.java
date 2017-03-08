@@ -35,7 +35,7 @@ public class PartActivity extends AppCompatActivity {
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.menu_home:
-                                Toast.makeText(getApplicationContext(), "menu_home", Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(getApplicationContext(), "menu_home", Toast.LENGTH_SHORT).show();
 
 
                                 Intent intent =new Intent();

@@ -106,18 +106,23 @@ public class ExerciseDetailActivity extends YouTubeBaseActivity implements YouTu
             public void onClick(View v) {
                 int status = (Integer) v.getTag();
                 // time.setBase(SystemClock.elapsedRealtime());
-
+                long timeElapsed = SystemClock.elapsedRealtime() - time.getBase();
                 if (status == 1) {
+                    //long timeElapsed = SystemClock.elapsedRealtime() - time.getBase();
                     time.setBase(SystemClock.elapsedRealtime());
                     time.start();
-                    button.setText("Pause");
+                    button.setText("End");
                     v.setTag(0); //pause
                 } else {
                     button.setText("Begin");
 
                     time.stop();
+                   // long timeElapsed = SystemClock.elapsedRealtime() - time.getBase();
+
                     //v.setTag(1); //pause
+                    Log.d(null,"Was: "+timeElapsed);
                 }
+               // Log.d(null,"Was: "+timeElapsed);
             }
 
         });

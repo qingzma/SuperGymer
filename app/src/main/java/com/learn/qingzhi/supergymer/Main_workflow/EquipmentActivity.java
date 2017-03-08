@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.learn.qingzhi.supergymer.R;
 import com.learn.qingzhi.supergymer.Scanner;
+import com.learn.qingzhi.supergymer.UserHistory;
 
 import java.util.List;
 
@@ -79,7 +80,10 @@ public class EquipmentActivity extends AppCompatActivity {
                                 EquipmentActivity.this.startActivity(intent);
 
                             case R.id.menu_user:
-                                Toast.makeText(getApplicationContext(),"menu_user",Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(getApplicationContext(),"menu_user",Toast.LENGTH_SHORT).show();
+                                Intent intent1 =new Intent();
+                                intent1.setClass(EquipmentActivity.this,UserHistory.class);
+                                EquipmentActivity.this.startActivity(intent1);
                         }
                         return true;
                     }

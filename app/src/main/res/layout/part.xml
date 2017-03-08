@@ -14,7 +14,12 @@
         android:layout_alignParentBottom="true"
         app:itemBackground="@drawable/bottom_background"
         app:menu="@menu/bottom_nav_items" />
-
+    <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:scrollbars = "vertical"
+        android:scrollbarStyle="insideInset">
     <LinearLayout
         android:id="@+id/layout3"
         android:layout_width="match_parent"
@@ -26,5 +31,5 @@
         android:weightSum="1">
 
     </LinearLayout>
-
+    </ScrollView>
 </RelativeLayout>
