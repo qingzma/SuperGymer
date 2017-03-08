@@ -2,19 +2,26 @@ package com.learn.qingzhi.supergymer.Main_workflow;
 
 import android.content.Intent;
 import android.os.CountDownTimer;
+import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Chronometer;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 import android.widget.VideoView;
 
+import com.google.android.youtube.player.YouTubeBaseActivity;
+import com.google.android.youtube.player.YouTubeInitializationResult;
+import com.google.android.youtube.player.YouTubePlayer;
+import com.google.android.youtube.player.YouTubePlayerView;
 import com.learn.qingzhi.supergymer.R;
 
 import java.net.URL;
@@ -25,13 +32,19 @@ import db.Equipment;
 
 import static android.support.v7.appcompat.R.id.text;
 
-public class ExerciseDetailActivity extends AppCompatActivity {
+public class ExerciseDetailActivity extends YouTubeBaseActivity implements YouTubePlayer.OnInitializedListener{ //extends AppCompatActivity {
     private VideoView video1=null;
     private TextView Text1=null;
     private ToggleButton togglebutton;
+    private static final int RECOVERY_REQUEST = 1;
+    private YouTubePlayerView youTubeView;
+    //private ToggleButton togglebutton;
+    private Button button=null;
+    private Chronometer time;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.arm_yaling);
 
         DBHandler dbHandler = new DBHandler(this);
@@ -68,29 +81,97 @@ public class ExerciseDetailActivity extends AppCompatActivity {
                         return true;
                     }
                 });
+        button=(Button)findViewById(R.id.button);
+        button.setTag(1);
+        button.setText("Begin");
+        time=(Chronometer) findViewById(R.id.chronometer2);
 
+       /* time.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
+            @Override
+            public void onChronometerTick(Chronometer chronometer) {
+
+            }
+        });*/
 
         Text1 = (TextView) findViewById(R.id.textView);
         Text1.setText(equip.get_introduction());
-        video1 = (VideoView) findViewById(R.id.videoView);
+        //video1 = (VideoView) findViewById(R.id.videoView);
+        youTubeView=(YouTubePlayerView) findViewById(R.id.youtube_view);
+        youTubeView.initialize(Config.YOUTUBE_API_KEY,this);
         togglebutton = (ToggleButton) findViewById(R.id.toggleButton);
-        togglebutton.setOnClickListener(new View.OnClickListener(){
+        togglebutton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                //video1 = (VideoView) findViewById(R.id.videoView);
+                time.setFormat("Exercise time:%s");
+                time.setBase(SystemClock.elapsedRealtime());
+
+                button.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        int status = (Integer) v.getTag();
+                        // time.setBase(SystemClock.elapsedRealtime());
+
+                        if (status == 1) {
+                            time.setBase(SystemClock.elapsedRealtime());
+                            time.start();
+                            button.setText("Pause");
+                            v.setTag(0); //pause
+                        } else {
+                            button.setText("Begin");
+
+                            time.stop();
+                            //v.setTag(1); //pause
+                        }
+                    }
+
+                });
+                //togglebutton = (ToggleButton) findViewById(R.id.toggleButton);
+                //togglebutton.setOnClickListener(new View.OnClickListener(){
+         /*   public void onClick(View v) {
 
                 if (togglebutton.isChecked()) {
-                    Toast.makeText(ExerciseDetailActivity.this, "begin", Toast.LENGTH_SHORT).show();
+                    time.start();
                 }
 
-                else {
-                    Toast.makeText(ExerciseDetailActivity.this, "end", Toast.LENGTH_SHORT).show();
+                else if(togglebutton.isActivated()) {
+
+                    time.stop();
                 }
             }
+        });*/
+
+
+            }
+
+
         });
 
+}
 
+
+    @Override
+    public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
+        if (!b) {
+            youTubePlayer.cueVideo("fhWaJi1Hsfo"); // Plays https://www.youtube.com/watch?v=fhWaJi1Hsfo
+        }
     }
 
-
-
+    @Override
+    public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
+        if (youTubeInitializationResult.isUserRecoverableError()) {
+            youTubeInitializationResult.getErrorDialog(this, RECOVERY_REQUEST).show();
+        } else {
+            String error = String.format(getString(R.string.player_error), youTubeInitializationResult.toString());
+            Toast.makeText(this, error, Toast.LENGTH_LONG).show();
+        }
+    }
+    protected YouTubePlayer.Provider getYouTubePlayerProvider() {
+        return youTubeView;
+    }
 }
+
+
+
+
 

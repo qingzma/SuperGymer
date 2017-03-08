@@ -2,19 +2,26 @@ package db;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Path;
+import android.graphics.drawable.Drawable;
+import android.os.Environment;
 import android.util.Log;
+import android.widget.ImageView;
 
+import com.learn.qingzhi.supergymer.MainActivity;
 import com.learn.qingzhi.supergymer.R;
-
+import java.nio.*;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by qingzhi on 06/03/2017.
@@ -32,6 +39,7 @@ public class DBHandler extends SQLiteOpenHelper {
     private static final String TABLE_USER = "users";
     private static final String TABLE_HISTORY = "histories";
     private static final String TABLE_EQUIPMENT = "equipments";
+    private static final String TABLE_BTDEVICE="btdevices";
 
     // USER Table Columns names
     private static final String KEY_ID = "id";
@@ -51,6 +59,11 @@ public class DBHandler extends SQLiteOpenHelper {
     private static final String KEY_EQUIPMENT_NAME="equipmentName";
     private static final String KEY_HYPERLINK="hyperlink";
     private static final String KEY_INTRO="introduction";
+    // btdevices Table column names
+    private static final String KEY_BTDEVICE_ID="deviceID";
+    private static final String KEY_BTDEVICE_NAME="deviceName";
+    private static final String KEY_UUID="uuid";
+    private static final String KEY_IMAGE_PATH="imagePath";
 
 
 
@@ -79,8 +92,14 @@ public class DBHandler extends SQLiteOpenHelper {
         String CREATE_EQUIPMENT_TABLE="CREATE TABLE " + TABLE_EQUIPMENT  + "("
                 +KEY_EQUIPMENT_ID + " INTEGER PRIMARY KEY,"+ KEY_EQUIPMENT_NAME + " TEXT,"
                 +KEY_PART+ " TEXT,"+KEY_HYPERLINK +" TEXT,"
-                +KEY_INTRO+" TEXT"+")";
+                +KEY_INTRO+" TEXT, "
+                +KEY_IMAGE_PATH+" TEXT "+")";
         db.execSQL(CREATE_EQUIPMENT_TABLE);
+
+        String CREATE_BTDEVICE_TABLE="CREATE TABLE " + TABLE_BTDEVICE  + "("
+                +KEY_BTDEVICE_ID + " INTEGER PRIMARY KEY, "+ KEY_BTDEVICE_NAME + " TEXT, "
+                +KEY_UUID+ " TEXT, "+KEY_IMAGE_PATH +" TEXT "+")";
+        db.execSQL(CREATE_BTDEVICE_TABLE);
 
 
 
@@ -97,6 +116,7 @@ public class DBHandler extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USER);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_EQUIPMENT);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_HISTORY);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_BTDEVICE);
         // Create tables again
         onCreate(db);
     }
@@ -124,6 +144,7 @@ public class DBHandler extends SQLiteOpenHelper {
         values.put(KEY_PART,eq.get_part());
         values.put(KEY_HYPERLINK,eq.get_video_url());
         values.put(KEY_INTRO,eq.get_introduction());
+        values.put(KEY_IMAGE_PATH,eq.get_image_path());
 
         //insert row
         db.insert(TABLE_EQUIPMENT,null,values);
@@ -141,6 +162,21 @@ public class DBHandler extends SQLiteOpenHelper {
 
         //insert row
         long index=db.insert(TABLE_HISTORY,null,values);
+        db.close();
+        return index;
+    }
+
+    //Addint new bluetooth device
+    public long addBTDevice(BTDevice btDevice){
+        SQLiteDatabase db=this.getWritableDatabase();
+        ContentValues values=new ContentValues();
+        values.put(KEY_BTDEVICE_NAME,btDevice.get_btdevice_name());
+        values.put(KEY_UUID,btDevice.get_uuid().toString());
+        values.put(KEY_IMAGE_PATH,btDevice.get_image_path());
+
+
+        //insert row
+        long index=db.insert(TABLE_BTDEVICE,null,values);
         db.close();
         return index;
     }
@@ -195,17 +231,17 @@ public class DBHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor=db.query(TABLE_EQUIPMENT,new String[]{KEY_EQUIPMENT_ID,KEY_EQUIPMENT_NAME,KEY_PART,
-                        KEY_HYPERLINK,KEY_INTRO},KEY_EQUIPMENT_ID+"=?",
+                        KEY_HYPERLINK,KEY_INTRO,KEY_IMAGE_PATH},KEY_EQUIPMENT_ID+"=?",
                 new String[]{String.valueOf(id)}, null, null, null, null);
         if(cursor!=null)
             cursor.moveToFirst();
 
         Equipment equipment=new Equipment(Integer.parseInt(cursor.getString(0)),cursor.getString(1),cursor.getString(2),
-                cursor.getString(3),cursor.getString(4));
+                cursor.getString(3),cursor.getString(4),cursor.getString(5));
         return equipment;
     }
 
-    //get user(s) by name
+    //get Equipments(s) by name
     public List<Equipment> getEquipmentByName(String name){
         List<Equipment> equipmentList=new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
@@ -217,12 +253,35 @@ public class DBHandler extends SQLiteOpenHelper {
             do{
                 Equipment equipment=new Equipment(Integer.parseInt(cursor.getString(0)),
                         cursor.getString(1),cursor.getString(2),
-                        cursor.getString(3),cursor.getString(4));
+                        cursor.getString(3),cursor.getString(4),
+                        cursor.getString(5));
                 equipmentList.add(equipment);
             }while(cursor.moveToNext());
         }
 
         return equipmentList;
+
+    }
+    //get BT device(s) by name
+    public List<BTDevice> getBTDeviceByName(String name){
+        List<BTDevice> btDeviceList=new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String querySelect="SELECT  *  FROM  " +TABLE_BTDEVICE+
+                "    WHERE "+KEY_BTDEVICE_NAME +" = "+ "\""+name+"\"";
+        Cursor cursor=db.rawQuery(querySelect,null);
+        if(cursor.getCount()!=0) {
+            cursor.moveToFirst();
+            do{
+                //File file=new File(cursor.getString(3));
+                BTDevice btDevice=new BTDevice(cursor.getInt(0),
+                        cursor.getString(1),
+                        UUID.fromString(cursor.getString(2)),
+                        cursor.getString(3));
+                btDeviceList.add(btDevice);
+            }while(cursor.moveToNext());
+        }
+
+        return btDeviceList;
 
     }
 
@@ -297,7 +356,8 @@ public class DBHandler extends SQLiteOpenHelper {
             do{
                 Equipment equipment=new Equipment(Integer.parseInt(cursor.getString(0)),
                         cursor.getString(1),cursor.getString(2),
-                        cursor.getString(3),cursor.getString(4));
+                        cursor.getString(3),cursor.getString(4),
+                        cursor.getString(5));
                 equipmentList.add(equipment);
             }while(cursor.moveToNext());
         }
@@ -329,6 +389,27 @@ public class DBHandler extends SQLiteOpenHelper {
 
 
 
+    //get all BT device(s)
+    public List<BTDevice> getAllBTDevices(){
+        List<BTDevice> btDeviceList=new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String querySelect="SELECT  *  FROM  " +TABLE_BTDEVICE;
+        Cursor cursor=db.rawQuery(querySelect,null);
+        if(cursor.getCount()!=0) {
+            cursor.moveToFirst();
+            do{
+                //File file=new File(cursor.getString(3));
+                BTDevice btDevice=new BTDevice(cursor.getInt(0),
+                        cursor.getString(1),
+                        UUID.fromString(cursor.getString(2)),
+                        cursor.getString(3));
+                btDeviceList.add(btDevice);
+            }while(cursor.moveToNext());
+        }
+
+        return btDeviceList;
+
+    }
 
     //get users count
     public int getUsersCount(){
@@ -345,6 +426,17 @@ public class DBHandler extends SQLiteOpenHelper {
     //get equipments count
     public int getAllEquipmentsCount(){
         String countQuery = "SELECT  * FROM " + TABLE_EQUIPMENT;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery, null);
+        cursor.close();
+
+        // return count
+        return cursor.getCount();
+    }
+
+    //get bt device count
+    public int getAllBTDeviceCount(){
+        String countQuery = "SELECT  * FROM " + TABLE_BTDEVICE;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
         cursor.close();
@@ -417,13 +509,14 @@ public class DBHandler extends SQLiteOpenHelper {
         values.put(KEY_PART,equipment.get_part());
         values.put(KEY_HYPERLINK,equipment.get_video_url());
         values.put(KEY_INTRO,equipment.get_introduction());
+        values.put(KEY_IMAGE_PATH,equipment.get_image_path());
 
         // updating row
         return db.update(TABLE_EQUIPMENT, values, KEY_ID + " = ?",
                 new String[] { String.valueOf(equipment.get_equipment_id()) });
     }
 
-    // Updating single equipment
+    // Updating single history
     public int updateHistory(Long histID,History history) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -484,33 +577,45 @@ public class DBHandler extends SQLiteOpenHelper {
                 Log.d("Name: ", log);
             }
 
+            String imageUriArm = "drawable://" + R.drawable.arm;
+            String imageUriBack = "drawable://" + R.drawable.back;
+            String imageUrileg = "drawable://" + R.drawable.leg;
+            String imageUriReduceFat = "drawable://" + R.drawable.btdevice_yoga_mat;
+            String imageUriChest = "drawable://" + R.drawable.chest;
+            String imageUriAbdomen = "drawable://" + R.drawable.chest;
 
 
             Log.d("Inserting: ", "inserting equipments");
             db.addEquipment(new Equipment(context.getResources().getString(R.string.dumbbell_name),
                     context.getResources().getString(R.string.part_arm),
                     "www.baidu.com",
-                    context.getResources().getString(R.string.dumbbell_arm_introduction)));
+                    context.getResources().getString(R.string.dumbbell_arm_introduction),
+                    imageUriArm));
             db.addEquipment(new Equipment(context.getResources().getString(R.string.dumbbell_name),
                     context.getResources().getString(R.string.part_chest),
                     "www.baidu.com",
-                    context.getResources().getString(R.string.dumbbell_chest_introduction)));
+                    context.getResources().getString(R.string.dumbbell_chest_introduction),
+                    imageUriChest));
             db.addEquipment(new Equipment(context.getResources().getString(R.string.dumbbell_name),
                     context.getResources().getString(R.string.part_abdomen),
                     "www.baidu.com",
-                    context.getResources().getString(R.string.dumbbell_abdomen_introduction)));
+                    context.getResources().getString(R.string.dumbbell_abdomen_introduction),
+                    imageUriAbdomen));
             db.addEquipment(new Equipment(context.getResources().getString(R.string.yoga_name),
                     context.getResources().getString(R.string.part_abdomen),
                     "www.baidu.com",
-                    context.getResources().getString(R.string.yoga_abdomen_introduction)));
+                    context.getResources().getString(R.string.yoga_abdomen_introduction),
+                    imageUriAbdomen));
             db.addEquipment(new Equipment(context.getResources().getString(R.string.yoga_name),
                     context.getResources().getString(R.string.part_leg),
                     "www.baidu.com",
-                    context.getResources().getString(R.string.yoga_leg_introduction)));
+                    context.getResources().getString(R.string.yoga_leg_introduction),
+                    imageUrileg));
             db.addEquipment(new Equipment(context.getResources().getString(R.string.treadmill_name),
                     context.getResources().getString(R.string.part_reduce_fate),
                     "www.baidu.com",
-                    context.getResources().getString(R.string.treadmill_reduce_fat_introduction)));
+                    context.getResources().getString(R.string.treadmill_reduce_fat_introduction),
+                    imageUriReduceFat));
 
             List<Equipment> equipmentList=new ArrayList<>();
             equipmentList=db.getAllEquipment();
@@ -543,6 +648,36 @@ public class DBHandler extends SQLiteOpenHelper {
             db.addHistory(history2);
             db.addHistory(history3);
             db.addHistory(history4);
+
+
+
+            //String path = Environment.getExternalStorageDirectory()+" ";
+
+            Log.d("Inserting: ", "inserting bluetooth devices");
+            String imageUribtdevice_dumbbell = "drawable://" + R.drawable.btdevice_dumbbell;
+            String imageUribtdevice_treadmill = "drawable://" + R.drawable.btdevice_treadmill;
+            String imageUribtdevice_yoga_mat = "drawable://" + R.drawable.btdevice_yoga_mat;
+            Log.d("Inserting: ", imageUribtdevice_dumbbell);
+
+            BTDevice btDevice1=new BTDevice(context.getResources().getString(R.string.dumbbell_name),
+                    UUID.fromString("f7826da6-4fa2-4e98-8024-bc5b71e0893e"),imageUribtdevice_dumbbell);
+            BTDevice btDevice2=new BTDevice(context.getResources().getString(R.string.yoga_name),
+                    UUID.fromString("ad3429e0-81ce-4cfa-ad81-93b8f2d601e5"),imageUribtdevice_dumbbell);
+            BTDevice btDevice3=new BTDevice(context.getResources().getString(R.string.treadmill_name),
+                    UUID.fromString("e242d6b0-01c2-4491-8d71-a52386a6f0c8"),imageUribtdevice_dumbbell);
+
+            db.addBTDevice(btDevice1);
+            db.addBTDevice(btDevice2);
+            db.addBTDevice(btDevice3);
+
+            List<BTDevice> btDeviceList=db.getAllBTDevices();
+            for (BTDevice btDevice:btDeviceList){
+                Log.d("Inserting: ",btDevice.toString());
+            }
+
+
+
+
         }
 
 
