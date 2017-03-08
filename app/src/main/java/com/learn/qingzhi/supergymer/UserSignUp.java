@@ -58,15 +58,17 @@ public class UserSignUp extends AppCompatActivity{
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.menu_home:
-                                Toast.makeText(getApplicationContext(), "menu_home", Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(getApplicationContext(), "menu_home", Toast.LENGTH_SHORT).show();
                                 break;
                             case R.id.menu_scan:
                                 //Toast.makeText(getApplicationContext(),"menu_scan",Toast.LENGTH_SHORT).show();
                                 Intent scanner = new Intent(UserSignUp.this,Scanner.class);
+                                scanner.putExtra("item",1);
                                 startActivity(scanner);
                                 break;
                             case R.id.menu_user:
                                 Intent intent_user = new Intent(UserSignUp.this,UserHistory.class);
+                                intent_user.putExtra("item",2);
                                 startActivity(intent_user);
                                 break;
                         }
