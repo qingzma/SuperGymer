@@ -1,14 +1,18 @@
 package com.learn.qingzhi.supergymer;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
+
 import com.learn.qingzhi.supergymer.dumbbell.Part_YalingActivity;
 
 import java.util.List;
@@ -47,6 +51,23 @@ public class EquiementActivity extends AppCompatActivity {
 
 
         }
+
+        BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.menu_home:
+                                Toast.makeText(getApplicationContext(), "menu_home", Toast.LENGTH_SHORT).show();
+                            case R.id.menu_scan:
+                                Toast.makeText(getApplicationContext(),"menu_scan",Toast.LENGTH_SHORT).show();
+                            case R.id.menu_user:
+                                Toast.makeText(getApplicationContext(),"menu_user",Toast.LENGTH_SHORT).show();
+                        }
+                        return true;
+                    }
+                });
 
     }
     class MyButtionListener implements View.OnClickListener{
