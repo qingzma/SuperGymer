@@ -76,6 +76,17 @@ public class PartActivity extends AppCompatActivity {
             row.addView(btnCategory[i]);
             layout.addView(row);
         }
+        //String a="Dumbbell";
+        if(equipment.equals("Dumbbell")){
+            btnCategory[0].setCompoundDrawablesWithIntrinsicBounds(R.drawable.arm1, 0,0 , 0);
+            btnCategory[1].setCompoundDrawablesWithIntrinsicBounds(R.drawable.chest1, 0, 0, 0);
+            btnCategory[2].setCompoundDrawablesWithIntrinsicBounds(R.drawable.abs1, 0, 0, 0);
+        }else if(equipment.equals("Yoga mat")){
+            btnCategory[0].setCompoundDrawablesWithIntrinsicBounds(R.drawable.abs1, 0,0 , 0);
+            btnCategory[1].setCompoundDrawablesWithIntrinsicBounds(R.drawable.leg1, 0, 0, 0);
+        }else if(equipment.equals("Treadmill")){
+            btnCategory[0].setCompoundDrawablesWithIntrinsicBounds(R.drawable.reduce_fat, 0,0 , 0);
+        }
     }
     class MyButtionListener implements View.OnClickListener{
         String equipment = null;

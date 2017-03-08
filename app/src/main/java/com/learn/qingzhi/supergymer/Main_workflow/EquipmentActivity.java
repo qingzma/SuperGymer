@@ -47,7 +47,7 @@ public class EquipmentActivity extends AppCompatActivity {
             btnCategory[i] = new Button(this);
             btnCategory[i].setLayoutParams(new AppBarLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
             btnCategory[i].setText(btnNames.get(i));
-           // btnCategory[i].setCompoundDrawables(drawable1,null,null,null);
+
             //btnCategory[i].setCompoundDrawablesWithIntrinsicBounds(R.drawable.btdevice_dumbbell, 0, 0, 0);
 
            // String imagePath=btnNames.get(i).toLowerCase()+".png";
