@@ -18,7 +18,7 @@ import db.DBHandler;
  */
 
 public class WelcomePageActivity extends AppCompatActivity {
-    private static int SPLASH_TIME_OUT = 4000;
+    private static int SPLASH_TIME_OUT = 2000;
 
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -33,7 +33,7 @@ public class WelcomePageActivity extends AppCompatActivity {
             public void run() {
 
                // Intent homeIntent = new Intent(WelcomePageActivity.this,UserSignUp.class);
-                Intent homeIntent = new Intent(WelcomePageActivity.this,EquipmentActivity.class);
+                Intent homeIntent = new Intent(WelcomePageActivity.this,UserSignUp.class);
                 startActivity(homeIntent);
                 finish();
             }
