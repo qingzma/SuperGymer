@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.learn.qingzhi.supergymer.R;
 import com.learn.qingzhi.supergymer.Scanner;
+import com.learn.qingzhi.supergymer.UserHistory;
 
 import java.util.List;
 
@@ -71,15 +72,27 @@ public class EquipmentActivity extends AppCompatActivity {
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.menu_home:
-                                Toast.makeText(getApplicationContext(), "menu_home", Toast.LENGTH_SHORT).show();
+                               // Toast.makeText(getApplicationContext(), "menu_home", Toast.LENGTH_SHORT).show();
+                                Intent intent2 =new Intent();
+                                intent2.setClass(EquipmentActivity.this,EquipmentActivity.class);
+                                EquipmentActivity.this.startActivity(intent2);
+                                EquipmentActivity.this.finish();
+                                break;
                             case R.id.menu_scan:
-                                Toast.makeText(getApplicationContext(),"menu_scan",Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(getApplicationContext(),"menu_scan",Toast.LENGTH_SHORT).show();
                                 Intent intent =new Intent();
                                 intent.setClass(EquipmentActivity.this,Scanner.class);
                                 EquipmentActivity.this.startActivity(intent);
+                                EquipmentActivity.this.finish();
+                                break;
 
                             case R.id.menu_user:
                                 Toast.makeText(getApplicationContext(),"menu_user",Toast.LENGTH_SHORT).show();
+                                Intent intent1 =new Intent();
+                                intent1.setClass(EquipmentActivity.this,UserHistory.class);
+                                EquipmentActivity.this.startActivity(intent1);
+                                EquipmentActivity.this.finish();
+                                break;
                         }
                         return true;
                     }

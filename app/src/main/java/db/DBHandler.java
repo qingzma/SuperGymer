@@ -2,6 +2,7 @@ package db;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -22,6 +23,10 @@ import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
+import android.content.Intent;
+import android.content.SharedPreferences;
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by qingzhi on 06/03/2017.
@@ -631,16 +636,24 @@ public class DBHandler extends SQLiteOpenHelper {
 
 
 
-            User user=db.getUser(0);
+            User user=db.getUser(1);
             int uid=user.get_userId();
-            uid=0;
-            Date dt1=Calendar.getInstance().getTime();
-            Date dt2=new Date(new Date().getTime()- 1*24*3600*1000);
-            Date dt3=new Date(new Date().getTime()- 2*24*3600*1000);
-            Date dt4=new Date(new Date().getTime()- 3*24*3600*1000);
+            //uid=1;
+
+            //SharedPreferences sharedPreferences = getSharedPreferences("UserInfo", MODE_PRIVATE);
+            //Get SharedPreferences.Editor object，save object to sharedPreferences
+            //SharedPreferences.Editor editor = sharedPreferences.edit();
+            //editor.putString("UserId",Integer.toString(user.get_userId()));
+            //put key value pair
+            //editor.commit();
+
+            Date dt4=Calendar.getInstance().getTime();
+            Date dt3=new Date(new Date().getTime()- 1*24*3600*1000);
+            Date dt2=new Date(new Date().getTime()- 2*24*3600*1000);
+            Date dt1=new Date(new Date().getTime()- 3*24*3600*1000);
 
             History history1=new History(uid,dt1,200,40);
-            History history2=new History(uid,dt2,300,350);
+            History history2=new History(uid,dt2,300,50);
             History history3=new History(uid,dt3,100,20);
             History history4=new History(uid,dt4,150,50);
 
@@ -648,6 +661,12 @@ public class DBHandler extends SQLiteOpenHelper {
             db.addHistory(history2);
             db.addHistory(history3);
             db.addHistory(history4);
+
+            List<History> historyList=db.getAllHistory(1);
+            for (History btDevice:historyList){
+                Log.d("Inserting: ",btDevice.toString());
+            }
+
 
 
 
