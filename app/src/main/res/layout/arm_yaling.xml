@@ -63,7 +63,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.06"
                 android:fontFamily="cursive"
+                android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+                android:textColor="@color/primary"
                 android:textSize="30sp"
                 android:typeface="monospace"
                 android:visibility="visible" />
@@ -73,7 +75,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.09"
-                android:text="Button" />
+                android:fontFamily="sans-serif-smallcaps"
+                android:text="Button"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:textStyle="bold"
+                android:typeface="normal"
+                android:visibility="visible" />
 
 
             <TextView
@@ -81,7 +88,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="80dp"
                 android:fontFamily="serif"
-                android:text="Build Your Body!!!"
+                android:text="Build Your Body every day!!!"
                 android:textStyle="bold" />
 
 
