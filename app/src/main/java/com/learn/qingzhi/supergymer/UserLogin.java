@@ -87,12 +87,8 @@ public class UserLogin extends AppCompatActivity {
         }
 
 
-        _loginButton.setEnabled(false);
-        final ProgressDialog progressDialog = new ProgressDialog(UserLogin.this,
-                R.style.AppTheme_Dark_Dialog);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Authenticating...");
-        progressDialog.show();
+        //_loginButton.setEnabled(false);
+
 
         String name = _nameText.getText().toString();
         String password = _passwordText.getText().toString();
@@ -116,24 +112,31 @@ public class UserLogin extends AppCompatActivity {
             editor.putString("UserId",Integer.toString(user.get_userId()));
             //put key value pair
             editor.commit();
+            final ProgressDialog progressDialog = new ProgressDialog(UserLogin.this,
+                    R.style.AppTheme_Dark_Dialog);
+            progressDialog.setIndeterminate(true);
+            progressDialog.setMessage("Authenticating...");
+            progressDialog.show();
+            new android.os.Handler().postDelayed(
+                    new Runnable() {
+                        public void run() {
+                            // On complete call either onLoginSuccess or onLoginFailed
+                            onLoginSuccess();
+                            // onLoginFailed();
+                            progressDialog.dismiss();
+                        }
+                    }, 2000);
             Intent intent = new Intent(UserLogin.this,EquipmentActivity.class);
             startActivity(intent);
 
         }else{
+            Toast.makeText(this,"Username doesn't exit or Wrong Password",Toast.LENGTH_LONG).show();
             return;
         }
         //System.out.print("user id : " + user.get_userId() );
         //Toast.makeText(getBaseContext(), user.get_userId(), Toast.LENGTH_LONG).show();
 
-        new android.os.Handler().postDelayed(
-                new Runnable() {
-                    public void run() {
-                        // On complete call either onLoginSuccess or onLoginFailed
-                        onLoginSuccess();
-                        // onLoginFailed();
-                        progressDialog.dismiss();
-                    }
-                }, 2000);
+
         /*
         if(authenticating()){
             String name = _nameText.getText().toString();

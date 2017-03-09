@@ -31,11 +31,6 @@
             android:name=".AndroidSQLiteTutorialActivity"
             android:label="@string/title_activity_android_sqlite_tutorial"
             android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
         <activity
             android:name=".WelcomePageActivity"
@@ -51,11 +46,6 @@
         <activity android:name=".Main_workflow.PartActivity" />
 
         <activity android:name=".Main_workflow.EquipmentActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 
