@@ -14,20 +14,19 @@
         <activity
             android:name=".UserSignUp"
             android:label="@string/app_name"
-            android:theme="@style/Theme.AppCompat.Light"/>
+            />
         <activity
             android:name=".UserLogin"
             android:label="@string/app_name"
-            android:theme="@style/Theme.AppCompat.Light"/>
+            />
         <activity android:name=".UserInfoSetup"
             android:label="@string/app_name"
-            android:theme="@style/Theme.AppCompat.Light"/>
+            />
         <activity android:name=".UserHistory"
-                  android:label="@string/app_name"
-                  android:theme="@style/Theme.AppCompat.Light"/>
+                  android:label="@string/app_name"/>
         <activity android:name=".Scanner"
                   android:label="@string/app_name"
-                  android:theme="@style/Theme.AppCompat.Light"/>
+                  />
         <activity
             android:name=".AndroidSQLiteTutorialActivity"
             android:label="@string/title_activity_android_sqlite_tutorial"
