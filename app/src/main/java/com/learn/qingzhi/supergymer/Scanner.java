@@ -1,12 +1,20 @@
 package com.learn.qingzhi.supergymer;
 
+import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.le.BluetoothLeScanner;
+import android.bluetooth.le.ScanCallback;
+import android.bluetooth.le.ScanFilter;
+import android.bluetooth.le.ScanResult;
+import android.bluetooth.le.ScanSettings;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
@@ -15,12 +23,15 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.learn.qingzhi.supergymer.Main_workflow.EquipmentActivity;
+import com.learn.qingzhi.supergymer.Main_workflow.PartActivity;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import pl.bclogic.pulsator4droid.library.PulsatorLayout;
@@ -31,12 +42,11 @@ import pl.bclogic.pulsator4droid.library.PulsatorLayout;
 
 public class Scanner extends AppCompatActivity {
     private static int REQUEST_ENABLE_BT = 2;
-    //private static int TAG = 100;
     private static final String TAG = "Scanner";
-
     BluetoothAdapter bluetoothAdapter = null;
     ArrayList<BluetoothDevice> arrayListPairedBluetoothDevices;
     ArrayList<BluetoothDevice> mBTDevices = new ArrayList<>();
+    Set<BluetoothDevice> pairedDevices = null;
 
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -44,29 +54,27 @@ public class Scanner extends AppCompatActivity {
         PulsatorLayout pulsator = (PulsatorLayout) findViewById(R.id.pulsator);
         pulsator.start();
 
-        //IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
-        //registerReceiver(mReceiver, filter); // Don't forget to unregister during onDestroy
-
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        try{
-            wait(1000);
-        }catch (InterruptedException e){
-            e.printStackTrace();
-        }
         //enableorDisableBT()
-        enableDisableBT();
-        try{
-            wait(1000);
-        }catch (InterruptedException e){
-            e.printStackTrace();
-        }
-        enableDiscoverable();
-        try{
-            wait(1000);
-        }catch (InterruptedException e){
-            e.printStackTrace();
-        }
+        enableBT();
+        //enableDiscoverable();
+        getPairedDevices();
+        mBTDevices.clear();
         discovery();
+        Log.d(TAG,"FINISH DISCOVERING");
+        if(mBTDevices.size()!= 0){
+            for(int i = 0;i<mBTDevices.size();i++){
+                if(mBTDevices.get(i).getAddress().equals("FC:2C:0F:75:4F:1A")){
+                    RelativeLayout relativeLayout = (RelativeLayout)findViewById(R.id.scannerRelativeLayout);
+                    ImageButton dumbbell = new ImageButton(this);
+                    dumbbell.setImageResource(R.drawable.dumbbell);
+                    dumbbell.setMaxWidth(25);
+                    dumbbell.setMaxHeight(25);
+                    relativeLayout.addView(dumbbell);
+                    bluetoothAdapter.cancelDiscovery();
+                }
+            }
+        }
 
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottom_navigation);
@@ -95,7 +103,7 @@ public class Scanner extends AppCompatActivity {
                     }
                 });
     }
-    public void enableDisableBT(){
+    public void enableBT(){
         if(bluetoothAdapter ==  null){
             Log.d(TAG,"Your Device does not support Bluetooth");
         }
@@ -106,6 +114,9 @@ public class Scanner extends AppCompatActivity {
             IntentFilter BTIntent = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
             registerReceiver(mBroadcastReceiver1,BTIntent);
         }
+
+    }
+    public void disableBT(){
         if(bluetoothAdapter.isEnabled()){
             bluetoothAdapter.disable();
 
@@ -124,19 +135,38 @@ public class Scanner extends AppCompatActivity {
         registerReceiver(mBroadcastReceiver2,intentFilter);
     }
 
+    //get Paired Devices Information
+    public void getPairedDevices(){
+        pairedDevices = bluetoothAdapter.getBondedDevices();
+        // If there are paired devices
+        if (pairedDevices.size() > 0) {
+            // Loop through paired devices
+            for (BluetoothDevice device : pairedDevices) {
+                // Add the name and address to an array adapter to show in a ListView
+                Log.d(TAG,device.getName() + " " + device.getAddress());
+            }
+        }
+    }
+
     public void discovery(){
         Log.d(TAG,"Discovery: looking for unpaired devices");
+        boolean flag = false;
         if(bluetoothAdapter.isDiscovering()){
             bluetoothAdapter.cancelDiscovery();
             Log.d(TAG,"Discovery:cancel discovery ");
-
-            bluetoothAdapter.startDiscovery();
+            flag = bluetoothAdapter.startDiscovery();
+            if(flag){
+                Log.d(TAG,"Start Discovering");
+            }
             IntentFilter discoveryDeviceIntent = new IntentFilter(BluetoothDevice.ACTION_FOUND);
             registerReceiver(mBroadcastReceiver3,discoveryDeviceIntent);
         }
 
         if(!bluetoothAdapter.isDiscovering()){
-            bluetoothAdapter.startDiscovery();
+            flag = bluetoothAdapter.startDiscovery();
+            if(flag){
+                Log.d(TAG,"Start Discovering Successfully");
+            }
             IntentFilter discoveryDeviceIntent = new IntentFilter(BluetoothDevice.ACTION_FOUND);
             registerReceiver(mBroadcastReceiver3,discoveryDeviceIntent);
         }
@@ -194,20 +224,64 @@ public class Scanner extends AppCompatActivity {
     };
     private BroadcastReceiver mBroadcastReceiver3 = new BroadcastReceiver() {
         @Override
-        public void onReceive(Context context, Intent intent) {
-            final String action = intent.getAction();
-            if(action.equals(BluetoothDevice.ACTION_FOUND)){
+        public void onReceive(final Context context, Intent intent) {
+            String action = intent.getAction();
+            //Log.d(TAG,"into mBroadcastReceiver3");
+            if (action.equalsIgnoreCase( BluetoothDevice.ACTION_FOUND)) {
+                    // device found
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+                // Add the name and address to an array adapter to show in a ListView
                 mBTDevices.add(device);
-                Log.d(TAG,"OnReceive: " + device.getName()+": "+device.getAddress());
+                Log.d("TAG",device.getName() + "\n" + device.getAddress());
+                if(device.getAddress().equals("FC:2C:0F:75:4F:1A")){
+                    RelativeLayout relativeLayout = (RelativeLayout)findViewById(R.id.scannerRelativeLayout);
+                    ImageButton dumbbell = new ImageButton(context);
+                    dumbbell.setImageResource(R.drawable.dumbbell);
+                    dumbbell.setMaxWidth(25);
+                    dumbbell.setMaxHeight(25);
+                    relativeLayout.addView(dumbbell);
+                    dumbbell.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(context, PartActivity.class);
+                            intent.putExtra("equipment","Dumbbell");
+                            startActivity(intent);
+                        }
+                    });
+                    bluetoothAdapter.cancelDiscovery();
+                }
+
+            } else if (action.equalsIgnoreCase(
+                    BluetoothAdapter.ACTION_DISCOVERY_FINISHED)) {
+                    // discoveryFinished
+                Log.d(TAG,"ACTION_DISCOVERY_FINISHED");
+            } else if (action.equalsIgnoreCase(
+                    BluetoothAdapter.ACTION_DISCOVERY_STARTED)) {
+                    // discoveryStarted
+                Log.d(TAG,"ACTION_DISCOVERY_STARTED");
             }
         }
     };
+    /*
+    private void checkBTPermissions(){
+        if(Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP){
+            int permissionCheck = this.checkSelfPermission("Manifest.permission.ACCESS_FINE_LOCATION");
+            permissionCheck += this.checkSelfPermission("Manifest.permission.ACCESS_COARSE_LOCATION");
+            if(permissionCheck != 0){
+                this.requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION},1001);
+            }
+        }else{
+            Log.d(TAG,"checkBTPermissions: no need to check premission, SDK Version < LOLLIPOP");
+        }
+    }*/
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(mBroadcastReceiver1);
+        unregisterReceiver(mBroadcastReceiver2);
+        unregisterReceiver(mBroadcastReceiver3);
     }
+
 
 }
