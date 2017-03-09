@@ -647,13 +647,13 @@ public class DBHandler extends SQLiteOpenHelper {
             //put key value pair
             //editor.commit();
 
-            Date dt1=Calendar.getInstance().getTime();
-            Date dt2=new Date(new Date().getTime()- 1*24*3600*1000);
-            Date dt3=new Date(new Date().getTime()- 2*24*3600*1000);
-            Date dt4=new Date(new Date().getTime()- 3*24*3600*1000);
+            Date dt4=Calendar.getInstance().getTime();
+            Date dt3=new Date(new Date().getTime()- 1*24*3600*1000);
+            Date dt2=new Date(new Date().getTime()- 2*24*3600*1000);
+            Date dt1=new Date(new Date().getTime()- 3*24*3600*1000);
 
             History history1=new History(uid,dt1,200,40);
-            History history2=new History(uid,dt2,300,350);
+            History history2=new History(uid,dt2,300,50);
             History history3=new History(uid,dt3,100,20);
             History history4=new History(uid,dt4,150,50);
 
