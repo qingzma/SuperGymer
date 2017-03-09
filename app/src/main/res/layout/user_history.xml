@@ -26,6 +26,12 @@
             android:layout_height="200dip"
             android:id="@+id/history_graph">
         </com.jjoe64.graphview.GraphView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/history_comment">
+
+        </LinearLayout>
 
     </LinearLayout>
 
