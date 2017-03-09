@@ -78,6 +78,10 @@ public class Scanner extends AppCompatActivity {
 
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottom_navigation);
+
+        bottomNavigationView.getMenu().getItem(1).setChecked(true);
+
+
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override
