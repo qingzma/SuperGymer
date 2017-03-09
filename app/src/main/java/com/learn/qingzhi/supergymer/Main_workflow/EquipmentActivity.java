@@ -1,7 +1,6 @@
 package com.learn.qingzhi.supergymer.Main_workflow;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomNavigationView;
@@ -22,7 +21,9 @@ import java.util.List;
 import db.DBHandler;
 
 import static com.learn.qingzhi.supergymer.R.drawable.btdevice_dumbbell;
-
+/**
+ * Created by Langsha Liu on 08/03/2017.
+ */
 
 public class EquipmentActivity extends AppCompatActivity {
 
@@ -66,6 +67,7 @@ public class EquipmentActivity extends AppCompatActivity {
 
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottom_navigation);
+        bottomNavigationView.getMenu().getItem(0).setChecked(true);
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override
@@ -73,10 +75,7 @@ public class EquipmentActivity extends AppCompatActivity {
                         switch (item.getItemId()) {
                             case R.id.menu_home:
                                // Toast.makeText(getApplicationContext(), "menu_home", Toast.LENGTH_SHORT).show();
-                                Intent intent2 =new Intent();
-                                intent2.setClass(EquipmentActivity.this,EquipmentActivity.class);
-                                EquipmentActivity.this.startActivity(intent2);
-                                EquipmentActivity.this.finish();
+
                                 break;
                             case R.id.menu_scan:
                                 //Toast.makeText(getApplicationContext(),"menu_scan",Toast.LENGTH_SHORT).show();
@@ -87,7 +86,7 @@ public class EquipmentActivity extends AppCompatActivity {
                                 break;
 
                             case R.id.menu_user:
-                                Toast.makeText(getApplicationContext(),"menu_user",Toast.LENGTH_SHORT).show();
+                              //  Toast.makeText(getApplicationContext(),"menu_user",Toast.LENGTH_SHORT).show();
                                 Intent intent1 =new Intent();
                                 intent1.setClass(EquipmentActivity.this,UserHistory.class);
                                 EquipmentActivity.this.startActivity(intent1);

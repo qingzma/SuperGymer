@@ -13,12 +13,16 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.learn.qingzhi.supergymer.R;
+import com.learn.qingzhi.supergymer.Scanner;
 import com.learn.qingzhi.supergymer.UserHistory;
 
 import java.util.List;
 
 import db.DBHandler;
 import db.Equipment;
+/**
+ * Created by Langsha Liu on 08/03/2017.
+ */
 
 public class PartActivity extends AppCompatActivity {
     Button[] btnCategory ;
@@ -46,9 +50,15 @@ public class PartActivity extends AppCompatActivity {
                                 break;
 
                             case R.id.menu_scan:
-                                Toast.makeText(getApplicationContext(),"menu_scan",Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(getApplicationContext(),"menu_scan",Toast.LENGTH_SHORT).show();
+                                Intent intent2 =new Intent();
+                                intent2.setClass(PartActivity.this,Scanner.class);
+                                PartActivity.this.startActivity(intent2);
+                                PartActivity.this.finish();
+                                break;
+
                             case R.id.menu_user:
-                                Toast.makeText(getApplicationContext(),"menu_user",Toast.LENGTH_SHORT).show();
+                               // Toast.makeText(getApplicationContext(),"menu_user",Toast.LENGTH_SHORT).show();
                                 Intent intent1 = new Intent();
                                 intent1.setClass(PartActivity.this, UserHistory.class);
                                 PartActivity.this.startActivity(intent1);
