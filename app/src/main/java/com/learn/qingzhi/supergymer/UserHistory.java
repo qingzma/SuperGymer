@@ -43,20 +43,21 @@ public class UserHistory extends AppCompatActivity {
         setContentView(R.layout.user_history);
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottom_navigation);
+        bottomNavigationView.getMenu().getItem(2).setChecked(true);
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.menu_home:
-                                Toast.makeText(getApplicationContext(), "menu_home", Toast.LENGTH_SHORT).show();
+                               // Toast.makeText(getApplicationContext(), "menu_home", Toast.LENGTH_SHORT).show();
                                 Intent intent =new Intent();
                                 intent.setClass(UserHistory.this, EquipmentActivity.class);
                                 UserHistory.this.startActivity(intent);
                                 UserHistory.this.finish();
                                 break;
                             case R.id.menu_scan:
-                                Toast.makeText(getApplicationContext(),"menu_scan",Toast.LENGTH_SHORT).show();
+                               // Toast.makeText(getApplicationContext(),"menu_scan",Toast.LENGTH_SHORT).show();
                                 Intent intent1 =new Intent();
                                 intent1.setClass(UserHistory.this,Scanner.class);
                                 UserHistory.this.startActivity(intent1);
@@ -64,7 +65,7 @@ public class UserHistory extends AppCompatActivity {
                                 break;
 
                             case R.id.menu_user:
-                                Toast.makeText(getApplicationContext(),"menu_user",Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(getApplicationContext(),"menu_user",Toast.LENGTH_SHORT).show();
                                 break;
                         }
                         return true;
@@ -77,11 +78,11 @@ public class UserHistory extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("UserInfo", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         //editor.putString("UserId",Integer.toString(user.get_userId()));
-        String userID=sharedPreferences.getString("UserInfo","NoneUser");
+        String userID=sharedPreferences.getString("UserId","NoneUser");
         if (userID.equals("NoneUser")){
             AlertDialog.Builder builder = new AlertDialog.Builder(UserHistory.this);
             builder.setMessage("Sign in?");
-            builder.setTitle("Hint:");
+            builder.setTitle("No user has signed yet!");
             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 @Override
                         public void onClick(DialogInterface dialog, int which) {

@@ -15,7 +15,9 @@
         app:pulse_repeat="0"
         app:pulse_color="@color/primary"
         app:pulse_startFromScratch="false"
-        app:pulse_interpolator="Linear">
+        app:pulse_interpolator="Linear"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
     </pl.bclogic.pulsator4droid.library.PulsatorLayout>
 
     <android.support.design.widget.BottomNavigationView

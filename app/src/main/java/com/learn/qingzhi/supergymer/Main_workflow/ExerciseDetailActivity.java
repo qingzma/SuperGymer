@@ -23,15 +23,16 @@ import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
 import com.learn.qingzhi.supergymer.R;
+import com.learn.qingzhi.supergymer.Scanner;
 import com.learn.qingzhi.supergymer.UserHistory;
-
-import java.net.URL;
 import java.util.List;
 
 import db.DBHandler;
 import db.Equipment;
 
-import static android.support.v7.appcompat.R.id.text;
+/**
+ * Created by Langsha Liu on 08/03/2017.
+ */
 
 public class ExerciseDetailActivity extends YouTubeBaseActivity implements YouTubePlayer.OnInitializedListener{ //extends AppCompatActivity {
     private VideoView video1=null;
@@ -77,9 +78,14 @@ public class ExerciseDetailActivity extends YouTubeBaseActivity implements YouTu
 
 
                             case R.id.menu_scan:
-                                Toast.makeText(getApplicationContext(), "menu_scan", Toast.LENGTH_SHORT).show();
+                               //Toast.makeText(getApplicationContext(), "menu_scan", Toast.LENGTH_SHORT).show();
+                                Intent intent2 =new Intent();
+                                intent2.setClass(ExerciseDetailActivity.this,Scanner.class);
+                                ExerciseDetailActivity.this.startActivity(intent2);
+                                ExerciseDetailActivity.this.finish();
+                                break;
                             case R.id.menu_user:
-                                Toast.makeText(getApplicationContext(), "menu_user", Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(getApplicationContext(), "menu_user", Toast.LENGTH_SHORT).show();
                                 Intent intent1 = new Intent();
                                 intent1.setClass(ExerciseDetailActivity.this, UserHistory.class);
                                 ExerciseDetailActivity.this.startActivity(intent1);
