@@ -205,7 +205,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
     //get user(s) by name
     public List<User> getUser(String name){
-        List<User> userList=null;
+        List<User> userList=new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
         String querySelect="SELECT  *  FROM  " +TABLE_USER+
                 "    WHERE "+KEY_NAME +" = "+ "\""+name+"\"";
