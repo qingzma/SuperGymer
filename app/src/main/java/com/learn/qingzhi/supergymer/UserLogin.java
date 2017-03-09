@@ -59,6 +59,7 @@ public class UserLogin extends AppCompatActivity {
             }
         });
 
+        /*
         BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -75,6 +76,7 @@ public class UserLogin extends AppCompatActivity {
                         return true;
                     }
                 });
+          */
     }
 
     public void login(){
