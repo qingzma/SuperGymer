@@ -39,7 +39,6 @@ public class ExerciseDetailActivity extends YouTubeBaseActivity implements YouTu
     private ToggleButton togglebutton;
     private static final int RECOVERY_REQUEST = 1;
     private YouTubePlayerView youTubeView;
-    //private ToggleButton togglebutton;
     private Button button=null;
     private Chronometer time;
     Equipment equip;
@@ -56,7 +55,7 @@ public class ExerciseDetailActivity extends YouTubeBaseActivity implements YouTu
         int id = intent.getIntExtra("id", 0);
         String equipment = intent.getStringExtra("equipment");
         equip = dbHandler.getEquipmentByName(equipment).get(id);
-        //URL url=equip.get_video_url();
+
 
         List<Equipment> equipmentList = dbHandler.getEquipmentByName(equipment);
 
@@ -99,12 +98,11 @@ public class ExerciseDetailActivity extends YouTubeBaseActivity implements YouTu
 
         Text1 = (TextView) findViewById(R.id.textView);
         Text1.setText(equip.get_introduction());
-        //video1 = (VideoView) findViewById(R.id.videoView);
+
         youTubeView = (YouTubePlayerView) findViewById(R.id.youtube_view);
         youTubeView.initialize(Config.YOUTUBE_API_KEY, this);
 
 
-        //video1 = (VideoView) findViewById(R.id.videoView);
         time.setFormat("Exercise time:%s");
         time.setBase(SystemClock.elapsedRealtime());
 
@@ -113,8 +111,8 @@ public class ExerciseDetailActivity extends YouTubeBaseActivity implements YouTu
             @Override
             public void onClick(View v) {
                 int status = (Integer) v.getTag();
-                // time.setBase(SystemClock.elapsedRealtime());
-                long timeElapsed = SystemClock.elapsedRealtime() - time.getBase();
+
+              //  long timeElapsed = SystemClock.elapsedRealtime() - time.getBase();
                 if (status == 1) {
                     //long timeElapsed = SystemClock.elapsedRealtime() - time.getBase();
                     time.setBase(SystemClock.elapsedRealtime());
@@ -128,7 +126,7 @@ public class ExerciseDetailActivity extends YouTubeBaseActivity implements YouTu
 
 
                 }
-               // Log.d(null,"Was: "+timeElapsed);
+
             }
 
         });
