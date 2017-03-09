@@ -81,7 +81,7 @@ public class UserHistory extends AppCompatActivity {
         if (userID.equals("NoneUser")){
             AlertDialog.Builder builder = new AlertDialog.Builder(UserHistory.this);
             builder.setMessage("Sign in?");
-            builder.setTitle("Hint:");
+            builder.setTitle("No user has signed yet!");
             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 @Override
                         public void onClick(DialogInterface dialog, int which) {
