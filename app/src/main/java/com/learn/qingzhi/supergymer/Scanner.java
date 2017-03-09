@@ -84,9 +84,14 @@ public class Scanner extends AppCompatActivity {
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.menu_home:
-                                Intent home = new Intent(Scanner.this,EquipmentActivity.class);
-                                home.putExtra("item",0);
-                                startActivity(home);
+                                //Intent home = new Intent(Scanner.this,EquipmentActivity.class);
+                                //home.putExtra("item",0);
+                                //startActivity(home);
+                                //Scanner.this.finish();
+                                Intent intent2 =new Intent();
+                                intent2.putExtra("item",0);
+                                intent2.setClass(Scanner.this,EquipmentActivity.class);
+                                Scanner.this.startActivity(intent2);
                                 Scanner.this.finish();
                                 break;
                             case R.id.menu_scan:
@@ -97,7 +102,8 @@ public class Scanner extends AppCompatActivity {
                             case R.id.menu_user:
                                 Intent intent_user = new Intent(Scanner.this,UserHistory.class);
                                 intent_user.putExtra("item",1);
-                                startActivity(intent_user);
+                                intent_user.setClass(Scanner.this,UserHistory.class);
+                                Scanner.this.startActivity(intent_user);
                                 Scanner.this.finish();
                                 break;
                         }
