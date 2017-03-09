@@ -77,7 +77,7 @@ public class UserHistory extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("UserInfo", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         //editor.putString("UserId",Integer.toString(user.get_userId()));
-        String userID=sharedPreferences.getString("UserInfo","NoneUser");
+        String userID=sharedPreferences.getString("UserId","NoneUser");
         if (userID.equals("NoneUser")){
             AlertDialog.Builder builder = new AlertDialog.Builder(UserHistory.this);
             builder.setMessage("Sign in?");
