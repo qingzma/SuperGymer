@@ -99,7 +99,7 @@ public class UserLogin extends AppCompatActivity {
         DBHandler dbHandler = new DBHandler(this);
         List<User> users = dbHandler.getUser(name);
 
-        if(users.isEmpty()){
+        if(users==null){
             _nameText.setError("username not exist");
             return;
         }
