@@ -152,20 +152,23 @@ public class UserHistory extends AppCompatActivity {
 
             LinearLayout linearLayout=(LinearLayout) findViewById(R.id.history_comment);
             linearLayout.setPadding(20,20,20,20);
-            linearLayout.setOrientation(LinearLayout.VERTICAL);
-            TextView textView1=new TextView(this);
-            textView1.setPadding(80,10,80,10);
+            //linearLayout.removeAllViews();
+
+            //TextView textView1=new TextView(this);
+            //textView1.setPadding(80,10,80,10);
+            TextView textView1= (TextView) findViewById(R.id.textView_history_comment1);
             textView1.setTextColor(Color.RED);
             textView1.setText("Total calories: "+totalCalories+" kJ.");
 
-            TextView textView2=new TextView(this);
-            textView2.setPadding(80,10,80,10);
+            //TextView textView2=new TextView(this);
+            TextView textView2= (TextView) findViewById(R.id.textView_history_comment2);
+            //textView2.setPadding(80,10,80,10);
             textView2.setTextColor(Color.BLUE);
             textView2.setText("Total time: "+totalTime+" mins.");
 
 
-            linearLayout.addView(textView1);
-            linearLayout.addView(textView2);
+            //linearLayout.addView(textView1);
+            //linearLayout.addView(textView2);
 
             ImageView imageView=new ImageView(this);
             imageView.setImageResource(R.drawable.fight);
