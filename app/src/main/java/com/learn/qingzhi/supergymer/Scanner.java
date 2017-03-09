@@ -92,7 +92,7 @@ public class Scanner extends AppCompatActivity {
                                 intent2.putExtra("item",0);
                                 intent2.setClass(Scanner.this,EquipmentActivity.class);
                                 Scanner.this.startActivity(intent2);
-                                Scanner.this.finish();
+                                //Scanner.this.finish();
                                 break;
                             case R.id.menu_scan:
                                 //Toast.makeText(getApplicationContext(),"menu_scan",Toast.LENGTH_SHORT).show();
@@ -104,7 +104,7 @@ public class Scanner extends AppCompatActivity {
                                 intent_user.putExtra("item",1);
                                 intent_user.setClass(Scanner.this,UserHistory.class);
                                 Scanner.this.startActivity(intent_user);
-                                Scanner.this.finish();
+                                //Scanner.this.finish();
                                 break;
                         }
                         return true;
