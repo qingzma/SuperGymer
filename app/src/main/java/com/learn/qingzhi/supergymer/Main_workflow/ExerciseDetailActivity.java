@@ -122,13 +122,11 @@ public class ExerciseDetailActivity extends YouTubeBaseActivity implements YouTu
                     button.setText("End");
                     v.setTag(0); //pause
                 } else {
-                    button.setText("Begin");
+                    button.setText("Exercise finished!");
 
                     time.stop();
-                   // long timeElapsed = SystemClock.elapsedRealtime() - time.getBase();
 
-                    //v.setTag(1); //pause
-                    Log.d(null,"Was: "+timeElapsed);
+
                 }
                // Log.d(null,"Was: "+timeElapsed);
             }

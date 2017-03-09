@@ -5,66 +5,87 @@
     android:layout_height="match_parent">
 
 
-    <!-- Content Container -->
 
+    <!-- Content Container -->
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_marginTop="50dp"
+        android:visibility="visible"
         app:itemBackground="@drawable/bottom_background"
         app:menu="@menu/bottom_nav_items" />
-    <ScrollView
-        xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:scrollbars = "vertical"
-        android:scrollbarStyle="insideInset">
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:weightSum="1"
+        android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:scrollbarStyle="insideInset"
+        android:scrollbars="vertical"
+        android:visibility="visible">
 
-        <com.google.android.youtube.player.YouTubePlayerView
-            android:id="@+id/youtube_view"
-            android:layout_width="365dp"
-            android:layout_height="235dp"
-            android:layout_alignParentTop="true"
-            android:layout_marginEnd="95dp"
-            android:layout_marginRight="30dp"
-            android:layout_toLeftOf="@+id/bottom_navigation"
-            android:layout_toStartOf="@+id/bottom_navigation" />
-
-        <TextView
-            android:id="@+id/textView"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.43"
-            android:text="arm" />
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="15dp"
+            android:orientation="vertical"
+            android:weightSum="1">
 
-        <Chronometer
-            android:id="@+id/chronometer2"
-            android:layout_width="192dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.06"
-            android:fontFamily="cursive"
-            android:textAppearance="@style/TextAppearance.AppCompat.Display2"
-            android:textSize="30sp"
-            android:typeface="monospace"
-            android:visibility="visible" />
 
-        <Button
-            android:id="@+id/button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.09"
-            android:text="Button" />
+            <com.google.android.youtube.player.YouTubePlayerView
+                android:id="@+id/youtube_view"
+                android:layout_width="365dp"
+                android:layout_height="235dp"
+                android:layout_alignParentTop="true"
+                android:layout_marginEnd="95dp"
+                android:layout_marginRight="30dp"
+                android:layout_toLeftOf="@+id/bottom_navigation"
+                android:layout_toStartOf="@+id/bottom_navigation" />
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.43"
+                android:fontFamily="sans-serif"
+                android:lineSpacingExtra="8sp" />
+
+            <Chronometer
+                android:id="@+id/chronometer2"
+                android:layout_width="192dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.06"
+                android:fontFamily="cursive"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+                android:textSize="30sp"
+                android:typeface="monospace"
+                android:visibility="visible" />
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.09"
+                android:text="Button" />
+
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="80dp"
+                android:fontFamily="serif"
+                android:text="Build Your Body!!!"
+                android:textStyle="bold" />
+
+
+        </LinearLayout>
+
     </ScrollView>
 </RelativeLayout>
